@@ -5,6 +5,22 @@
             "matchCommandLine": true
         },
         "git init": true,
-        "git add": true
+        "git add": true,
+        "git commit": true,
+        "/^which gh && gh auth status 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^brew install gh 2>&1 \\| tail -5$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "git config": true,
+        "git remote": true,
+        "/^git remote add origin https://github\\.com/dabch2020/eindex\\.git && git push -u origin main 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "git push": true
     }
 }

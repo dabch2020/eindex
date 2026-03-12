@@ -129,7 +129,7 @@ def generate_data():
     ak = install_akshare()
 
     end_date = datetime.now().strftime('%Y-%m-%d')
-    start_date = (datetime.now() - timedelta(days=500)).strftime('%Y-%m-%d')
+    start_date = '2015-01-01'  # 数据从2015年开始
 
     # 获取交易日历
     print("获取交易日历...")

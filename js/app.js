@@ -169,8 +169,8 @@ function renderMainChart() {
         },
         grid: { left: 60, right: 30, top: 40, bottom: 80 },
         dataZoom: [
-            { type: 'inside', start: 70, end: 100 },
-            { type: 'slider', start: 70, end: 100, height: 30, bottom: 10,
+            { type: 'inside', start: 90, end: 100 },
+            { type: 'slider', start: 90, end: 100, height: 30, bottom: 10,
               borderColor: '#2a2f45', backgroundColor: '#1a1d2e',
               fillerColor: 'rgba(79,143,247,0.15)',
               handleStyle: { color: '#4f8ff7' },
@@ -263,8 +263,8 @@ function renderIndicatorsChart() {
         },
         grid: { left: 60, right: 30, top: 45, bottom: 80 },
         dataZoom: [
-            { type: 'inside', start: 70, end: 100 },
-            { type: 'slider', start: 70, end: 100, height: 30, bottom: 10,
+            { type: 'inside', start: 90, end: 100 },
+            { type: 'slider', start: 90, end: 100, height: 30, bottom: 10,
               borderColor: '#2a2f45', backgroundColor: '#1a1d2e',
               fillerColor: 'rgba(79,143,247,0.15)',
               handleStyle: { color: '#4f8ff7' },

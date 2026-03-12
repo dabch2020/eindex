@@ -10,9 +10,9 @@ from pathlib import Path
 random.seed(42)
 
 def generate_sample_data():
-    """生成约300个交易日的模拟数据"""
+    """生成从2015年至今的模拟数据"""
     data = []
-    start = datetime(2025, 1, 2)
+    start = datetime(2015, 1, 5)
     
     # 模拟市场周期
     turnover_base = 0.012  # 1.2%
