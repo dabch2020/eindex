@@ -6,7 +6,7 @@ eIndex 数据更新脚本
 数据源：
   - 换手率：新浪财经（沪深指数每日成交额）
   - 融资余额：上交所 + 深交所
-  - 涨停家数：东方财富网
+  - 涨停家数：通达信 880006 停板家数 (via mootdx)
 
 用法：
   python update_data.py          # 增量更新（只获取新数据）
@@ -83,7 +83,7 @@ def estimate_float_mcap(date_str):
 def get_trade_dates(ak, start="2015-01-01"):
     """从上证指数获取真实交易日历（自动排除周末和节假日）"""
     print("获取交易日历...")
-    df = ak.stock_zh_index_daily(symbol="sh000001")
+    df = ak.stock_zh_index_daily_em(symbol="sh000001")
     df['date'] = df['date'].astype(str)
     end = datetime.now().strftime("%Y-%m-%d")
     dates = sorted(d for d in df['date'] if start <= d <= end)
@@ -93,21 +93,21 @@ def get_trade_dates(ak, start="2015-01-01"):
 
 def get_turnover_data(ak, trade_dates):
     """全市场换手率 = (沪市成交额 + 深市成交额) / 估算流通市值"""
-    print("获取全市场成交额（新浪财经）...")
+    print("获取全市场成交额（东方财富）...")
     results = {}
 
     try:
-        df_sh = ak.stock_zh_index_daily(symbol="sh000001")
+        df_sh = ak.stock_zh_index_daily_em(symbol="sh000001")
         df_sh['date'] = df_sh['date'].astype(str)
-        sh_vol = dict(zip(df_sh['date'], df_sh['volume']))
+        sh_amt = dict(zip(df_sh['date'], df_sh['amount']))
 
-        df_sz = ak.stock_zh_index_daily(symbol="sz399001")
+        df_sz = ak.stock_zh_index_daily_em(symbol="sz399001")
         df_sz['date'] = df_sz['date'].astype(str)
-        sz_vol = dict(zip(df_sz['date'], df_sz['volume']))
+        sz_amt = dict(zip(df_sz['date'], df_sz['amount']))
 
         for dt in trade_dates:
-            sh = sh_vol.get(dt, 0) or 0
-            sz = sz_vol.get(dt, 0) or 0
+            sh = sh_amt.get(dt, 0) or 0
+            sz = sz_amt.get(dt, 0) or 0
             total = float(sh) + float(sz)
             if total > 0:
                 mcap = estimate_float_mcap(dt)
@@ -245,63 +245,70 @@ def _save_limitup_cache(cache):
         json.dump(cache, f, ensure_ascii=False, indent=2)
 
 
+def ensure_mootdx():
+    """确保 mootdx 已安装"""
+    try:
+        from mootdx.quotes import Quotes
+        return Quotes
+    except ImportError:
+        import subprocess
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "mootdx", "-q"])
+        from mootdx.quotes import Quotes
+        return Quotes
+
+
 def get_limitup_data(ak, trade_dates, max_days=60):
-    """获取涨停家数占比（东方财富网）+ 持久化缓存
+    """获取涨停家数占比 — 通达信 880006 停板家数 via mootdx
 
-    stock_zt_pool_em 在东方财富只保留最近约 1 个月的数据，
-    因此采用增量缓存策略：
-    1. 读取本地缓存 (data/limitup_cache.json)
-    2. 仅向 API 请求缓存中缺失的最近日期
-    3. 将新获取的数据追加到缓存
-    随着每日自动运行，缓存会逐渐积累完整的历史数据。
+    880006 的 close 列 = 涨停家数，open 列 = 跌停家数。
+    mootdx 通过通达信行情协议可获取约 2500 个交易日的历史数据（~2016年起）。
+    获取后持久化缓存到 data/limitup_cache.json，避免重复请求。
     """
+    import socket
+    socket.setdefaulttimeout(10)
+
     cache = _load_limitup_cache()
-    print(f"涨停数据缓存: {len(cache)} 天已有")
+    cached_dates = set(cache.keys())
+    missing = [dt for dt in trade_dates if dt not in cached_dates]
 
-    # 找出缓存中缺失的最近日期（API 只保留 ~1 个月）
-    recent_dates = trade_dates[-max_days:]
-    missing = [dt for dt in recent_dates if dt not in cache]
+    print(f"涨停数据缓存: {len(cached_dates)} 天已有, {len(missing)} 天缺失")
 
-    if not missing:
-        print("  涨停缓存已覆盖最近日期，无需请求 API")
-    else:
-        # 从最新日期向后推，因为 API 只保留最近 ~1 个月
-        missing_reversed = list(reversed(missing))
-        print(f"  需获取 {len(missing_reversed)} 天 ({missing_reversed[-1]} ~ {missing_reversed[0]})")
-        consecutive_empty = 0
-        fetched = 0
+    if missing:
+        try:
+            Quotes = ensure_mootdx()
+            client = Quotes.factory(market='std')
 
-        for i, dt in enumerate(missing_reversed):
-            try:
-                df = ak.stock_zt_pool_em(date=dt.replace('-', ''))
-                year = int(dt[:4])
-                total = TOTAL_STOCKS.get(year, 5300)
-                if df is not None and len(df) > 0:
-                    count = len(df)
-                    cache[dt] = {"count": count, "ratio": count / total}
-                    consecutive_empty = 0
-                    fetched += 1
-                else:
-                    consecutive_empty += 1
-            except Exception as e:
-                consecutive_empty += 1
-                if consecutive_empty <= 3:
-                    print(f"  {dt}: {e}")
+            import pandas as pd
+            all_data = []
+            for start in range(0, 5000, 800):
+                data = client.index(symbol='880006', frequency=9, start=start, offset=800)
+                if data is None or len(data) == 0:
+                    break
+                all_data.append(data)
+                if len(data) < 800:
+                    break
 
-            # 东方财富只保留 ~1 个月，连续空结果说明已超出范围
-            if consecutive_empty >= 8:
-                print(f"  连续 {consecutive_empty} 天无数据，已达 API 历史上限")
-                break
+            if all_data:
+                combined = pd.concat(all_data)
+                combined = combined[~combined.index.duplicated(keep='first')]
+                new_count = 0
+                for idx, row in combined.iterrows():
+                    dt = idx.strftime('%Y-%m-%d')
+                    if dt not in cached_dates:
+                        count = int(row['close'])
+                        year = int(dt[:4])
+                        total = TOTAL_STOCKS.get(year, 5300)
+                        cache[dt] = {"count": count, "ratio": count / total}
+                        new_count += 1
 
-            if (i + 1) % 20 == 0:
-                print(f"  进度: {i + 1}/{len(missing_reversed)}")
+                _save_limitup_cache(cache)
+                print(f"  mootdx 880006 新增 {new_count} 天, 缓存共 {len(cache)} 天")
+            else:
+                print("  mootdx 未获取到数据")
+        except Exception as e:
+            print(f"  mootdx 获取失败: {e}")
 
-            time.sleep(0.3)
-
-        _save_limitup_cache(cache)
-        print(f"  新获取 {fetched} 天，缓存共 {len(cache)} 天")
-
-    # 转换为 {date: ratio} 格式供后续计算
+    # 转换为 {date: ratio} 格式
     results = {}
     for dt in trade_dates:
         if dt in cache:
@@ -309,7 +316,7 @@ def get_limitup_data(ak, trade_dates, max_days=60):
             if isinstance(entry, dict):
                 results[dt] = entry["ratio"]
             else:
-                results[dt] = float(entry)  # 兼容旧格式
+                results[dt] = float(entry)
 
     print(f"  涨停数据可用: {len(results)} 天")
     return results
@@ -365,8 +372,8 @@ def generate_data():
     turnover_data = get_turnover_data(ak, trade_dates)
     margin_data = get_margin_data(ak)
 
-    # 涨停数据使用持久化缓存，每次只获取缺失的最近日期
-    limitup_data = get_limitup_data(ak, trade_dates, max_days=60)
+    # 涨停数据使用通达信 880006 + 持久化缓存
+    limitup_data = get_limitup_data(ak, trade_dates)
 
     # ── 计算情绪指数 ──
     print("计算情绪指数...")
