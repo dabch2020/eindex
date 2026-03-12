@@ -143,73 +143,74 @@ def _find_column(df, candidates):
 
 
 def get_margin_data(ak):
-    """获取沪深两市融资余额占比（上交所 + 深交所）"""
-    print("获取融资余额（上交所 + 深交所）...")
+    """获取沪深两市融资余额占比
+
+    数据源：
+    - 主要：macro_china_market_margin_sh/sz（东方财富，2010 至今，每日更新）
+    - 备用：stock_margin_sse（上交所，end_date 写死 20230922，仅覆盖到 2023-09）
+    """
+    print("获取融资余额（沪市 + 深市）...")
     sh_margin = {}
     sz_margin = {}
 
-    # ── 上交所 ──
+    # ── 沪市（macro 接口，数据最全） ──
     try:
-        df = ak.stock_margin_sse(start_date="20160126")
-        date_col = df.columns[0]  # 第一列通常是日期
-        bal_col = _find_column(df, ['融资余额(元)', '融资余额', '融资余额（元）'])
-        if bal_col is None:
-            bal_col = df.columns[4] if len(df.columns) > 4 else None
-
-        if bal_col:
-            for _, row in df.iterrows():
-                dt = _parse_date(row[date_col])
-                if dt is None:
-                    continue
-                try:
-                    balance = float(row[bal_col])
-                    if balance > 0:
-                        sh_margin[dt] = balance
-                except (ValueError, TypeError):
-                    continue
-
-        print(f"  上交所融资: {len(sh_margin)} 天")
-    except Exception as e:
-        print(f"  上交所融资获取失败: {e}")
-
-    # ── 深交所 ──
-    # akshare 深交所融资 API 名称可能随版本变化，逐个尝试
-    szse_fetchers = [
-        ("stock_margin_szse", {"start_date": "20160126"}),
-        ("stock_margin_detail_szse", {}),
-    ]
-
-    for func_name, kwargs in szse_fetchers:
-        if hasattr(ak, func_name):
+        df = ak.macro_china_market_margin_sh()
+        for _, row in df.iterrows():
+            dt = _parse_date(row['日期'])
+            if dt is None or dt < '2016-01-26':
+                continue
             try:
-                df = getattr(ak, func_name)(**kwargs)
-                date_col = df.columns[0]
-                bal_col = _find_column(df, ['融资余额(元)', '融资余额', '融资余额（元）'])
-                if bal_col is None:
-                    bal_col = df.columns[4] if len(df.columns) > 4 else None
+                balance = float(row['融资余额'])
+                if balance > 0:
+                    sh_margin[dt] = balance
+            except (ValueError, TypeError):
+                continue
+        print(f"  沪市融资: {len(sh_margin)} 天")
+    except Exception as e:
+        print(f"  沪市融资获取失败: {e}")
+        # 备用：stock_margin_sse（截止 2023-09）
+        try:
+            df = ak.stock_margin_sse(start_date="20160126")
+            bal_col = _find_column(df, ['融资余额(元)', '融资余额', '融资余额（元）'])
+            if bal_col is None:
+                bal_col = df.columns[4] if len(df.columns) > 4 else None
+            if bal_col:
+                for _, row in df.iterrows():
+                    dt = _parse_date(row[df.columns[0]])
+                    if dt is None:
+                        continue
+                    try:
+                        balance = float(row[bal_col])
+                        if balance > 0:
+                            sh_margin[dt] = balance
+                    except (ValueError, TypeError):
+                        continue
+            print(f"  沪市融资(备用): {len(sh_margin)} 天")
+        except Exception as e2:
+            print(f"  沪市融资备用也失败: {e2}")
 
-                if bal_col:
-                    for _, row in df.iterrows():
-                        dt = _parse_date(row[date_col])
-                        if dt is None:
-                            continue
-                        try:
-                            balance = float(row[bal_col])
-                            if balance > 0:
-                                sz_margin[dt] = balance
-                        except (ValueError, TypeError):
-                            continue
-
-                print(f"  深交所融资: {len(sz_margin)} 天 (via {func_name})")
-                break
-            except Exception as e:
-                print(f"  {func_name} 失败: {e}")
+    # ── 深市 ──
+    try:
+        df = ak.macro_china_market_margin_sz()
+        for _, row in df.iterrows():
+            dt = _parse_date(row['日期'])
+            if dt is None or dt < '2016-01-26':
+                continue
+            try:
+                balance = float(row['融资余额'])
+                if balance > 0:
+                    sz_margin[dt] = balance
+            except (ValueError, TypeError):
+                continue
+        print(f"  深市融资: {len(sz_margin)} 天")
+    except Exception as e:
+        print(f"  深市融资获取失败: {e}")
 
     # ── 合并 ──
     results = {}
     if sh_margin and not sz_margin:
-        # 深交所数据不可用，用上交所 × 1.67 估算全市场
-        print("  深交所数据不可用，使用上交所 × 1.67 估算全市场")
+        print("  深市数据不可用，使用沪市 × 1.67 估算全市场")
         for dt, val in sh_margin.items():
             mcap = estimate_float_mcap(dt)
             results[dt] = val * 1.67 / mcap
