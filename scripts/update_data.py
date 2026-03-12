@@ -309,15 +309,15 @@ def get_limitup_data(ak, trade_dates, max_days=60):
         except Exception as e:
             print(f"  mootdx 获取失败: {e}")
 
-    # 转换为 {date: ratio} 格式
+    # 转换为 {date: (ratio, count)} 格式
     results = {}
     for dt in trade_dates:
         if dt in cache:
             entry = cache[dt]
             if isinstance(entry, dict):
-                results[dt] = entry["ratio"]
+                results[dt] = (entry["ratio"], entry["count"])
             else:
-                results[dt] = float(entry)
+                results[dt] = (float(entry), 0)
 
     print(f"  涨停数据可用: {len(results)} 天")
     return results
@@ -384,7 +384,9 @@ def generate_data():
     for dt in trade_dates:
         t_val = turnover_data.get(dt)
         m_val = margin_data.get(dt)
-        l_val = limitup_data.get(dt)
+        l_entry = limitup_data.get(dt)
+        l_val = l_entry[0] if l_entry is not None else None
+        l_count = l_entry[1] if l_entry is not None else 0
 
         if t_val is not None:
             t_hist.append(t_val)
@@ -414,6 +416,7 @@ def generate_data():
             "turnover_pct": round(t_pct, 2) if t_pct is not None else 0,
             "margin_ratio": round(m_val, 6) if m_val is not None else 0,
             "margin_pct": round(m_pct, 2) if m_pct is not None else 0,
+            "limitup_count": l_count,
             "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
         })

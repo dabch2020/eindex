@@ -347,6 +347,7 @@ function renderTable() {
             <td>${d.turnover_pct.toFixed(1)}</td>
             <td>${(d.margin_ratio * 100).toFixed(3)}%</td>
             <td>${d.margin_pct.toFixed(1)}</td>
+            <td>${d.limitup_count || 0}</td>
             <td>${(d.limitup_ratio * 100).toFixed(3)}%</td>
             <td>${d.limitup_pct.toFixed(1)}</td>
         </tr>`;
@@ -375,7 +376,7 @@ document.querySelectorAll('th.sortable').forEach(th => {
 // 导出CSV
 function exportCSV() {
     if (!allData.length) return;
-    const headers = ['日期', '情绪指数', '信号', '换手率', '换手率分位', '融资占比', '融资分位', '涨停占比', '涨停分位'];
+    const headers = ['日期', '情绪指数', '信号', '换手率', '换手率分位', '融资占比', '融资分位', '停板家数', '涨停占比', '涨停分位'];
     const rows = allData.map(d => {
         const sig = getSignal(d.eindex);
         return [
@@ -386,6 +387,7 @@ function exportCSV() {
             d.turnover_pct.toFixed(1),
             (d.margin_ratio * 100).toFixed(3) + '%',
             d.margin_pct.toFixed(1),
+            d.limitup_count || 0,
             (d.limitup_ratio * 100).toFixed(3) + '%',
             d.limitup_pct.toFixed(1)
         ].join(',');
