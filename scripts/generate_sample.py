@@ -4,16 +4,78 @@
 import json
 import math
 import random
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 from pathlib import Path
 
 random.seed(42)
+
+
+def get_cn_holidays():
+    """返回A股休市的公共假日集合（2015-2026）"""
+    holidays = set()
+
+    # 辅助函数：添加日期范围
+    def add_range(y, m_start, d_start, m_end, d_end):
+        d = date(y, m_start, d_start)
+        end = date(y, m_end, d_end)
+        while d <= end:
+            holidays.add(d)
+            d += timedelta(days=1)
+
+    for y in range(2015, 2027):
+        # 元旦 (1月1日，通常放1-3天)
+        add_range(y, 1, 1, 1, 1)
+
+        # 春节 (约1月底-2月中，放7天)
+        spring_festival = {
+            2015: (2, 18, 2, 24), 2016: (2, 7, 2, 13), 2017: (1, 27, 2, 2),
+            2018: (2, 15, 2, 21), 2019: (2, 4, 2, 10), 2020: (1, 24, 1, 31),
+            2021: (2, 11, 2, 17), 2022: (1, 31, 2, 6), 2023: (1, 21, 1, 27),
+            2024: (2, 10, 2, 17), 2025: (1, 28, 2, 4), 2026: (2, 17, 2, 23),
+        }
+        if y in spring_festival:
+            add_range(y, *spring_festival[y])
+
+        # 清明节 (4月4-6日左右，放3天)
+        add_range(y, 4, 4, 4, 6)
+
+        # 劳动节 (5月1-5日，放5天)
+        add_range(y, 5, 1, 5, 5)
+
+        # 端午节 (约6月中，放3天)
+        dragon_boat = {
+            2015: (6, 20, 6, 22), 2016: (6, 9, 6, 11), 2017: (5, 28, 5, 30),
+            2018: (6, 16, 6, 18), 2019: (6, 7, 6, 9), 2020: (6, 25, 6, 27),
+            2021: (6, 12, 6, 14), 2022: (6, 3, 6, 5), 2023: (6, 22, 6, 24),
+            2024: (6, 8, 6, 10), 2025: (5, 31, 6, 2), 2026: (6, 19, 6, 21),
+        }
+        if y in dragon_boat:
+            add_range(y, *dragon_boat[y])
+
+        # 中秋节 (约9-10月，放3天)
+        mid_autumn = {
+            2015: (9, 26, 9, 27), 2016: (9, 15, 9, 17), 2017: (10, 4, 10, 4),
+            2018: (9, 22, 9, 24), 2019: (9, 13, 9, 15), 2020: (10, 1, 10, 1),
+            2021: (9, 19, 9, 21), 2022: (9, 10, 9, 12), 2023: (9, 29, 9, 29),
+            2024: (9, 15, 9, 17), 2025: (10, 6, 10, 8), 2026: (9, 25, 9, 27),
+        }
+        if y in mid_autumn:
+            add_range(y, *mid_autumn[y])
+
+        # 国庆节 (10月1-7日)
+        add_range(y, 10, 1, 10, 7)
+
+    return holidays
+
 
 def generate_sample_data():
     """生成从2015年至今的模拟数据"""
     data = []
     start = datetime(2015, 1, 5)
-    
+
+    # A股公共假日
+    cn_holidays = get_cn_holidays()
+
     # 模拟市场周期
     turnover_base = 0.012  # 1.2%
     margin_base = 0.022    # 2.2%
@@ -33,8 +95,8 @@ def generate_sample_data():
             current += timedelta(days=1)
             continue
         
-        # 模拟随机跳过 (节假日)
-        if random.random() < 0.03:
+        # 跳过A股公共假日
+        if current.date() in cn_holidays:
             current += timedelta(days=1)
             continue
         

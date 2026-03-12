@@ -21,6 +21,10 @@
             "approve": true,
             "matchCommandLine": true
         },
-        "git push": true
+        "git push": true,
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\ndates = \\[d\\['date'\\] for d in data\\]\n# 检查2025春节 \\(1/28-2/4\\) 和2025国庆 \\(10/1-10/7\\)\nprint\\('春节期间\\(2025-01-28~02-04\\):'\\)\nprint\\(\\[d for d in dates if '2025-01-28' <= d <= '2025-02-04'\\]\\)\nprint\\('国庆期间\\(2025-10-01~10-07\\):'\\)\nprint\\(\\[d for d in dates if '2025-10-01' <= d <= '2025-10-07'\\]\\)\nprint\\('2025元旦:'\\)\nprint\\(\\[d for d in dates if d == '2025-01-01'\\]\\)\nprint\\(f'总交易日: \\{len\\(dates\\)\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     }
 }
