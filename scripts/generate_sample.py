@@ -76,11 +76,69 @@ def generate_sample_data():
     # A股公共假日
     cn_holidays = get_cn_holidays()
 
-    # 模拟市场周期
-    turnover_base = 0.012  # 1.2%
-    margin_base = 0.022    # 2.2%
-    limitup_base = 0.008   # 0.8%
-    
+    # A股历史市场阶段 — 每个阶段定义基准倍率
+    # (start_date, end_date, turnover_mult, margin_mult, limitup_mult, noise_scale)
+    # turnover_mult: 成交额相对基准的倍率
+    # margin_mult: 融资余额相对基准的倍率
+    # limitup_mult: 涨停数相对基准的倍率
+    market_phases = [
+        # 2015 H1 大牛市：天量成交、大量涨停、融资爆发
+        ("2015-01-05", "2015-06-12", 2.2, 1.5, 2.5, 0.08),
+        # 2015 股灾：成交缩量但仍较高、融资强制平仓下降、涨停极少
+        ("2015-06-15", "2015-09-30", 1.6, 1.1, 0.3, 0.10),
+        # 2015 Q4 弱反弹
+        ("2015-10-08", "2015-12-31", 1.1, 0.95, 0.8, 0.08),
+        # 2016 熔断后震荡
+        ("2016-01-04", "2016-02-29", 0.7, 0.8, 0.3, 0.06),
+        # 2016 震荡回升
+        ("2016-03-01", "2016-12-30", 0.85, 0.85, 0.7, 0.06),
+        # 2017 蓝筹结构牛 — 成交温和、融资平稳、涨停少
+        ("2017-01-03", "2017-12-29", 0.75, 0.82, 0.5, 0.05),
+        # 2018 贸易战熊市 — 全面低迷
+        ("2018-01-02", "2018-12-28", 0.6, 0.7, 0.4, 0.06),
+        # 2019 Q1 春季躁动 — 短暂放量
+        ("2019-01-02", "2019-04-19", 1.3, 0.9, 1.4, 0.08),
+        # 2019 Q2-Q4 回落震荡
+        ("2019-04-22", "2019-12-31", 0.8, 0.85, 0.6, 0.05),
+        # 2020 Q1 疫情暴跌
+        ("2020-01-02", "2020-03-23", 0.9, 0.75, 0.35, 0.10),
+        # 2020 Q2-Q3 流动性牛市
+        ("2020-03-24", "2020-09-30", 1.5, 1.1, 1.6, 0.08),
+        # 2020 Q4 回落
+        ("2020-10-08", "2020-12-31", 0.95, 0.95, 0.8, 0.05),
+        # 2021 H1 抱团牛末期
+        ("2021-01-04", "2021-02-18", 1.4, 1.05, 1.3, 0.08),
+        # 2021 抱团瓦解后震荡
+        ("2021-02-19", "2021-12-31", 0.9, 0.9, 0.7, 0.06),
+        # 2022 全年熊市
+        ("2022-01-04", "2022-10-31", 0.65, 0.72, 0.4, 0.06),
+        # 2022 Q4 弱反弹
+        ("2022-11-01", "2022-12-30", 0.85, 0.78, 0.7, 0.06),
+        # 2023 年初反弹后持续低迷
+        ("2023-01-03", "2023-02-28", 1.1, 0.85, 1.0, 0.06),
+        ("2023-03-01", "2023-12-29", 0.6, 0.7, 0.4, 0.05),
+        # 2024 H1 继续低迷
+        ("2024-01-02", "2024-09-23", 0.55, 0.65, 0.35, 0.05),
+        # 2024 924行情大爆发
+        ("2024-09-24", "2024-10-08", 2.8, 1.3, 3.0, 0.05),
+        # 2024 Q4 冲高回落
+        ("2024-10-09", "2024-12-31", 1.2, 1.0, 1.0, 0.07),
+        # 2025 震荡分化
+        ("2025-01-02", "2025-12-31", 0.9, 0.88, 0.7, 0.06),
+        # 2026 至今
+        ("2026-01-02", "2026-12-31", 0.8, 0.82, 0.6, 0.05),
+    ]
+
+    def get_phase(dt_str):
+        for ps, pe, tm, mm, lm, ns in market_phases:
+            if ps <= dt_str <= pe:
+                return tm, mm, lm, ns
+        return 1.0, 1.0, 1.0, 0.06
+
+    turnover_base = 0.012   # 基准换手率 ~1.2%
+    margin_base = 0.022     # 基准融资占比 ~2.2%
+    limitup_base = 0.008    # 基准涨停占比 ~0.8%
+
     turnover_history = []
     margin_history = []
     limitup_history = []
@@ -99,26 +157,21 @@ def generate_sample_data():
         if current.date() in cn_holidays:
             current += timedelta(days=1)
             continue
-        
-        t = day_count / 250.0  # 归一化时间
-        
-        # 使用正弦函数模拟市场周期
-        cycle = math.sin(t * 2 * math.pi * 0.8 + random.gauss(0, 0.1))
-        trend = math.sin(t * 2 * math.pi * 0.3) * 0.5
-        
-        # 换手率
-        turnover = turnover_base * (1 + 0.4 * cycle + 0.2 * trend + random.gauss(0, 0.15))
-        turnover = max(0.004, min(0.035, turnover))
+
+        dt_str = current.strftime('%Y-%m-%d')
+        tm, mm, lm, ns = get_phase(dt_str)
+
+        # 各指标独立噪声 + 阶段倍率
+        turnover = turnover_base * tm * (1 + random.gauss(0, ns))
+        turnover = max(0.003, min(0.040, turnover))
         turnover_history.append(turnover)
-        
-        # 融资余额占比
-        margin = margin_base * (1 + 0.15 * cycle + 0.1 * trend + random.gauss(0, 0.05))
-        margin = max(0.015, min(0.032, margin))
+
+        margin = margin_base * mm * (1 + random.gauss(0, ns * 0.5))
+        margin = max(0.010, min(0.038, margin))
         margin_history.append(margin)
-        
-        # 涨停家数占比
-        limitup = limitup_base * (1 + 0.6 * cycle + 0.3 * trend + random.gauss(0, 0.25))
-        limitup = max(0.001, min(0.025, limitup))
+
+        limitup = limitup_base * lm * (1 + random.gauss(0, ns * 1.5))
+        limitup = max(0.0005, min(0.030, limitup))
         limitup_history.append(limitup)
         
         # 计算分位数
