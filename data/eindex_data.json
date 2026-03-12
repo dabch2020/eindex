@@ -1,0 +1,2995 @@
+{
+  "updated_at": "2026-03-12 11:16:05",
+  "data": [
+    {
+      "date": "2025-01-02",
+      "eindex": 100.0,
+      "turnover_rate": 0.012606,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.022562,
+      "margin_pct": 100.0,
+      "limitup_ratio": 0.0116,
+      "limitup_pct": 100.0
+    },
+    {
+      "date": "2025-01-03",
+      "eindex": 50.0,
+      "turnover_rate": 0.011784,
+      "turnover_pct": 50.0,
+      "margin_ratio": 0.021946,
+      "margin_pct": 50.0,
+      "limitup_ratio": 0.008497,
+      "limitup_pct": 50.0
+    },
+    {
+      "date": "2025-01-06",
+      "eindex": 77.78,
+      "turnover_rate": 0.012086,
+      "turnover_pct": 66.67,
+      "margin_ratio": 0.022576,
+      "margin_pct": 100.0,
+      "limitup_ratio": 0.010849,
+      "limitup_pct": 66.67
+    },
+    {
+      "date": "2025-01-07",
+      "eindex": 58.33,
+      "turnover_rate": 0.014794,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.022351,
+      "margin_pct": 50.0,
+      "limitup_ratio": 0.008222,
+      "limitup_pct": 25.0
+    },
+    {
+      "date": "2025-01-08",
+      "eindex": 73.33,
+      "turnover_rate": 0.010727,
+      "turnover_pct": 20.0,
+      "margin_ratio": 0.023748,
+      "margin_pct": 100.0,
+      "limitup_ratio": 0.012443,
+      "limitup_pct": 100.0
+    },
+    {
+      "date": "2025-01-09",
+      "eindex": 61.11,
+      "turnover_rate": 0.013153,
+      "turnover_pct": 83.33,
+      "margin_ratio": 0.023357,
+      "margin_pct": 83.33,
+      "limitup_ratio": 0.00648,
+      "limitup_pct": 16.67
+    },
+    {
+      "date": "2025-01-10",
+      "eindex": 47.62,
+      "turnover_rate": 0.010344,
+      "turnover_pct": 14.29,
+      "margin_ratio": 0.023453,
+      "margin_pct": 85.71,
+      "limitup_ratio": 0.008229,
+      "limitup_pct": 42.86
+    },
+    {
+      "date": "2025-01-13",
+      "eindex": 50.0,
+      "turnover_rate": 0.010856,
+      "turnover_pct": 37.5,
+      "margin_ratio": 0.023669,
+      "margin_pct": 87.5,
+      "limitup_ratio": 0.007046,
+      "limitup_pct": 25.0
+    },
+    {
+      "date": "2025-01-14",
+      "eindex": 70.37,
+      "turnover_rate": 0.013533,
+      "turnover_pct": 88.89,
+      "margin_ratio": 0.022708,
+      "margin_pct": 55.56,
+      "limitup_ratio": 0.009957,
+      "limitup_pct": 66.67
+    },
+    {
+      "date": "2025-01-15",
+      "eindex": 46.67,
+      "turnover_rate": 0.014111,
+      "turnover_pct": 90.0,
+      "margin_ratio": 0.022188,
+      "margin_pct": 20.0,
+      "limitup_ratio": 0.007815,
+      "limitup_pct": 30.0
+    },
+    {
+      "date": "2025-01-16",
+      "eindex": 75.76,
+      "turnover_rate": 0.014515,
+      "turnover_pct": 90.91,
+      "margin_ratio": 0.024271,
+      "margin_pct": 100.0,
+      "limitup_ratio": 0.008022,
+      "limitup_pct": 36.36
+    },
+    {
+      "date": "2025-01-17",
+      "eindex": 86.11,
+      "turnover_rate": 0.016068,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.023616,
+      "margin_pct": 75.0,
+      "limitup_ratio": 0.01118,
+      "limitup_pct": 83.33
+    },
+    {
+      "date": "2025-01-20",
+      "eindex": 15.38,
+      "turnover_rate": 0.011103,
+      "turnover_pct": 30.77,
+      "margin_ratio": 0.02178,
+      "margin_pct": 7.69,
+      "limitup_ratio": 0.005345,
+      "limitup_pct": 7.69
+    },
+    {
+      "date": "2025-01-21",
+      "eindex": 64.29,
+      "turnover_rate": 0.013829,
+      "turnover_pct": 71.43,
+      "margin_ratio": 0.022624,
+      "margin_pct": 50.0,
+      "limitup_ratio": 0.010821,
+      "limitup_pct": 71.43
+    },
+    {
+      "date": "2025-01-22",
+      "eindex": 71.11,
+      "turnover_rate": 0.013021,
+      "turnover_pct": 53.33,
+      "margin_ratio": 0.022984,
+      "margin_pct": 60.0,
+      "limitup_ratio": 0.012995,
+      "limitup_pct": 100.0
+    },
+    {
+      "date": "2025-01-23",
+      "eindex": 64.58,
+      "turnover_rate": 0.01297,
+      "turnover_pct": 50.0,
+      "margin_ratio": 0.023322,
+      "margin_pct": 62.5,
+      "limitup_ratio": 0.011489,
+      "limitup_pct": 81.25
+    },
+    {
+      "date": "2025-01-24",
+      "eindex": 78.43,
+      "turnover_rate": 0.015992,
+      "turnover_pct": 94.12,
+      "margin_ratio": 0.024032,
+      "margin_pct": 94.12,
+      "limitup_ratio": 0.008404,
+      "limitup_pct": 47.06
+    },
+    {
+      "date": "2025-01-27",
+      "eindex": 75.93,
+      "turnover_rate": 0.014256,
+      "turnover_pct": 77.78,
+      "margin_ratio": 0.023897,
+      "margin_pct": 88.89,
+      "limitup_ratio": 0.010625,
+      "limitup_pct": 61.11
+    },
+    {
+      "date": "2025-01-28",
+      "eindex": 36.84,
+      "turnover_rate": 0.011006,
+      "turnover_pct": 21.05,
+      "margin_ratio": 0.022577,
+      "margin_pct": 36.84,
+      "limitup_ratio": 0.009637,
+      "limitup_pct": 52.63
+    },
+    {
+      "date": "2025-01-29",
+      "eindex": 78.33,
+      "turnover_rate": 0.014439,
+      "turnover_pct": 80.0,
+      "margin_ratio": 0.025901,
+      "margin_pct": 100.0,
+      "limitup_ratio": 0.009775,
+      "limitup_pct": 55.0
+    },
+    {
+      "date": "2025-01-31",
+      "eindex": 60.32,
+      "turnover_rate": 0.011797,
+      "turnover_pct": 33.33,
+      "margin_ratio": 0.023132,
+      "margin_pct": 52.38,
+      "limitup_ratio": 0.012675,
+      "limitup_pct": 95.24
+    },
+    {
+      "date": "2025-02-03",
+      "eindex": 74.24,
+      "turnover_rate": 0.014494,
+      "turnover_pct": 81.82,
+      "margin_ratio": 0.025369,
+      "margin_pct": 95.45,
+      "limitup_ratio": 0.008536,
+      "limitup_pct": 45.45
+    },
+    {
+      "date": "2025-02-04",
+      "eindex": 59.42,
+      "turnover_rate": 0.013973,
+      "turnover_pct": 65.22,
+      "margin_ratio": 0.025302,
+      "margin_pct": 91.3,
+      "limitup_ratio": 0.007867,
+      "limitup_pct": 21.74
+    },
+    {
+      "date": "2025-02-05",
+      "eindex": 72.22,
+      "turnover_rate": 0.012072,
+      "turnover_pct": 33.33,
+      "margin_ratio": 0.024466,
+      "margin_pct": 87.5,
+      "limitup_ratio": 0.012741,
+      "limitup_pct": 95.83
+    },
+    {
+      "date": "2025-02-06",
+      "eindex": 62.67,
+      "turnover_rate": 0.012359,
+      "turnover_pct": 40.0,
+      "margin_ratio": 0.024767,
+      "margin_pct": 88.0,
+      "limitup_ratio": 0.010543,
+      "limitup_pct": 60.0
+    },
+    {
+      "date": "2025-02-10",
+      "eindex": 69.23,
+      "turnover_rate": 0.012743,
+      "turnover_pct": 46.15,
+      "margin_ratio": 0.02404,
+      "margin_pct": 76.92,
+      "limitup_ratio": 0.011735,
+      "limitup_pct": 84.62
+    },
+    {
+      "date": "2025-02-11",
+      "eindex": 71.6,
+      "turnover_rate": 0.014545,
+      "turnover_pct": 88.89,
+      "margin_ratio": 0.02356,
+      "margin_pct": 55.56,
+      "limitup_ratio": 0.010861,
+      "limitup_pct": 70.37
+    },
+    {
+      "date": "2025-02-12",
+      "eindex": 51.19,
+      "turnover_rate": 0.013805,
+      "turnover_pct": 60.71,
+      "margin_ratio": 0.022569,
+      "margin_pct": 21.43,
+      "limitup_ratio": 0.011134,
+      "limitup_pct": 71.43
+    },
+    {
+      "date": "2025-02-13",
+      "eindex": 81.61,
+      "turnover_rate": 0.013746,
+      "turnover_pct": 58.62,
+      "margin_ratio": 0.024516,
+      "margin_pct": 86.21,
+      "limitup_ratio": 0.013521,
+      "limitup_pct": 100.0
+    },
+    {
+      "date": "2025-02-14",
+      "eindex": 87.78,
+      "turnover_rate": 0.01649,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.02572,
+      "margin_pct": 96.67,
+      "limitup_ratio": 0.010919,
+      "limitup_pct": 66.67
+    },
+    {
+      "date": "2025-02-17",
+      "eindex": 82.8,
+      "turnover_rate": 0.014688,
+      "turnover_pct": 87.1,
+      "margin_ratio": 0.024137,
+      "margin_pct": 74.19,
+      "limitup_ratio": 0.012583,
+      "limitup_pct": 87.1
+    },
+    {
+      "date": "2025-02-18",
+      "eindex": 90.62,
+      "turnover_rate": 0.016374,
+      "turnover_pct": 96.88,
+      "margin_ratio": 0.025606,
+      "margin_pct": 93.75,
+      "limitup_ratio": 0.012332,
+      "limitup_pct": 81.25
+    },
+    {
+      "date": "2025-02-19",
+      "eindex": 75.76,
+      "turnover_rate": 0.013758,
+      "turnover_pct": 54.55,
+      "margin_ratio": 0.025379,
+      "margin_pct": 90.91,
+      "limitup_ratio": 0.01239,
+      "limitup_pct": 81.82
+    },
+    {
+      "date": "2025-02-20",
+      "eindex": 77.45,
+      "turnover_rate": 0.016231,
+      "turnover_pct": 94.12,
+      "margin_ratio": 0.025649,
+      "margin_pct": 94.12,
+      "limitup_ratio": 0.010271,
+      "limitup_pct": 44.12
+    },
+    {
+      "date": "2025-02-21",
+      "eindex": 60.95,
+      "turnover_rate": 0.012289,
+      "turnover_pct": 28.57,
+      "margin_ratio": 0.024643,
+      "margin_pct": 77.14,
+      "limitup_ratio": 0.01232,
+      "limitup_pct": 77.14
+    },
+    {
+      "date": "2025-02-24",
+      "eindex": 54.63,
+      "turnover_rate": 0.015973,
+      "turnover_pct": 86.11,
+      "margin_ratio": 0.023946,
+      "margin_pct": 58.33,
+      "limitup_ratio": 0.008074,
+      "limitup_pct": 19.44
+    },
+    {
+      "date": "2025-02-25",
+      "eindex": 81.08,
+      "turnover_rate": 0.016846,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.023513,
+      "margin_pct": 43.24,
+      "limitup_ratio": 0.015155,
+      "limitup_pct": 100.0
+    },
+    {
+      "date": "2025-02-26",
+      "eindex": 79.82,
+      "turnover_rate": 0.017547,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.023849,
+      "margin_pct": 55.26,
+      "limitup_ratio": 0.012481,
+      "limitup_pct": 84.21
+    },
+    {
+      "date": "2025-02-27",
+      "eindex": 71.79,
+      "turnover_rate": 0.015073,
+      "turnover_pct": 79.49,
+      "margin_ratio": 0.025707,
+      "margin_pct": 94.87,
+      "limitup_ratio": 0.010042,
+      "limitup_pct": 41.03
+    },
+    {
+      "date": "2025-02-28",
+      "eindex": 85.0,
+      "turnover_rate": 0.016303,
+      "turnover_pct": 90.0,
+      "margin_ratio": 0.027514,
+      "margin_pct": 100.0,
+      "limitup_ratio": 0.011435,
+      "limitup_pct": 65.0
+    },
+    {
+      "date": "2025-03-03",
+      "eindex": 91.87,
+      "turnover_rate": 0.017796,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.025084,
+      "margin_pct": 78.05,
+      "limitup_ratio": 0.013973,
+      "limitup_pct": 97.56
+    },
+    {
+      "date": "2025-03-04",
+      "eindex": 86.51,
+      "turnover_rate": 0.018734,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.024052,
+      "margin_pct": 61.9,
+      "limitup_ratio": 0.014616,
+      "limitup_pct": 97.62
+    },
+    {
+      "date": "2025-03-05",
+      "eindex": 79.84,
+      "turnover_rate": 0.017274,
+      "turnover_pct": 93.02,
+      "margin_ratio": 0.025666,
+      "margin_pct": 90.7,
+      "limitup_ratio": 0.011098,
+      "limitup_pct": 55.81
+    },
+    {
+      "date": "2025-03-06",
+      "eindex": 86.36,
+      "turnover_rate": 0.017425,
+      "turnover_pct": 93.18,
+      "margin_ratio": 0.026379,
+      "margin_pct": 97.73,
+      "limitup_ratio": 0.011663,
+      "limitup_pct": 68.18
+    },
+    {
+      "date": "2025-03-07",
+      "eindex": 56.3,
+      "turnover_rate": 0.015486,
+      "turnover_pct": 71.11,
+      "margin_ratio": 0.023788,
+      "margin_pct": 46.67,
+      "limitup_ratio": 0.01091,
+      "limitup_pct": 51.11
+    },
+    {
+      "date": "2025-03-10",
+      "eindex": 94.93,
+      "turnover_rate": 0.020378,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.025838,
+      "margin_pct": 93.48,
+      "limitup_ratio": 0.013169,
+      "limitup_pct": 91.3
+    },
+    {
+      "date": "2025-03-11",
+      "eindex": 87.23,
+      "turnover_rate": 0.014968,
+      "turnover_pct": 65.96,
+      "margin_ratio": 0.026629,
+      "margin_pct": 97.87,
+      "limitup_ratio": 0.015019,
+      "limitup_pct": 97.87
+    },
+    {
+      "date": "2025-03-12",
+      "eindex": 61.81,
+      "turnover_rate": 0.014558,
+      "turnover_pct": 60.42,
+      "margin_ratio": 0.023544,
+      "margin_pct": 35.42,
+      "limitup_ratio": 0.013245,
+      "limitup_pct": 89.58
+    },
+    {
+      "date": "2025-03-13",
+      "eindex": 65.99,
+      "turnover_rate": 0.016047,
+      "turnover_pct": 75.51,
+      "margin_ratio": 0.025042,
+      "margin_pct": 71.43,
+      "limitup_ratio": 0.011089,
+      "limitup_pct": 51.02
+    },
+    {
+      "date": "2025-03-14",
+      "eindex": 76.0,
+      "turnover_rate": 0.014985,
+      "turnover_pct": 66.0,
+      "margin_ratio": 0.024331,
+      "margin_pct": 62.0,
+      "limitup_ratio": 0.015379,
+      "limitup_pct": 100.0
+    },
+    {
+      "date": "2025-03-17",
+      "eindex": 71.9,
+      "turnover_rate": 0.017054,
+      "turnover_pct": 88.24,
+      "margin_ratio": 0.024851,
+      "margin_pct": 70.59,
+      "limitup_ratio": 0.011357,
+      "limitup_pct": 56.86
+    },
+    {
+      "date": "2025-03-18",
+      "eindex": 75.0,
+      "turnover_rate": 0.020667,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.026852,
+      "margin_pct": 98.08,
+      "limitup_ratio": 0.009699,
+      "limitup_pct": 26.92
+    },
+    {
+      "date": "2025-03-19",
+      "eindex": 66.67,
+      "turnover_rate": 0.019691,
+      "turnover_pct": 96.23,
+      "margin_ratio": 0.024996,
+      "margin_pct": 69.81,
+      "limitup_ratio": 0.010204,
+      "limitup_pct": 33.96
+    },
+    {
+      "date": "2025-03-20",
+      "eindex": 72.84,
+      "turnover_rate": 0.016465,
+      "turnover_pct": 79.63,
+      "margin_ratio": 0.025684,
+      "margin_pct": 85.19,
+      "limitup_ratio": 0.011111,
+      "limitup_pct": 53.7
+    },
+    {
+      "date": "2025-03-21",
+      "eindex": 86.06,
+      "turnover_rate": 0.016466,
+      "turnover_pct": 80.0,
+      "margin_ratio": 0.02582,
+      "margin_pct": 89.09,
+      "limitup_ratio": 0.013459,
+      "limitup_pct": 89.09
+    },
+    {
+      "date": "2025-03-24",
+      "eindex": 75.0,
+      "turnover_rate": 0.019161,
+      "turnover_pct": 94.64,
+      "margin_ratio": 0.025214,
+      "margin_pct": 71.43,
+      "limitup_ratio": 0.01141,
+      "limitup_pct": 58.93
+    },
+    {
+      "date": "2025-03-25",
+      "eindex": 76.61,
+      "turnover_rate": 0.01888,
+      "turnover_pct": 92.98,
+      "margin_ratio": 0.027178,
+      "margin_pct": 98.25,
+      "limitup_ratio": 0.010635,
+      "limitup_pct": 38.6
+    },
+    {
+      "date": "2025-03-26",
+      "eindex": 88.51,
+      "turnover_rate": 0.017391,
+      "turnover_pct": 84.48,
+      "margin_ratio": 0.027249,
+      "margin_pct": 98.28,
+      "limitup_ratio": 0.012798,
+      "limitup_pct": 82.76
+    },
+    {
+      "date": "2025-03-27",
+      "eindex": 72.88,
+      "turnover_rate": 0.019848,
+      "turnover_pct": 96.61,
+      "margin_ratio": 0.024382,
+      "margin_pct": 54.24,
+      "limitup_ratio": 0.012223,
+      "limitup_pct": 67.8
+    },
+    {
+      "date": "2025-03-31",
+      "eindex": 50.56,
+      "turnover_rate": 0.014585,
+      "turnover_pct": 50.0,
+      "margin_ratio": 0.023689,
+      "margin_pct": 35.0,
+      "limitup_ratio": 0.012125,
+      "limitup_pct": 66.67
+    },
+    {
+      "date": "2025-04-01",
+      "eindex": 83.06,
+      "turnover_rate": 0.017814,
+      "turnover_pct": 88.52,
+      "margin_ratio": 0.024756,
+      "margin_pct": 60.66,
+      "limitup_ratio": 0.017059,
+      "limitup_pct": 100.0
+    },
+    {
+      "date": "2025-04-02",
+      "eindex": 74.73,
+      "turnover_rate": 0.014272,
+      "turnover_pct": 40.32,
+      "margin_ratio": 0.025925,
+      "margin_pct": 90.32,
+      "limitup_ratio": 0.014698,
+      "limitup_pct": 93.55
+    },
+    {
+      "date": "2025-04-03",
+      "eindex": 57.67,
+      "turnover_rate": 0.013476,
+      "turnover_pct": 26.98,
+      "margin_ratio": 0.024388,
+      "margin_pct": 53.97,
+      "limitup_ratio": 0.014692,
+      "limitup_pct": 92.06
+    },
+    {
+      "date": "2025-04-04",
+      "eindex": 79.69,
+      "turnover_rate": 0.015777,
+      "turnover_pct": 60.94,
+      "margin_ratio": 0.027763,
+      "margin_pct": 100.0,
+      "limitup_ratio": 0.012769,
+      "limitup_pct": 78.12
+    },
+    {
+      "date": "2025-04-07",
+      "eindex": 81.03,
+      "turnover_rate": 0.017777,
+      "turnover_pct": 86.15,
+      "margin_ratio": 0.02453,
+      "margin_pct": 56.92,
+      "limitup_ratio": 0.017341,
+      "limitup_pct": 100.0
+    },
+    {
+      "date": "2025-04-08",
+      "eindex": 74.75,
+      "turnover_rate": 0.014839,
+      "turnover_pct": 53.03,
+      "margin_ratio": 0.02558,
+      "margin_pct": 74.24,
+      "limitup_ratio": 0.016815,
+      "limitup_pct": 96.97
+    },
+    {
+      "date": "2025-04-09",
+      "eindex": 79.1,
+      "turnover_rate": 0.014784,
+      "turnover_pct": 50.75,
+      "margin_ratio": 0.026156,
+      "margin_pct": 89.55,
+      "limitup_ratio": 0.016974,
+      "limitup_pct": 97.01
+    },
+    {
+      "date": "2025-04-10",
+      "eindex": 87.75,
+      "turnover_rate": 0.020204,
+      "turnover_pct": 97.06,
+      "margin_ratio": 0.025734,
+      "margin_pct": 82.35,
+      "limitup_ratio": 0.013622,
+      "limitup_pct": 83.82
+    },
+    {
+      "date": "2025-04-11",
+      "eindex": 87.92,
+      "turnover_rate": 0.020349,
+      "turnover_pct": 97.1,
+      "margin_ratio": 0.026565,
+      "margin_pct": 91.3,
+      "limitup_ratio": 0.012843,
+      "limitup_pct": 75.36
+    },
+    {
+      "date": "2025-04-14",
+      "eindex": 56.19,
+      "turnover_rate": 0.019987,
+      "turnover_pct": 94.29,
+      "margin_ratio": 0.023035,
+      "margin_pct": 17.14,
+      "limitup_ratio": 0.011929,
+      "limitup_pct": 57.14
+    },
+    {
+      "date": "2025-04-15",
+      "eindex": 82.16,
+      "turnover_rate": 0.017171,
+      "turnover_pct": 76.06,
+      "margin_ratio": 0.026677,
+      "margin_pct": 92.96,
+      "limitup_ratio": 0.013013,
+      "limitup_pct": 77.46
+    },
+    {
+      "date": "2025-04-16",
+      "eindex": 81.48,
+      "turnover_rate": 0.018372,
+      "turnover_pct": 86.11,
+      "margin_ratio": 0.025137,
+      "margin_pct": 63.89,
+      "limitup_ratio": 0.015725,
+      "limitup_pct": 94.44
+    },
+    {
+      "date": "2025-04-17",
+      "eindex": 87.67,
+      "turnover_rate": 0.018861,
+      "turnover_pct": 87.67,
+      "margin_ratio": 0.025736,
+      "margin_pct": 80.82,
+      "limitup_ratio": 0.016443,
+      "limitup_pct": 94.52
+    },
+    {
+      "date": "2025-04-21",
+      "eindex": 57.21,
+      "turnover_rate": 0.016582,
+      "turnover_pct": 70.27,
+      "margin_ratio": 0.025683,
+      "margin_pct": 74.32,
+      "limitup_ratio": 0.010292,
+      "limitup_pct": 27.03
+    },
+    {
+      "date": "2025-04-22",
+      "eindex": 80.44,
+      "turnover_rate": 0.018561,
+      "turnover_pct": 85.33,
+      "margin_ratio": 0.025417,
+      "margin_pct": 68.0,
+      "limitup_ratio": 0.014949,
+      "limitup_pct": 88.0
+    },
+    {
+      "date": "2025-04-23",
+      "eindex": 71.49,
+      "turnover_rate": 0.015934,
+      "turnover_pct": 55.26,
+      "margin_ratio": 0.025469,
+      "margin_pct": 68.42,
+      "limitup_ratio": 0.015337,
+      "limitup_pct": 90.79
+    },
+    {
+      "date": "2025-04-24",
+      "eindex": 67.1,
+      "turnover_rate": 0.018344,
+      "turnover_pct": 83.12,
+      "margin_ratio": 0.023598,
+      "margin_pct": 25.97,
+      "limitup_ratio": 0.015719,
+      "limitup_pct": 92.21
+    },
+    {
+      "date": "2025-04-25",
+      "eindex": 73.08,
+      "turnover_rate": 0.016011,
+      "turnover_pct": 57.69,
+      "margin_ratio": 0.025454,
+      "margin_pct": 67.95,
+      "limitup_ratio": 0.015831,
+      "limitup_pct": 93.59
+    },
+    {
+      "date": "2025-04-29",
+      "eindex": 64.56,
+      "turnover_rate": 0.018441,
+      "turnover_pct": 84.81,
+      "margin_ratio": 0.025192,
+      "margin_pct": 60.76,
+      "limitup_ratio": 0.011582,
+      "limitup_pct": 48.1
+    },
+    {
+      "date": "2025-04-30",
+      "eindex": 77.5,
+      "turnover_rate": 0.019454,
+      "turnover_pct": 91.25,
+      "margin_ratio": 0.027509,
+      "margin_pct": 97.5,
+      "limitup_ratio": 0.011394,
+      "limitup_pct": 43.75
+    },
+    {
+      "date": "2025-05-01",
+      "eindex": 66.67,
+      "turnover_rate": 0.018533,
+      "turnover_pct": 83.95,
+      "margin_ratio": 0.025224,
+      "margin_pct": 61.73,
+      "limitup_ratio": 0.012093,
+      "limitup_pct": 54.32
+    },
+    {
+      "date": "2025-05-02",
+      "eindex": 71.14,
+      "turnover_rate": 0.014789,
+      "turnover_pct": 42.68,
+      "margin_ratio": 0.026041,
+      "margin_pct": 86.59,
+      "limitup_ratio": 0.014796,
+      "limitup_pct": 84.15
+    },
+    {
+      "date": "2025-05-06",
+      "eindex": 84.34,
+      "turnover_rate": 0.018009,
+      "turnover_pct": 79.52,
+      "margin_ratio": 0.026937,
+      "margin_pct": 93.98,
+      "limitup_ratio": 0.014378,
+      "limitup_pct": 79.52
+    },
+    {
+      "date": "2025-05-07",
+      "eindex": 75.4,
+      "turnover_rate": 0.02006,
+      "turnover_pct": 95.24,
+      "margin_ratio": 0.025085,
+      "margin_pct": 55.95,
+      "limitup_ratio": 0.013501,
+      "limitup_pct": 75.0
+    },
+    {
+      "date": "2025-05-08",
+      "eindex": 70.59,
+      "turnover_rate": 0.017421,
+      "turnover_pct": 71.76,
+      "margin_ratio": 0.025884,
+      "margin_pct": 82.35,
+      "limitup_ratio": 0.012375,
+      "limitup_pct": 57.65
+    },
+    {
+      "date": "2025-05-09",
+      "eindex": 80.23,
+      "turnover_rate": 0.021416,
+      "turnover_pct": 100.0,
+      "margin_ratio": 0.025503,
+      "margin_pct": 67.44,
+      "limitup_ratio": 0.013294,
+      "limitup_pct": 73.26
+    },
+    {
+      "date": "2025-05-12",
+      "eindex": 54.41,
+      "turnover_rate": 0.015786,
+      "turnover_pct": 49.43,
+      "margin_ratio": 0.026401,
+      "margin_pct": 88.51,
+      "limitup_ratio": 0.010592,
+      "limitup_pct": 25.29
+    },
+    {
+      "date": "2025-05-13",
+      "eindex": 63.26,
+      "turnover_rate": 0.015043,
+      "turnover_pct": 45.45,
+      "margin_ratio": 0.027146,
+      "margin_pct": 94.32,
+      "limitup_ratio": 0.011794,
+      "limitup_pct": 50.0
+    },
+    {
+      "date": "2025-05-14",
+      "eindex": 51.69,
+      "turnover_rate": 0.017437,
+      "turnover_pct": 73.03,
+      "margin_ratio": 0.023736,
+      "margin_pct": 26.97,
+      "limitup_ratio": 0.012275,
+      "limitup_pct": 55.06
+    },
+    {
+      "date": "2025-05-15",
+      "eindex": 84.07,
+      "turnover_rate": 0.017719,
+      "turnover_pct": 74.44,
+      "margin_ratio": 0.025978,
+      "margin_pct": 83.33,
+      "limitup_ratio": 0.016347,
+      "limitup_pct": 94.44
+    },
+    {
+      "date": "2025-05-16",
+      "eindex": 75.82,
+      "turnover_rate": 0.017192,
+      "turnover_pct": 67.03,
+      "margin_ratio": 0.025906,
+      "margin_pct": 81.32,
+      "limitup_ratio": 0.014323,
+      "limitup_pct": 79.12
+    },
+    {
+      "date": "2025-05-19",
+      "eindex": 72.1,
+      "turnover_rate": 0.01898,
+      "turnover_pct": 88.04,
+      "margin_ratio": 0.025315,
+      "margin_pct": 58.7,
+      "limitup_ratio": 0.013142,
+      "limitup_pct": 69.57
+    },
+    {
+      "date": "2025-05-20",
+      "eindex": 70.61,
+      "turnover_rate": 0.014801,
+      "turnover_pct": 39.78,
+      "margin_ratio": 0.026955,
+      "margin_pct": 93.55,
+      "limitup_ratio": 0.01425,
+      "limitup_pct": 78.49
+    },
+    {
+      "date": "2025-05-21",
+      "eindex": 65.96,
+      "turnover_rate": 0.018055,
+      "turnover_pct": 78.72,
+      "margin_ratio": 0.023823,
+      "margin_pct": 28.72,
+      "limitup_ratio": 0.015523,
+      "limitup_pct": 90.43
+    },
+    {
+      "date": "2025-05-22",
+      "eindex": 49.82,
+      "turnover_rate": 0.014086,
+      "turnover_pct": 25.26,
+      "margin_ratio": 0.026016,
+      "margin_pct": 83.16,
+      "limitup_ratio": 0.011481,
+      "limitup_pct": 41.05
+    },
+    {
+      "date": "2025-05-26",
+      "eindex": 58.33,
+      "turnover_rate": 0.013781,
+      "turnover_pct": 21.88,
+      "margin_ratio": 0.026927,
+      "margin_pct": 91.67,
+      "limitup_ratio": 0.012706,
+      "limitup_pct": 61.46
+    },
+    {
+      "date": "2025-05-27",
+      "eindex": 76.98,
+      "turnover_rate": 0.01677,
+      "turnover_pct": 62.89,
+      "margin_ratio": 0.026085,
+      "margin_pct": 83.51,
+      "limitup_ratio": 0.014853,
+      "limitup_pct": 84.54
+    },
+    {
+      "date": "2025-05-28",
+      "eindex": 52.38,
+      "turnover_rate": 0.01738,
+      "turnover_pct": 68.37,
+      "margin_ratio": 0.025197,
+      "margin_pct": 53.06,
+      "limitup_ratio": 0.011247,
+      "limitup_pct": 35.71
+    },
+    {
+      "date": "2025-05-29",
+      "eindex": 68.69,
+      "turnover_rate": 0.017511,
+      "turnover_pct": 72.73,
+      "margin_ratio": 0.025658,
+      "margin_pct": 66.67,
+      "limitup_ratio": 0.012995,
+      "limitup_pct": 66.67
+    },
+    {
+      "date": "2025-05-30",
+      "eindex": 60.0,
+      "turnover_rate": 0.017073,
+      "turnover_pct": 64.0,
+      "margin_ratio": 0.025418,
+      "margin_pct": 60.0,
+      "limitup_ratio": 0.012395,
+      "limitup_pct": 56.0
+    },
+    {
+      "date": "2025-06-02",
+      "eindex": 76.24,
+      "turnover_rate": 0.017503,
+      "turnover_pct": 72.28,
+      "margin_ratio": 0.025829,
+      "margin_pct": 75.25,
+      "limitup_ratio": 0.014685,
+      "limitup_pct": 81.19
+    },
+    {
+      "date": "2025-06-03",
+      "eindex": 74.18,
+      "turnover_rate": 0.019425,
+      "turnover_pct": 90.2,
+      "margin_ratio": 0.026284,
+      "margin_pct": 85.29,
+      "limitup_ratio": 0.012028,
+      "limitup_pct": 47.06
+    },
+    {
+      "date": "2025-06-04",
+      "eindex": 70.87,
+      "turnover_rate": 0.017059,
+      "turnover_pct": 62.14,
+      "margin_ratio": 0.026503,
+      "margin_pct": 87.38,
+      "limitup_ratio": 0.012785,
+      "limitup_pct": 63.11
+    },
+    {
+      "date": "2025-06-05",
+      "eindex": 34.62,
+      "turnover_rate": 0.014422,
+      "turnover_pct": 27.88,
+      "margin_ratio": 0.025692,
+      "margin_pct": 68.27,
+      "limitup_ratio": 0.008099,
+      "limitup_pct": 7.69
+    },
+    {
+      "date": "2025-06-06",
+      "eindex": 79.37,
+      "turnover_rate": 0.017002,
+      "turnover_pct": 60.95,
+      "margin_ratio": 0.026691,
+      "margin_pct": 90.48,
+      "limitup_ratio": 0.01499,
+      "limitup_pct": 86.67
+    },
+    {
+      "date": "2025-06-09",
+      "eindex": 65.72,
+      "turnover_rate": 0.019626,
+      "turnover_pct": 91.51,
+      "margin_ratio": 0.025629,
+      "margin_pct": 62.26,
+      "limitup_ratio": 0.011686,
+      "limitup_pct": 43.4
+    },
+    {
+      "date": "2025-06-10",
+      "eindex": 50.16,
+      "turnover_rate": 0.01604,
+      "turnover_pct": 49.53,
+      "margin_ratio": 0.026785,
+      "margin_pct": 90.65,
+      "limitup_ratio": 0.008238,
+      "limitup_pct": 10.28
+    },
+    {
+      "date": "2025-06-11",
+      "eindex": 33.64,
+      "turnover_rate": 0.016891,
+      "turnover_pct": 60.19,
+      "margin_ratio": 0.024167,
+      "margin_pct": 32.41,
+      "limitup_ratio": 0.008118,
+      "limitup_pct": 8.33
+    },
+    {
+      "date": "2025-06-12",
+      "eindex": 38.23,
+      "turnover_rate": 0.016157,
+      "turnover_pct": 51.38,
+      "margin_ratio": 0.024975,
+      "margin_pct": 43.12,
+      "limitup_ratio": 0.010239,
+      "limitup_pct": 20.18
+    },
+    {
+      "date": "2025-06-13",
+      "eindex": 36.36,
+      "turnover_rate": 0.013232,
+      "turnover_pct": 15.45,
+      "margin_ratio": 0.024985,
+      "margin_pct": 43.64,
+      "limitup_ratio": 0.012106,
+      "limitup_pct": 50.0
+    },
+    {
+      "date": "2025-06-16",
+      "eindex": 50.75,
+      "turnover_rate": 0.01505,
+      "turnover_pct": 41.44,
+      "margin_ratio": 0.024466,
+      "margin_pct": 36.04,
+      "limitup_ratio": 0.013515,
+      "limitup_pct": 74.77
+    },
+    {
+      "date": "2025-06-17",
+      "eindex": 72.92,
+      "turnover_rate": 0.019913,
+      "turnover_pct": 93.75,
+      "margin_ratio": 0.025849,
+      "margin_pct": 75.0,
+      "limitup_ratio": 0.012121,
+      "limitup_pct": 50.0
+    },
+    {
+      "date": "2025-06-18",
+      "eindex": 36.28,
+      "turnover_rate": 0.014426,
+      "turnover_pct": 27.43,
+      "margin_ratio": 0.025311,
+      "margin_pct": 53.1,
+      "limitup_ratio": 0.010908,
+      "limitup_pct": 28.32
+    },
+    {
+      "date": "2025-06-19",
+      "eindex": 43.86,
+      "turnover_rate": 0.016012,
+      "turnover_pct": 49.12,
+      "margin_ratio": 0.025666,
+      "margin_pct": 64.91,
+      "limitup_ratio": 0.009998,
+      "limitup_pct": 17.54
+    },
+    {
+      "date": "2025-06-20",
+      "eindex": 77.1,
+      "turnover_rate": 0.018093,
+      "turnover_pct": 80.0,
+      "margin_ratio": 0.02536,
+      "margin_pct": 53.91,
+      "limitup_ratio": 0.016826,
+      "limitup_pct": 97.39
+    },
+    {
+      "date": "2025-06-23",
+      "eindex": 64.66,
+      "turnover_rate": 0.017756,
+      "turnover_pct": 75.0,
+      "margin_ratio": 0.02489,
+      "margin_pct": 41.38,
+      "limitup_ratio": 0.014064,
+      "limitup_pct": 77.59
+    },
+    {
+      "date": "2025-06-24",
+      "eindex": 54.99,
+      "turnover_rate": 0.016752,
+      "turnover_pct": 58.12,
+      "margin_ratio": 0.025685,
+      "margin_pct": 68.38,
+      "limitup_ratio": 0.011432,
+      "limitup_pct": 38.46
+    },
+    {
+      "date": "2025-06-25",
+      "eindex": 45.2,
+      "turnover_rate": 0.014673,
+      "turnover_pct": 32.2,
+      "margin_ratio": 0.026377,
+      "margin_pct": 84.75,
+      "limitup_ratio": 0.010117,
+      "limitup_pct": 18.64
+    },
+    {
+      "date": "2025-06-26",
+      "eindex": 63.31,
+      "turnover_rate": 0.015623,
+      "turnover_pct": 42.86,
+      "margin_ratio": 0.02602,
+      "margin_pct": 80.67,
+      "limitup_ratio": 0.012979,
+      "limitup_pct": 66.39
+    },
+    {
+      "date": "2025-06-27",
+      "eindex": 22.78,
+      "turnover_rate": 0.013425,
+      "turnover_pct": 15.0,
+      "margin_ratio": 0.02431,
+      "margin_pct": 30.83,
+      "limitup_ratio": 0.010334,
+      "limitup_pct": 22.5
+    },
+    {
+      "date": "2025-06-30",
+      "eindex": 39.39,
+      "turnover_rate": 0.016627,
+      "turnover_pct": 58.68,
+      "margin_ratio": 0.024577,
+      "margin_pct": 37.19,
+      "limitup_ratio": 0.010327,
+      "limitup_pct": 22.31
+    },
+    {
+      "date": "2025-07-01",
+      "eindex": 52.73,
+      "turnover_rate": 0.016862,
+      "turnover_pct": 61.48,
+      "margin_ratio": 0.02368,
+      "margin_pct": 18.85,
+      "limitup_ratio": 0.013985,
+      "limitup_pct": 77.87
+    },
+    {
+      "date": "2025-07-02",
+      "eindex": 49.05,
+      "turnover_rate": 0.014722,
+      "turnover_pct": 33.33,
+      "margin_ratio": 0.025026,
+      "margin_pct": 44.72,
+      "limitup_ratio": 0.013104,
+      "limitup_pct": 69.11
+    },
+    {
+      "date": "2025-07-03",
+      "eindex": 42.2,
+      "turnover_rate": 0.017105,
+      "turnover_pct": 66.13,
+      "margin_ratio": 0.024737,
+      "margin_pct": 38.71,
+      "limitup_ratio": 0.010306,
+      "limitup_pct": 21.77
+    },
+    {
+      "date": "2025-07-04",
+      "eindex": 65.33,
+      "turnover_rate": 0.016723,
+      "turnover_pct": 58.4,
+      "margin_ratio": 0.026598,
+      "margin_pct": 88.8,
+      "limitup_ratio": 0.012079,
+      "limitup_pct": 48.8
+    },
+    {
+      "date": "2025-07-07",
+      "eindex": 52.65,
+      "turnover_rate": 0.016281,
+      "turnover_pct": 52.38,
+      "margin_ratio": 0.024783,
+      "margin_pct": 40.48,
+      "limitup_ratio": 0.012828,
+      "limitup_pct": 65.08
+    },
+    {
+      "date": "2025-07-09",
+      "eindex": 46.19,
+      "turnover_rate": 0.020693,
+      "turnover_pct": 99.21,
+      "margin_ratio": 0.023284,
+      "margin_pct": 11.02,
+      "limitup_ratio": 0.010861,
+      "limitup_pct": 28.35
+    },
+    {
+      "date": "2025-07-10",
+      "eindex": 30.73,
+      "turnover_rate": 0.013784,
+      "turnover_pct": 18.75,
+      "margin_ratio": 0.02551,
+      "margin_pct": 60.94,
+      "limitup_ratio": 0.009448,
+      "limitup_pct": 12.5
+    },
+    {
+      "date": "2025-07-11",
+      "eindex": 74.16,
+      "turnover_rate": 0.016224,
+      "turnover_pct": 51.16,
+      "margin_ratio": 0.027324,
+      "margin_pct": 97.67,
+      "limitup_ratio": 0.013314,
+      "limitup_pct": 73.64
+    },
+    {
+      "date": "2025-07-14",
+      "eindex": 50.51,
+      "turnover_rate": 0.01367,
+      "turnover_pct": 16.15,
+      "margin_ratio": 0.025887,
+      "margin_pct": 76.15,
+      "limitup_ratio": 0.012573,
+      "limitup_pct": 59.23
+    },
+    {
+      "date": "2025-07-15",
+      "eindex": 57.76,
+      "turnover_rate": 0.016958,
+      "turnover_pct": 63.36,
+      "margin_ratio": 0.023188,
+      "margin_pct": 10.69,
+      "limitup_ratio": 0.017119,
+      "limitup_pct": 99.24
+    },
+    {
+      "date": "2025-07-16",
+      "eindex": 21.21,
+      "turnover_rate": 0.012835,
+      "turnover_pct": 10.61,
+      "margin_ratio": 0.024686,
+      "margin_pct": 37.88,
+      "limitup_ratio": 0.009899,
+      "limitup_pct": 15.15
+    },
+    {
+      "date": "2025-07-17",
+      "eindex": 49.12,
+      "turnover_rate": 0.016275,
+      "turnover_pct": 52.63,
+      "margin_ratio": 0.026892,
+      "margin_pct": 92.48,
+      "limitup_ratio": 0.007005,
+      "limitup_pct": 2.26
+    },
+    {
+      "date": "2025-07-18",
+      "eindex": 19.9,
+      "turnover_rate": 0.013887,
+      "turnover_pct": 21.64,
+      "margin_ratio": 0.024533,
+      "margin_pct": 35.82,
+      "limitup_ratio": 0.006742,
+      "limitup_pct": 2.24
+    },
+    {
+      "date": "2025-07-21",
+      "eindex": 53.33,
+      "turnover_rate": 0.017504,
+      "turnover_pct": 74.81,
+      "margin_ratio": 0.024627,
+      "margin_pct": 37.04,
+      "limitup_ratio": 0.011968,
+      "limitup_pct": 48.15
+    },
+    {
+      "date": "2025-07-22",
+      "eindex": 18.38,
+      "turnover_rate": 0.014554,
+      "turnover_pct": 30.15,
+      "margin_ratio": 0.023209,
+      "margin_pct": 11.03,
+      "limitup_ratio": 0.009599,
+      "limitup_pct": 13.97
+    },
+    {
+      "date": "2025-07-23",
+      "eindex": 21.9,
+      "turnover_rate": 0.012406,
+      "turnover_pct": 8.76,
+      "margin_ratio": 0.022764,
+      "margin_pct": 8.03,
+      "limitup_ratio": 0.011977,
+      "limitup_pct": 48.91
+    },
+    {
+      "date": "2025-07-24",
+      "eindex": 6.04,
+      "turnover_rate": 0.012244,
+      "turnover_pct": 7.25,
+      "margin_ratio": 0.022732,
+      "margin_pct": 7.97,
+      "limitup_ratio": 0.006743,
+      "limitup_pct": 2.9
+    },
+    {
+      "date": "2025-07-25",
+      "eindex": 43.41,
+      "turnover_rate": 0.014642,
+      "turnover_pct": 33.09,
+      "margin_ratio": 0.026275,
+      "margin_pct": 83.45,
+      "limitup_ratio": 0.009323,
+      "limitup_pct": 13.67
+    },
+    {
+      "date": "2025-07-28",
+      "eindex": 25.95,
+      "turnover_rate": 0.015808,
+      "turnover_pct": 45.71,
+      "margin_ratio": 0.02393,
+      "margin_pct": 25.71,
+      "limitup_ratio": 0.007879,
+      "limitup_pct": 6.43
+    },
+    {
+      "date": "2025-07-29",
+      "eindex": 20.09,
+      "turnover_rate": 0.01602,
+      "turnover_pct": 49.65,
+      "margin_ratio": 0.022855,
+      "margin_pct": 9.22,
+      "limitup_ratio": 0.005538,
+      "limitup_pct": 1.42
+    },
+    {
+      "date": "2025-07-30",
+      "eindex": 42.02,
+      "turnover_rate": 0.014712,
+      "turnover_pct": 34.51,
+      "margin_ratio": 0.025219,
+      "margin_pct": 52.82,
+      "limitup_ratio": 0.011211,
+      "limitup_pct": 38.73
+    },
+    {
+      "date": "2025-07-31",
+      "eindex": 45.92,
+      "turnover_rate": 0.015198,
+      "turnover_pct": 42.66,
+      "margin_ratio": 0.02593,
+      "margin_pct": 79.02,
+      "limitup_ratio": 0.009509,
+      "limitup_pct": 16.08
+    },
+    {
+      "date": "2025-08-01",
+      "eindex": 3.24,
+      "turnover_rate": 0.010379,
+      "turnover_pct": 1.39,
+      "margin_ratio": 0.022202,
+      "margin_pct": 2.78,
+      "limitup_ratio": 0.007136,
+      "limitup_pct": 5.56
+    },
+    {
+      "date": "2025-08-04",
+      "eindex": 4.6,
+      "turnover_rate": 0.012183,
+      "turnover_pct": 7.59,
+      "margin_ratio": 0.022343,
+      "margin_pct": 3.45,
+      "limitup_ratio": 0.006585,
+      "limitup_pct": 2.76
+    },
+    {
+      "date": "2025-08-05",
+      "eindex": 22.6,
+      "turnover_rate": 0.013399,
+      "turnover_pct": 15.75,
+      "margin_ratio": 0.023622,
+      "margin_pct": 20.55,
+      "limitup_ratio": 0.010749,
+      "limitup_pct": 31.51
+    },
+    {
+      "date": "2025-08-06",
+      "eindex": 38.1,
+      "turnover_rate": 0.016721,
+      "turnover_pct": 61.9,
+      "margin_ratio": 0.024511,
+      "margin_pct": 36.73,
+      "limitup_ratio": 0.009004,
+      "limitup_pct": 15.65
+    },
+    {
+      "date": "2025-08-07",
+      "eindex": 42.57,
+      "turnover_rate": 0.018444,
+      "turnover_pct": 85.81,
+      "margin_ratio": 0.02432,
+      "margin_pct": 33.11,
+      "limitup_ratio": 0.007901,
+      "limitup_pct": 8.78
+    },
+    {
+      "date": "2025-08-08",
+      "eindex": 35.79,
+      "turnover_rate": 0.015497,
+      "turnover_pct": 44.3,
+      "margin_ratio": 0.024746,
+      "margin_pct": 42.95,
+      "limitup_ratio": 0.009656,
+      "limitup_pct": 20.13
+    },
+    {
+      "date": "2025-08-11",
+      "eindex": 9.78,
+      "turnover_rate": 0.012884,
+      "turnover_pct": 12.67,
+      "margin_ratio": 0.021896,
+      "margin_pct": 1.33,
+      "limitup_ratio": 0.008535,
+      "limitup_pct": 15.33
+    },
+    {
+      "date": "2025-08-12",
+      "eindex": 24.06,
+      "turnover_rate": 0.016509,
+      "turnover_pct": 60.26,
+      "margin_ratio": 0.022451,
+      "margin_pct": 5.3,
+      "limitup_ratio": 0.007805,
+      "limitup_pct": 6.62
+    },
+    {
+      "date": "2025-08-13",
+      "eindex": 24.34,
+      "turnover_rate": 0.013362,
+      "turnover_pct": 15.79,
+      "margin_ratio": 0.022473,
+      "margin_pct": 5.92,
+      "limitup_ratio": 0.011791,
+      "limitup_pct": 51.32
+    },
+    {
+      "date": "2025-08-14",
+      "eindex": 15.9,
+      "turnover_rate": 0.012441,
+      "turnover_pct": 10.46,
+      "margin_ratio": 0.022882,
+      "margin_pct": 12.42,
+      "limitup_ratio": 0.010027,
+      "limitup_pct": 24.84
+    },
+    {
+      "date": "2025-08-15",
+      "eindex": 36.15,
+      "turnover_rate": 0.013354,
+      "turnover_pct": 16.23,
+      "margin_ratio": 0.025786,
+      "margin_pct": 74.03,
+      "limitup_ratio": 0.009396,
+      "limitup_pct": 18.18
+    },
+    {
+      "date": "2025-08-18",
+      "eindex": 19.35,
+      "turnover_rate": 0.014936,
+      "turnover_pct": 40.65,
+      "margin_ratio": 0.020951,
+      "margin_pct": 0.65,
+      "limitup_ratio": 0.00868,
+      "limitup_pct": 16.77
+    },
+    {
+      "date": "2025-08-19",
+      "eindex": 37.39,
+      "turnover_rate": 0.016737,
+      "turnover_pct": 64.1,
+      "margin_ratio": 0.024003,
+      "margin_pct": 30.13,
+      "limitup_ratio": 0.009173,
+      "limitup_pct": 17.95
+    },
+    {
+      "date": "2025-08-20",
+      "eindex": 29.09,
+      "turnover_rate": 0.016649,
+      "turnover_pct": 62.42,
+      "margin_ratio": 0.021325,
+      "margin_pct": 1.27,
+      "limitup_ratio": 0.009722,
+      "limitup_pct": 23.57
+    },
+    {
+      "date": "2025-08-21",
+      "eindex": 35.86,
+      "turnover_rate": 0.016315,
+      "turnover_pct": 57.59,
+      "margin_ratio": 0.020856,
+      "margin_pct": 0.63,
+      "limitup_ratio": 0.011555,
+      "limitup_pct": 49.37
+    },
+    {
+      "date": "2025-08-22",
+      "eindex": 18.66,
+      "turnover_rate": 0.011452,
+      "turnover_pct": 4.4,
+      "margin_ratio": 0.022351,
+      "margin_pct": 6.92,
+      "limitup_ratio": 0.011315,
+      "limitup_pct": 44.65
+    },
+    {
+      "date": "2025-08-25",
+      "eindex": 12.29,
+      "turnover_rate": 0.013191,
+      "turnover_pct": 15.62,
+      "margin_ratio": 0.022047,
+      "margin_pct": 4.38,
+      "limitup_ratio": 0.008682,
+      "limitup_pct": 16.88
+    },
+    {
+      "date": "2025-08-26",
+      "eindex": 19.67,
+      "turnover_rate": 0.012734,
+      "turnover_pct": 11.8,
+      "margin_ratio": 0.022819,
+      "margin_pct": 14.29,
+      "limitup_ratio": 0.010433,
+      "limitup_pct": 32.92
+    },
+    {
+      "date": "2025-08-27",
+      "eindex": 13.58,
+      "turnover_rate": 0.012409,
+      "turnover_pct": 10.49,
+      "margin_ratio": 0.022985,
+      "margin_pct": 16.67,
+      "limitup_ratio": 0.008391,
+      "limitup_pct": 13.58
+    },
+    {
+      "date": "2025-08-28",
+      "eindex": 13.29,
+      "turnover_rate": 0.009658,
+      "turnover_pct": 0.61,
+      "margin_ratio": 0.021594,
+      "margin_pct": 2.45,
+      "limitup_ratio": 0.010754,
+      "limitup_pct": 36.81
+    },
+    {
+      "date": "2025-08-29",
+      "eindex": 14.23,
+      "turnover_rate": 0.011681,
+      "turnover_pct": 5.49,
+      "margin_ratio": 0.023479,
+      "margin_pct": 22.56,
+      "limitup_ratio": 0.008479,
+      "limitup_pct": 14.63
+    },
+    {
+      "date": "2025-09-01",
+      "eindex": 6.06,
+      "turnover_rate": 0.009062,
+      "turnover_pct": 0.61,
+      "margin_ratio": 0.020829,
+      "margin_pct": 0.61,
+      "limitup_ratio": 0.008634,
+      "limitup_pct": 16.97
+    },
+    {
+      "date": "2025-09-02",
+      "eindex": 5.02,
+      "turnover_rate": 0.010559,
+      "turnover_pct": 3.01,
+      "margin_ratio": 0.022163,
+      "margin_pct": 6.02,
+      "limitup_ratio": 0.007423,
+      "limitup_pct": 6.02
+    },
+    {
+      "date": "2025-09-03",
+      "eindex": 3.39,
+      "turnover_rate": 0.011474,
+      "turnover_pct": 6.59,
+      "margin_ratio": 0.021554,
+      "margin_pct": 2.99,
+      "limitup_ratio": 0.005077,
+      "limitup_pct": 0.6
+    },
+    {
+      "date": "2025-09-04",
+      "eindex": 7.54,
+      "turnover_rate": 0.008711,
+      "turnover_pct": 0.6,
+      "margin_ratio": 0.021263,
+      "margin_pct": 2.38,
+      "limitup_ratio": 0.008759,
+      "limitup_pct": 19.64
+    },
+    {
+      "date": "2025-09-05",
+      "eindex": 9.27,
+      "turnover_rate": 0.00832,
+      "turnover_pct": 0.59,
+      "margin_ratio": 0.022642,
+      "margin_pct": 14.79,
+      "limitup_ratio": 0.008134,
+      "limitup_pct": 12.43
+    },
+    {
+      "date": "2025-09-08",
+      "eindex": 1.37,
+      "turnover_rate": 0.007636,
+      "turnover_pct": 0.59,
+      "margin_ratio": 0.021275,
+      "margin_pct": 2.94,
+      "limitup_ratio": 0.004465,
+      "limitup_pct": 0.59
+    },
+    {
+      "date": "2025-09-09",
+      "eindex": 10.14,
+      "turnover_rate": 0.009754,
+      "turnover_pct": 3.51,
+      "margin_ratio": 0.021003,
+      "margin_pct": 2.34,
+      "limitup_ratio": 0.009542,
+      "limitup_pct": 24.56
+    },
+    {
+      "date": "2025-09-10",
+      "eindex": 12.02,
+      "turnover_rate": 0.011904,
+      "turnover_pct": 11.05,
+      "margin_ratio": 0.021283,
+      "margin_pct": 4.07,
+      "limitup_ratio": 0.008857,
+      "limitup_pct": 20.93
+    },
+    {
+      "date": "2025-09-11",
+      "eindex": 10.79,
+      "turnover_rate": 0.011796,
+      "turnover_pct": 10.4,
+      "margin_ratio": 0.022613,
+      "margin_pct": 15.61,
+      "limitup_ratio": 0.007071,
+      "limitup_pct": 6.36
+    },
+    {
+      "date": "2025-09-12",
+      "eindex": 21.26,
+      "turnover_rate": 0.00933,
+      "turnover_pct": 2.87,
+      "margin_ratio": 0.021818,
+      "margin_pct": 6.9,
+      "limitup_ratio": 0.011556,
+      "limitup_pct": 54.02
+    },
+    {
+      "date": "2025-09-15",
+      "eindex": 11.62,
+      "turnover_rate": 0.012155,
+      "turnover_pct": 13.71,
+      "margin_ratio": 0.022138,
+      "margin_pct": 9.14,
+      "limitup_ratio": 0.008096,
+      "limitup_pct": 12.0
+    },
+    {
+      "date": "2025-09-16",
+      "eindex": 10.61,
+      "turnover_rate": 0.009288,
+      "turnover_pct": 2.84,
+      "margin_ratio": 0.022134,
+      "margin_pct": 9.09,
+      "limitup_ratio": 0.008672,
+      "limitup_pct": 19.89
+    },
+    {
+      "date": "2025-09-17",
+      "eindex": 10.17,
+      "turnover_rate": 0.010516,
+      "turnover_pct": 6.21,
+      "margin_ratio": 0.021428,
+      "margin_pct": 5.08,
+      "limitup_ratio": 0.008554,
+      "limitup_pct": 19.21
+    },
+    {
+      "date": "2025-09-18",
+      "eindex": 9.74,
+      "turnover_rate": 0.012771,
+      "turnover_pct": 20.79,
+      "margin_ratio": 0.020835,
+      "margin_pct": 1.12,
+      "limitup_ratio": 0.007242,
+      "limitup_pct": 7.3
+    },
+    {
+      "date": "2025-09-19",
+      "eindex": 31.84,
+      "turnover_rate": 0.009858,
+      "turnover_pct": 5.03,
+      "margin_ratio": 0.021701,
+      "margin_pct": 7.26,
+      "limitup_ratio": 0.013717,
+      "limitup_pct": 83.24
+    },
+    {
+      "date": "2025-09-22",
+      "eindex": 10.37,
+      "turnover_rate": 0.013435,
+      "turnover_pct": 27.78,
+      "margin_ratio": 0.020961,
+      "margin_pct": 2.78,
+      "limitup_ratio": 0.004097,
+      "limitup_pct": 0.56
+    },
+    {
+      "date": "2025-09-23",
+      "eindex": 9.21,
+      "turnover_rate": 0.01006,
+      "turnover_pct": 5.52,
+      "margin_ratio": 0.022578,
+      "margin_pct": 18.78,
+      "limitup_ratio": 0.006437,
+      "limitup_pct": 3.31
+    },
+    {
+      "date": "2025-09-24",
+      "eindex": 2.93,
+      "turnover_rate": 0.010151,
+      "turnover_pct": 6.04,
+      "margin_ratio": 0.020715,
+      "margin_pct": 0.55,
+      "limitup_ratio": 0.005089,
+      "limitup_pct": 2.2
+    },
+    {
+      "date": "2025-09-25",
+      "eindex": 5.65,
+      "turnover_rate": 0.008316,
+      "turnover_pct": 1.09,
+      "margin_ratio": 0.022338,
+      "margin_pct": 14.21,
+      "limitup_ratio": 0.004522,
+      "limitup_pct": 1.64
+    },
+    {
+      "date": "2025-09-26",
+      "eindex": 5.98,
+      "turnover_rate": 0.009707,
+      "turnover_pct": 4.89,
+      "margin_ratio": 0.02019,
+      "margin_pct": 0.54,
+      "limitup_ratio": 0.007894,
+      "limitup_pct": 12.5
+    },
+    {
+      "date": "2025-09-29",
+      "eindex": 6.67,
+      "turnover_rate": 0.011165,
+      "turnover_pct": 11.89,
+      "margin_ratio": 0.02113,
+      "margin_pct": 4.86,
+      "limitup_ratio": 0.005115,
+      "limitup_pct": 3.24
+    },
+    {
+      "date": "2025-09-30",
+      "eindex": 5.56,
+      "turnover_rate": 0.010497,
+      "turnover_pct": 8.6,
+      "margin_ratio": 0.019659,
+      "margin_pct": 0.54,
+      "limitup_ratio": 0.006822,
+      "limitup_pct": 7.53
+    },
+    {
+      "date": "2025-10-01",
+      "eindex": 14.62,
+      "turnover_rate": 0.013868,
+      "turnover_pct": 35.29,
+      "margin_ratio": 0.019268,
+      "margin_pct": 0.53,
+      "limitup_ratio": 0.006925,
+      "limitup_pct": 8.02
+    },
+    {
+      "date": "2025-10-02",
+      "eindex": 9.75,
+      "turnover_rate": 0.011261,
+      "turnover_pct": 12.77,
+      "margin_ratio": 0.021834,
+      "margin_pct": 11.7,
+      "limitup_ratio": 0.006251,
+      "limitup_pct": 4.79
+    },
+    {
+      "date": "2025-10-03",
+      "eindex": 14.11,
+      "turnover_rate": 0.007722,
+      "turnover_pct": 1.06,
+      "margin_ratio": 0.023714,
+      "margin_pct": 37.57,
+      "limitup_ratio": 0.005289,
+      "limitup_pct": 3.7
+    },
+    {
+      "date": "2025-10-06",
+      "eindex": 20.35,
+      "turnover_rate": 0.013093,
+      "turnover_pct": 26.84,
+      "margin_ratio": 0.022748,
+      "margin_pct": 24.74,
+      "limitup_ratio": 0.006932,
+      "limitup_pct": 9.47
+    },
+    {
+      "date": "2025-10-07",
+      "eindex": 1.57,
+      "turnover_rate": 0.008064,
+      "turnover_pct": 1.57,
+      "margin_ratio": 0.019439,
+      "margin_pct": 1.05,
+      "limitup_ratio": 0.004559,
+      "limitup_pct": 2.09
+    },
+    {
+      "date": "2025-10-08",
+      "eindex": 15.8,
+      "turnover_rate": 0.010726,
+      "turnover_pct": 10.94,
+      "margin_ratio": 0.023084,
+      "margin_pct": 29.17,
+      "limitup_ratio": 0.006549,
+      "limitup_pct": 7.29
+    },
+    {
+      "date": "2025-10-09",
+      "eindex": 13.82,
+      "turnover_rate": 0.00917,
+      "turnover_pct": 4.15,
+      "margin_ratio": 0.022662,
+      "margin_pct": 23.83,
+      "limitup_ratio": 0.007258,
+      "limitup_pct": 13.47
+    },
+    {
+      "date": "2025-10-10",
+      "eindex": 25.77,
+      "turnover_rate": 0.011824,
+      "turnover_pct": 18.04,
+      "margin_ratio": 0.02265,
+      "margin_pct": 23.71,
+      "limitup_ratio": 0.0098,
+      "limitup_pct": 35.57
+    },
+    {
+      "date": "2025-10-13",
+      "eindex": 7.35,
+      "turnover_rate": 0.010088,
+      "turnover_pct": 8.21,
+      "margin_ratio": 0.021384,
+      "margin_pct": 8.72,
+      "limitup_ratio": 0.005348,
+      "limitup_pct": 5.13
+    },
+    {
+      "date": "2025-10-14",
+      "eindex": 6.8,
+      "turnover_rate": 0.007496,
+      "turnover_pct": 0.51,
+      "margin_ratio": 0.022049,
+      "margin_pct": 14.29,
+      "limitup_ratio": 0.005407,
+      "limitup_pct": 5.61
+    },
+    {
+      "date": "2025-10-15",
+      "eindex": 11.84,
+      "turnover_rate": 0.011103,
+      "turnover_pct": 14.21,
+      "margin_ratio": 0.021636,
+      "margin_pct": 10.66,
+      "limitup_ratio": 0.006916,
+      "limitup_pct": 10.66
+    },
+    {
+      "date": "2025-10-16",
+      "eindex": 7.41,
+      "turnover_rate": 0.00947,
+      "turnover_pct": 6.06,
+      "margin_ratio": 0.019812,
+      "margin_pct": 2.02,
+      "limitup_ratio": 0.007182,
+      "limitup_pct": 14.14
+    },
+    {
+      "date": "2025-10-17",
+      "eindex": 2.35,
+      "turnover_rate": 0.008886,
+      "turnover_pct": 4.02,
+      "margin_ratio": 0.020037,
+      "margin_pct": 2.51,
+      "limitup_ratio": 0.003229,
+      "limitup_pct": 0.5
+    },
+    {
+      "date": "2025-10-20",
+      "eindex": 10.5,
+      "turnover_rate": 0.011174,
+      "turnover_pct": 16.5,
+      "margin_ratio": 0.020947,
+      "margin_pct": 5.5,
+      "limitup_ratio": 0.006716,
+      "limitup_pct": 9.5
+    },
+    {
+      "date": "2025-10-21",
+      "eindex": 5.47,
+      "turnover_rate": 0.010713,
+      "turnover_pct": 12.94,
+      "margin_ratio": 0.019944,
+      "margin_pct": 2.49,
+      "limitup_ratio": 0.003871,
+      "limitup_pct": 1.0
+    },
+    {
+      "date": "2025-10-23",
+      "eindex": 6.44,
+      "turnover_rate": 0.010366,
+      "turnover_pct": 10.89,
+      "margin_ratio": 0.020128,
+      "margin_pct": 3.47,
+      "limitup_ratio": 0.005135,
+      "limitup_pct": 4.95
+    },
+    {
+      "date": "2025-10-24",
+      "eindex": 7.55,
+      "turnover_rate": 0.010537,
+      "turnover_pct": 12.81,
+      "margin_ratio": 0.021108,
+      "margin_pct": 8.37,
+      "limitup_ratio": 0.004023,
+      "limitup_pct": 1.48
+    },
+    {
+      "date": "2025-10-27",
+      "eindex": 4.25,
+      "turnover_rate": 0.009226,
+      "turnover_pct": 5.39,
+      "margin_ratio": 0.02081,
+      "margin_pct": 4.9,
+      "limitup_ratio": 0.004437,
+      "limitup_pct": 2.45
+    },
+    {
+      "date": "2025-10-28",
+      "eindex": 6.99,
+      "turnover_rate": 0.010382,
+      "turnover_pct": 12.2,
+      "margin_ratio": 0.020263,
+      "margin_pct": 4.39,
+      "limitup_ratio": 0.00488,
+      "limitup_pct": 4.39
+    },
+    {
+      "date": "2025-10-30",
+      "eindex": 10.03,
+      "turnover_rate": 0.010783,
+      "turnover_pct": 16.02,
+      "margin_ratio": 0.020512,
+      "margin_pct": 4.85,
+      "limitup_ratio": 0.005778,
+      "limitup_pct": 9.22
+    },
+    {
+      "date": "2025-10-31",
+      "eindex": 4.99,
+      "turnover_rate": 0.009149,
+      "turnover_pct": 4.83,
+      "margin_ratio": 0.018762,
+      "margin_pct": 0.48,
+      "limitup_ratio": 0.006151,
+      "limitup_pct": 9.66
+    },
+    {
+      "date": "2025-11-03",
+      "eindex": 6.89,
+      "turnover_rate": 0.010245,
+      "turnover_pct": 11.06,
+      "margin_ratio": 0.02045,
+      "margin_pct": 5.29,
+      "limitup_ratio": 0.004696,
+      "limitup_pct": 4.33
+    },
+    {
+      "date": "2025-11-04",
+      "eindex": 3.83,
+      "turnover_rate": 0.007254,
+      "turnover_pct": 0.48,
+      "margin_ratio": 0.017388,
+      "margin_pct": 0.48,
+      "limitup_ratio": 0.006219,
+      "limitup_pct": 10.53
+    },
+    {
+      "date": "2025-11-05",
+      "eindex": 3.97,
+      "turnover_rate": 0.009508,
+      "turnover_pct": 8.1,
+      "margin_ratio": 0.019897,
+      "margin_pct": 3.33,
+      "limitup_ratio": 0.00313,
+      "limitup_pct": 0.48
+    },
+    {
+      "date": "2025-11-06",
+      "eindex": 4.11,
+      "turnover_rate": 0.009214,
+      "turnover_pct": 6.16,
+      "margin_ratio": 0.019818,
+      "margin_pct": 3.32,
+      "limitup_ratio": 0.004421,
+      "limitup_pct": 2.84
+    },
+    {
+      "date": "2025-11-07",
+      "eindex": 18.08,
+      "turnover_rate": 0.007435,
+      "turnover_pct": 0.94,
+      "margin_ratio": 0.018676,
+      "margin_pct": 0.94,
+      "limitup_ratio": 0.010877,
+      "limitup_pct": 52.36
+    },
+    {
+      "date": "2025-11-10",
+      "eindex": 15.49,
+      "turnover_rate": 0.00989,
+      "turnover_pct": 11.27,
+      "margin_ratio": 0.02173,
+      "margin_pct": 17.84,
+      "limitup_ratio": 0.007002,
+      "limitup_pct": 17.37
+    },
+    {
+      "date": "2025-11-11",
+      "eindex": 2.49,
+      "turnover_rate": 0.006554,
+      "turnover_pct": 0.47,
+      "margin_ratio": 0.020112,
+      "margin_pct": 5.61,
+      "limitup_ratio": 0.003688,
+      "limitup_pct": 1.4
+    },
+    {
+      "date": "2025-11-12",
+      "eindex": 9.15,
+      "turnover_rate": 0.010396,
+      "turnover_pct": 15.81,
+      "margin_ratio": 0.018964,
+      "margin_pct": 1.86,
+      "limitup_ratio": 0.00537,
+      "limitup_pct": 9.77
+    },
+    {
+      "date": "2025-11-13",
+      "eindex": 9.57,
+      "turnover_rate": 0.01022,
+      "turnover_pct": 13.43,
+      "margin_ratio": 0.019793,
+      "margin_pct": 3.7,
+      "limitup_ratio": 0.005855,
+      "limitup_pct": 11.57
+    },
+    {
+      "date": "2025-11-14",
+      "eindex": 8.76,
+      "turnover_rate": 0.009882,
+      "turnover_pct": 11.52,
+      "margin_ratio": 0.020275,
+      "margin_pct": 8.29,
+      "limitup_ratio": 0.004989,
+      "limitup_pct": 6.45
+    },
+    {
+      "date": "2025-11-17",
+      "eindex": 1.07,
+      "turnover_rate": 0.006489,
+      "turnover_pct": 0.46,
+      "margin_ratio": 0.018737,
+      "margin_pct": 1.38,
+      "limitup_ratio": 0.003286,
+      "limitup_pct": 1.38
+    },
+    {
+      "date": "2025-11-18",
+      "eindex": 4.72,
+      "turnover_rate": 0.009729,
+      "turnover_pct": 10.96,
+      "margin_ratio": 0.01898,
+      "margin_pct": 2.74,
+      "limitup_ratio": 0.001689,
+      "limitup_pct": 0.46
+    },
+    {
+      "date": "2025-11-19",
+      "eindex": 1.97,
+      "turnover_rate": 0.004045,
+      "turnover_pct": 0.45,
+      "margin_ratio": 0.019177,
+      "margin_pct": 3.18,
+      "limitup_ratio": 0.0036,
+      "limitup_pct": 2.27
+    },
+    {
+      "date": "2025-11-20",
+      "eindex": 14.33,
+      "turnover_rate": 0.011111,
+      "turnover_pct": 23.53,
+      "margin_ratio": 0.019987,
+      "margin_pct": 7.24,
+      "limitup_ratio": 0.005495,
+      "limitup_pct": 12.22
+    },
+    {
+      "date": "2025-11-21",
+      "eindex": 7.96,
+      "turnover_rate": 0.011,
+      "turnover_pct": 22.07,
+      "margin_ratio": 0.018251,
+      "margin_pct": 0.9,
+      "limitup_ratio": 0.003113,
+      "limitup_pct": 0.9
+    },
+    {
+      "date": "2025-11-24",
+      "eindex": 2.09,
+      "turnover_rate": 0.007875,
+      "turnover_pct": 4.04,
+      "margin_ratio": 0.018608,
+      "margin_pct": 1.35,
+      "limitup_ratio": 0.002526,
+      "limitup_pct": 0.9
+    },
+    {
+      "date": "2025-11-26",
+      "eindex": 12.8,
+      "turnover_rate": 0.007233,
+      "turnover_pct": 1.79,
+      "margin_ratio": 0.020579,
+      "margin_pct": 12.05,
+      "limitup_ratio": 0.007302,
+      "limitup_pct": 24.55
+    },
+    {
+      "date": "2025-11-27",
+      "eindex": 7.26,
+      "turnover_rate": 0.00867,
+      "turnover_pct": 6.22,
+      "margin_ratio": 0.02084,
+      "margin_pct": 14.22,
+      "limitup_ratio": 0.002616,
+      "limitup_pct": 1.33
+    },
+    {
+      "date": "2025-11-28",
+      "eindex": 16.52,
+      "turnover_rate": 0.010397,
+      "turnover_pct": 19.03,
+      "margin_ratio": 0.021595,
+      "margin_pct": 21.24,
+      "limitup_ratio": 0.005048,
+      "limitup_pct": 9.29
+    },
+    {
+      "date": "2025-12-01",
+      "eindex": 10.87,
+      "turnover_rate": 0.00933,
+      "turnover_pct": 10.13,
+      "margin_ratio": 0.018687,
+      "margin_pct": 2.2,
+      "limitup_ratio": 0.006867,
+      "limitup_pct": 20.26
+    },
+    {
+      "date": "2025-12-02",
+      "eindex": 8.48,
+      "turnover_rate": 0.008159,
+      "turnover_pct": 5.26,
+      "margin_ratio": 0.020455,
+      "margin_pct": 11.84,
+      "limitup_ratio": 0.004851,
+      "limitup_pct": 8.33
+    },
+    {
+      "date": "2025-12-03",
+      "eindex": 2.33,
+      "turnover_rate": 0.007178,
+      "turnover_pct": 1.75,
+      "margin_ratio": 0.019166,
+      "margin_pct": 4.37,
+      "limitup_ratio": 0.00249,
+      "limitup_pct": 0.87
+    },
+    {
+      "date": "2025-12-04",
+      "eindex": 18.99,
+      "turnover_rate": 0.011414,
+      "turnover_pct": 27.83,
+      "margin_ratio": 0.020696,
+      "margin_pct": 13.48,
+      "limitup_ratio": 0.005818,
+      "limitup_pct": 15.65
+    },
+    {
+      "date": "2025-12-05",
+      "eindex": 4.33,
+      "turnover_rate": 0.006557,
+      "turnover_pct": 1.73,
+      "margin_ratio": 0.01965,
+      "margin_pct": 6.06,
+      "limitup_ratio": 0.003901,
+      "limitup_pct": 5.19
+    },
+    {
+      "date": "2025-12-08",
+      "eindex": 9.34,
+      "turnover_rate": 0.008266,
+      "turnover_pct": 6.47,
+      "margin_ratio": 0.019553,
+      "margin_pct": 6.03,
+      "limitup_ratio": 0.005704,
+      "limitup_pct": 15.52
+    },
+    {
+      "date": "2025-12-09",
+      "eindex": 16.02,
+      "turnover_rate": 0.009991,
+      "turnover_pct": 16.31,
+      "margin_ratio": 0.021608,
+      "margin_pct": 23.61,
+      "limitup_ratio": 0.004548,
+      "limitup_pct": 8.15
+    },
+    {
+      "date": "2025-12-10",
+      "eindex": 8.97,
+      "turnover_rate": 0.010346,
+      "turnover_pct": 19.23,
+      "margin_ratio": 0.017732,
+      "margin_pct": 0.85,
+      "limitup_ratio": 0.004421,
+      "limitup_pct": 6.84
+    },
+    {
+      "date": "2025-12-11",
+      "eindex": 11.91,
+      "turnover_rate": 0.010015,
+      "turnover_pct": 16.6,
+      "margin_ratio": 0.020034,
+      "margin_pct": 10.21,
+      "limitup_ratio": 0.00455,
+      "limitup_pct": 8.94
+    },
+    {
+      "date": "2025-12-12",
+      "eindex": 1.84,
+      "turnover_rate": 0.006602,
+      "turnover_pct": 2.12,
+      "margin_ratio": 0.018245,
+      "margin_pct": 1.27,
+      "limitup_ratio": 0.002999,
+      "limitup_pct": 2.12
+    },
+    {
+      "date": "2025-12-15",
+      "eindex": 13.78,
+      "turnover_rate": 0.008624,
+      "turnover_pct": 8.02,
+      "margin_ratio": 0.018885,
+      "margin_pct": 4.22,
+      "limitup_ratio": 0.007586,
+      "limitup_pct": 29.11
+    },
+    {
+      "date": "2025-12-16",
+      "eindex": 15.41,
+      "turnover_rate": 0.004918,
+      "turnover_pct": 0.84,
+      "margin_ratio": 0.021623,
+      "margin_pct": 25.21,
+      "limitup_ratio": 0.006465,
+      "limitup_pct": 20.17
+    },
+    {
+      "date": "2025-12-17",
+      "eindex": 8.23,
+      "turnover_rate": 0.00721,
+      "turnover_pct": 3.35,
+      "margin_ratio": 0.019022,
+      "margin_pct": 5.44,
+      "limitup_ratio": 0.005422,
+      "limitup_pct": 15.9
+    },
+    {
+      "date": "2025-12-18",
+      "eindex": 8.75,
+      "turnover_rate": 0.009324,
+      "turnover_pct": 12.92,
+      "margin_ratio": 0.019237,
+      "margin_pct": 6.67,
+      "limitup_ratio": 0.004313,
+      "limitup_pct": 6.67
+    },
+    {
+      "date": "2025-12-19",
+      "eindex": 4.56,
+      "turnover_rate": 0.007522,
+      "turnover_pct": 5.39,
+      "margin_ratio": 0.01954,
+      "margin_pct": 7.88,
+      "limitup_ratio": 0.001,
+      "limitup_pct": 0.41
+    },
+    {
+      "date": "2025-12-22",
+      "eindex": 18.46,
+      "turnover_rate": 0.009419,
+      "turnover_pct": 14.46,
+      "margin_ratio": 0.020284,
+      "margin_pct": 14.88,
+      "limitup_ratio": 0.006978,
+      "limitup_pct": 26.03
+    },
+    {
+      "date": "2025-12-23",
+      "eindex": 5.9,
+      "turnover_rate": 0.007463,
+      "turnover_pct": 4.94,
+      "margin_ratio": 0.019972,
+      "margin_pct": 11.52,
+      "limitup_ratio": 0.002084,
+      "limitup_pct": 1.23
+    },
+    {
+      "date": "2025-12-24",
+      "eindex": 9.15,
+      "turnover_rate": 0.006476,
+      "turnover_pct": 1.23,
+      "margin_ratio": 0.021076,
+      "margin_pct": 21.72,
+      "limitup_ratio": 0.003254,
+      "limitup_pct": 4.51
+    },
+    {
+      "date": "2025-12-25",
+      "eindex": 4.63,
+      "turnover_rate": 0.005827,
+      "turnover_pct": 1.22,
+      "margin_ratio": 0.019326,
+      "margin_pct": 7.35,
+      "limitup_ratio": 0.003543,
+      "limitup_pct": 5.31
+    },
+    {
+      "date": "2025-12-26",
+      "eindex": 11.79,
+      "turnover_rate": 0.008941,
+      "turnover_pct": 11.79,
+      "margin_ratio": 0.01973,
+      "margin_pct": 9.76,
+      "limitup_ratio": 0.00507,
+      "limitup_pct": 13.82
+    },
+    {
+      "date": "2025-12-29",
+      "eindex": 23.75,
+      "turnover_rate": 0.010275,
+      "turnover_pct": 22.67,
+      "margin_ratio": 0.021763,
+      "margin_pct": 29.15,
+      "limitup_ratio": 0.005762,
+      "limitup_pct": 19.43
+    },
+    {
+      "date": "2025-12-30",
+      "eindex": 3.49,
+      "turnover_rate": 0.006032,
+      "turnover_pct": 1.61,
+      "margin_ratio": 0.019012,
+      "margin_pct": 5.24,
+      "limitup_ratio": 0.003124,
+      "limitup_pct": 3.63
+    },
+    {
+      "date": "2025-12-31",
+      "eindex": 9.24,
+      "turnover_rate": 0.007307,
+      "turnover_pct": 5.62,
+      "margin_ratio": 0.020724,
+      "margin_pct": 18.88,
+      "limitup_ratio": 0.003044,
+      "limitup_pct": 3.21
+    },
+    {
+      "date": "2026-01-01",
+      "eindex": 7.87,
+      "turnover_rate": 0.007192,
+      "turnover_pct": 4.4,
+      "margin_ratio": 0.019224,
+      "margin_pct": 6.8,
+      "limitup_ratio": 0.00466,
+      "limitup_pct": 12.4
+    },
+    {
+      "date": "2026-01-02",
+      "eindex": 24.0,
+      "turnover_rate": 0.011228,
+      "turnover_pct": 33.2,
+      "margin_ratio": 0.019162,
+      "margin_pct": 6.0,
+      "limitup_ratio": 0.00753,
+      "limitup_pct": 32.8
+    },
+    {
+      "date": "2026-01-05",
+      "eindex": 14.4,
+      "turnover_rate": 0.009863,
+      "turnover_pct": 20.0,
+      "margin_ratio": 0.018872,
+      "margin_pct": 4.0,
+      "limitup_ratio": 0.005483,
+      "limitup_pct": 19.2
+    },
+    {
+      "date": "2026-01-06",
+      "eindex": 20.27,
+      "turnover_rate": 0.010188,
+      "turnover_pct": 23.2,
+      "margin_ratio": 0.019779,
+      "margin_pct": 11.6,
+      "limitup_ratio": 0.006734,
+      "limitup_pct": 26.0
+    },
+    {
+      "date": "2026-01-07",
+      "eindex": 7.2,
+      "turnover_rate": 0.006627,
+      "turnover_pct": 4.0,
+      "margin_ratio": 0.019581,
+      "margin_pct": 10.4,
+      "limitup_ratio": 0.003869,
+      "limitup_pct": 7.2
+    },
+    {
+      "date": "2026-01-08",
+      "eindex": 6.53,
+      "turnover_rate": 0.00731,
+      "turnover_pct": 6.8,
+      "margin_ratio": 0.019682,
+      "margin_pct": 11.6,
+      "limitup_ratio": 0.001751,
+      "limitup_pct": 1.2
+    },
+    {
+      "date": "2026-01-09",
+      "eindex": 9.87,
+      "turnover_rate": 0.007705,
+      "turnover_pct": 9.2,
+      "margin_ratio": 0.019575,
+      "margin_pct": 10.4,
+      "limitup_ratio": 0.004315,
+      "limitup_pct": 10.0
+    },
+    {
+      "date": "2026-01-12",
+      "eindex": 15.6,
+      "turnover_rate": 0.008564,
+      "turnover_pct": 12.4,
+      "margin_ratio": 0.01913,
+      "margin_pct": 6.4,
+      "limitup_ratio": 0.006814,
+      "limitup_pct": 28.0
+    },
+    {
+      "date": "2026-01-13",
+      "eindex": 16.13,
+      "turnover_rate": 0.010365,
+      "turnover_pct": 26.8,
+      "margin_ratio": 0.020534,
+      "margin_pct": 20.8,
+      "limitup_ratio": 0.001197,
+      "limitup_pct": 0.8
+    },
+    {
+      "date": "2026-01-14",
+      "eindex": 6.13,
+      "turnover_rate": 0.006439,
+      "turnover_pct": 2.0,
+      "margin_ratio": 0.019685,
+      "margin_pct": 12.8,
+      "limitup_ratio": 0.002786,
+      "limitup_pct": 3.6
+    },
+    {
+      "date": "2026-01-15",
+      "eindex": 17.47,
+      "turnover_rate": 0.009503,
+      "turnover_pct": 19.6,
+      "margin_ratio": 0.019545,
+      "margin_pct": 10.4,
+      "limitup_ratio": 0.005672,
+      "limitup_pct": 22.4
+    },
+    {
+      "date": "2026-01-16",
+      "eindex": 19.73,
+      "turnover_rate": 0.008545,
+      "turnover_pct": 12.8,
+      "margin_ratio": 0.020428,
+      "margin_pct": 20.4,
+      "limitup_ratio": 0.006292,
+      "limitup_pct": 26.0
+    },
+    {
+      "date": "2026-01-19",
+      "eindex": 11.87,
+      "turnover_rate": 0.008354,
+      "turnover_pct": 12.8,
+      "margin_ratio": 0.020494,
+      "margin_pct": 21.6,
+      "limitup_ratio": 0.001278,
+      "limitup_pct": 1.2
+    },
+    {
+      "date": "2026-01-20",
+      "eindex": 17.6,
+      "turnover_rate": 0.009646,
+      "turnover_pct": 21.2,
+      "margin_ratio": 0.020431,
+      "margin_pct": 20.8,
+      "limitup_ratio": 0.004209,
+      "limitup_pct": 10.8
+    },
+    {
+      "date": "2026-01-21",
+      "eindex": 22.4,
+      "turnover_rate": 0.012243,
+      "turnover_pct": 41.6,
+      "margin_ratio": 0.020695,
+      "margin_pct": 23.6,
+      "limitup_ratio": 0.001743,
+      "limitup_pct": 2.0
+    },
+    {
+      "date": "2026-01-22",
+      "eindex": 14.53,
+      "turnover_rate": 0.009591,
+      "turnover_pct": 21.2,
+      "margin_ratio": 0.019748,
+      "margin_pct": 14.0,
+      "limitup_ratio": 0.003567,
+      "limitup_pct": 8.4
+    },
+    {
+      "date": "2026-01-23",
+      "eindex": 23.87,
+      "turnover_rate": 0.011995,
+      "turnover_pct": 40.8,
+      "margin_ratio": 0.01895,
+      "margin_pct": 4.8,
+      "limitup_ratio": 0.005856,
+      "limitup_pct": 26.0
+    },
+    {
+      "date": "2026-01-26",
+      "eindex": 15.47,
+      "turnover_rate": 0.007456,
+      "turnover_pct": 8.0,
+      "margin_ratio": 0.020961,
+      "margin_pct": 28.8,
+      "limitup_ratio": 0.003697,
+      "limitup_pct": 9.6
+    },
+    {
+      "date": "2026-01-27",
+      "eindex": 26.67,
+      "turnover_rate": 0.009432,
+      "turnover_pct": 20.4,
+      "margin_ratio": 0.020404,
+      "margin_pct": 21.2,
+      "limitup_ratio": 0.00755,
+      "limitup_pct": 38.4
+    },
+    {
+      "date": "2026-01-28",
+      "eindex": 22.27,
+      "turnover_rate": 0.009237,
+      "turnover_pct": 18.4,
+      "margin_ratio": 0.021018,
+      "margin_pct": 30.4,
+      "limitup_ratio": 0.0049,
+      "limitup_pct": 18.0
+    },
+    {
+      "date": "2026-01-29",
+      "eindex": 11.07,
+      "turnover_rate": 0.006188,
+      "turnover_pct": 2.0,
+      "margin_ratio": 0.019722,
+      "margin_pct": 14.0,
+      "limitup_ratio": 0.004717,
+      "limitup_pct": 17.2
+    },
+    {
+      "date": "2026-01-30",
+      "eindex": 16.8,
+      "turnover_rate": 0.008423,
+      "turnover_pct": 14.0,
+      "margin_ratio": 0.020675,
+      "margin_pct": 25.2,
+      "limitup_ratio": 0.004019,
+      "limitup_pct": 11.2
+    },
+    {
+      "date": "2026-02-02",
+      "eindex": 32.0,
+      "turnover_rate": 0.01127,
+      "turnover_pct": 39.2,
+      "margin_ratio": 0.021418,
+      "margin_pct": 34.8,
+      "limitup_ratio": 0.005259,
+      "limitup_pct": 22.0
+    },
+    {
+      "date": "2026-02-03",
+      "eindex": 31.87,
+      "turnover_rate": 0.009868,
+      "turnover_pct": 26.4,
+      "margin_ratio": 0.021772,
+      "margin_pct": 39.2,
+      "limitup_ratio": 0.006305,
+      "limitup_pct": 30.0
+    },
+    {
+      "date": "2026-02-04",
+      "eindex": 37.87,
+      "turnover_rate": 0.009918,
+      "turnover_pct": 27.6,
+      "margin_ratio": 0.023355,
+      "margin_pct": 52.4,
+      "limitup_ratio": 0.006792,
+      "limitup_pct": 33.6
+    },
+    {
+      "date": "2026-02-05",
+      "eindex": 22.8,
+      "turnover_rate": 0.006784,
+      "turnover_pct": 5.2,
+      "margin_ratio": 0.021015,
+      "margin_pct": 31.2,
+      "limitup_ratio": 0.006613,
+      "limitup_pct": 32.0
+    },
+    {
+      "date": "2026-02-06",
+      "eindex": 15.87,
+      "turnover_rate": 0.008775,
+      "turnover_pct": 16.8,
+      "margin_ratio": 0.020331,
+      "margin_pct": 21.6,
+      "limitup_ratio": 0.003605,
+      "limitup_pct": 9.2
+    },
+    {
+      "date": "2026-02-10",
+      "eindex": 25.07,
+      "turnover_rate": 0.013222,
+      "turnover_pct": 50.0,
+      "margin_ratio": 0.019042,
+      "margin_pct": 6.8,
+      "limitup_ratio": 0.004834,
+      "limitup_pct": 18.4
+    },
+    {
+      "date": "2026-02-11",
+      "eindex": 33.87,
+      "turnover_rate": 0.01109,
+      "turnover_pct": 38.4,
+      "margin_ratio": 0.020848,
+      "margin_pct": 29.6,
+      "limitup_ratio": 0.006729,
+      "limitup_pct": 33.6
+    },
+    {
+      "date": "2026-02-12",
+      "eindex": 37.87,
+      "turnover_rate": 0.008167,
+      "turnover_pct": 12.8,
+      "margin_ratio": 0.022751,
+      "margin_pct": 49.6,
+      "limitup_ratio": 0.008867,
+      "limitup_pct": 51.2
+    },
+    {
+      "date": "2026-02-13",
+      "eindex": 38.53,
+      "turnover_rate": 0.010732,
+      "turnover_pct": 38.0,
+      "margin_ratio": 0.021243,
+      "margin_pct": 34.4,
+      "limitup_ratio": 0.007621,
+      "limitup_pct": 43.2
+    },
+    {
+      "date": "2026-02-16",
+      "eindex": 23.47,
+      "turnover_rate": 0.009021,
+      "turnover_pct": 18.4,
+      "margin_ratio": 0.019387,
+      "margin_pct": 10.4,
+      "limitup_ratio": 0.007383,
+      "limitup_pct": 41.6
+    },
+    {
+      "date": "2026-02-17",
+      "eindex": 26.13,
+      "turnover_rate": 0.010222,
+      "turnover_pct": 32.4,
+      "margin_ratio": 0.019794,
+      "margin_pct": 16.8,
+      "limitup_ratio": 0.005941,
+      "limitup_pct": 29.2
+    },
+    {
+      "date": "2026-02-18",
+      "eindex": 20.93,
+      "turnover_rate": 0.009304,
+      "turnover_pct": 21.6,
+      "margin_ratio": 0.019255,
+      "margin_pct": 9.6,
+      "limitup_ratio": 0.006432,
+      "limitup_pct": 31.6
+    },
+    {
+      "date": "2026-02-19",
+      "eindex": 30.67,
+      "turnover_rate": 0.010656,
+      "turnover_pct": 38.4,
+      "margin_ratio": 0.021327,
+      "margin_pct": 37.6,
+      "limitup_ratio": 0.004545,
+      "limitup_pct": 16.0
+    },
+    {
+      "date": "2026-02-20",
+      "eindex": 17.73,
+      "turnover_rate": 0.007716,
+      "turnover_pct": 11.2,
+      "margin_ratio": 0.020728,
+      "margin_pct": 29.2,
+      "limitup_ratio": 0.004157,
+      "limitup_pct": 12.8
+    },
+    {
+      "date": "2026-02-23",
+      "eindex": 37.2,
+      "turnover_rate": 0.008869,
+      "turnover_pct": 18.0,
+      "margin_ratio": 0.021591,
+      "margin_pct": 40.0,
+      "limitup_ratio": 0.008907,
+      "limitup_pct": 53.6
+    },
+    {
+      "date": "2026-02-24",
+      "eindex": 25.47,
+      "turnover_rate": 0.007972,
+      "turnover_pct": 12.4,
+      "margin_ratio": 0.021257,
+      "margin_pct": 36.4,
+      "limitup_ratio": 0.005699,
+      "limitup_pct": 27.6
+    },
+    {
+      "date": "2026-02-25",
+      "eindex": 39.87,
+      "turnover_rate": 0.010706,
+      "turnover_pct": 40.0,
+      "margin_ratio": 0.021774,
+      "margin_pct": 44.4,
+      "limitup_ratio": 0.006675,
+      "limitup_pct": 35.2
+    },
+    {
+      "date": "2026-02-26",
+      "eindex": 44.27,
+      "turnover_rate": 0.010317,
+      "turnover_pct": 35.2,
+      "margin_ratio": 0.023049,
+      "margin_pct": 56.0,
+      "limitup_ratio": 0.007027,
+      "limitup_pct": 41.6
+    },
+    {
+      "date": "2026-02-27",
+      "eindex": 35.47,
+      "turnover_rate": 0.009634,
+      "turnover_pct": 26.8,
+      "margin_ratio": 0.020211,
+      "margin_pct": 22.0,
+      "limitup_ratio": 0.009533,
+      "limitup_pct": 57.6
+    },
+    {
+      "date": "2026-03-02",
+      "eindex": 42.13,
+      "turnover_rate": 0.01158,
+      "turnover_pct": 47.6,
+      "margin_ratio": 0.019821,
+      "margin_pct": 18.4,
+      "limitup_ratio": 0.009868,
+      "limitup_pct": 60.4
+    },
+    {
+      "date": "2026-03-03",
+      "eindex": 43.33,
+      "turnover_rate": 0.010215,
+      "turnover_pct": 34.0,
+      "margin_ratio": 0.023019,
+      "margin_pct": 56.4,
+      "limitup_ratio": 0.006924,
+      "limitup_pct": 39.6
+    },
+    {
+      "date": "2026-03-04",
+      "eindex": 35.6,
+      "turnover_rate": 0.010532,
+      "turnover_pct": 40.0,
+      "margin_ratio": 0.022459,
+      "margin_pct": 50.8,
+      "limitup_ratio": 0.004471,
+      "limitup_pct": 16.0
+    },
+    {
+      "date": "2026-03-05",
+      "eindex": 23.33,
+      "turnover_rate": 0.008484,
+      "turnover_pct": 16.0,
+      "margin_ratio": 0.020256,
+      "margin_pct": 22.8,
+      "limitup_ratio": 0.005996,
+      "limitup_pct": 31.2
+    },
+    {
+      "date": "2026-03-06",
+      "eindex": 28.67,
+      "turnover_rate": 0.009707,
+      "turnover_pct": 28.8,
+      "margin_ratio": 0.020614,
+      "margin_pct": 28.4,
+      "limitup_ratio": 0.005746,
+      "limitup_pct": 28.8
+    },
+    {
+      "date": "2026-03-09",
+      "eindex": 44.0,
+      "turnover_rate": 0.011645,
+      "turnover_pct": 49.6,
+      "margin_ratio": 0.022384,
+      "margin_pct": 51.2,
+      "limitup_ratio": 0.005861,
+      "limitup_pct": 31.2
+    },
+    {
+      "date": "2026-03-10",
+      "eindex": 55.33,
+      "turnover_rate": 0.016166,
+      "turnover_pct": 75.2,
+      "margin_ratio": 0.022072,
+      "margin_pct": 48.4,
+      "limitup_ratio": 0.006936,
+      "limitup_pct": 42.4
+    },
+    {
+      "date": "2026-03-11",
+      "eindex": 28.8,
+      "turnover_rate": 0.013394,
+      "turnover_pct": 58.8,
+      "margin_ratio": 0.020324,
+      "margin_pct": 24.4,
+      "limitup_ratio": 0.002481,
+      "limitup_pct": 3.2
+    },
+    {
+      "date": "2026-03-12",
+      "eindex": 37.6,
+      "turnover_rate": 0.008982,
+      "turnover_pct": 20.0,
+      "margin_ratio": 0.02189,
+      "margin_pct": 47.6,
+      "limitup_ratio": 0.007108,
+      "limitup_pct": 45.2
+    }
+  ]
+}
