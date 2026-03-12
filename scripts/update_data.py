@@ -80,7 +80,7 @@ def estimate_float_mcap(date_str):
     return 70e12
 
 
-def get_trade_dates(ak, start="2015-01-01"):
+def get_trade_dates(ak, start="2016-01-26"):
     """从上证指数获取真实交易日历（自动排除周末和节假日）"""
     print("获取交易日历...")
     df = ak.stock_zh_index_daily_em(symbol="sh000001")
@@ -150,7 +150,7 @@ def get_margin_data(ak):
 
     # ── 上交所 ──
     try:
-        df = ak.stock_margin_sse(start_date="20150101")
+        df = ak.stock_margin_sse(start_date="20160126")
         date_col = df.columns[0]  # 第一列通常是日期
         bal_col = _find_column(df, ['融资余额(元)', '融资余额', '融资余额（元）'])
         if bal_col is None:
@@ -175,7 +175,7 @@ def get_margin_data(ak):
     # ── 深交所 ──
     # akshare 深交所融资 API 名称可能随版本变化，逐个尝试
     szse_fetchers = [
-        ("stock_margin_szse", {"start_date": "20150101"}),
+        ("stock_margin_szse", {"start_date": "20160126"}),
         ("stock_margin_detail_szse", {}),
     ]
 
