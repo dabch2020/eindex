@@ -227,42 +227,91 @@ def get_margin_data(ak):
     return results
 
 
-def get_limitup_data(ak, trade_dates, max_days=300):
-    """获取涨停家数占比（东方财富网）
+LIMITUP_CACHE = DATA_DIR / "limitup_cache.json"
 
-    stock_zt_pool_em 需逐日调用，为避免频率限制：
-    - 全量模式：获取最近 max_days 个交易日
-    - 增量模式：只获取缺失的日期
+
+def _load_limitup_cache():
+    """加载涨停数据缓存"""
+    if LIMITUP_CACHE.exists():
+        with open(LIMITUP_CACHE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+
+def _save_limitup_cache(cache):
+    """保存涨停数据缓存"""
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(LIMITUP_CACHE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+
+def get_limitup_data(ak, trade_dates, max_days=60):
+    """获取涨停家数占比（东方财富网）+ 持久化缓存
+
+    stock_zt_pool_em 在东方财富只保留最近约 1 个月的数据，
+    因此采用增量缓存策略：
+    1. 读取本地缓存 (data/limitup_cache.json)
+    2. 仅向 API 请求缓存中缺失的最近日期
+    3. 将新获取的数据追加到缓存
+    随着每日自动运行，缓存会逐渐积累完整的历史数据。
     """
-    print(f"获取涨停数据（最近 {max_days} 天）...")
-    results = {}
-    recent_dates = trade_dates[-max_days:]
-    failed = 0
+    cache = _load_limitup_cache()
+    print(f"涨停数据缓存: {len(cache)} 天已有")
 
-    for i, dt in enumerate(recent_dates):
-        try:
-            df = ak.stock_zt_pool_em(date=dt.replace('-', ''))
-            year = int(dt[:4])
-            total = TOTAL_STOCKS.get(year, 5300)
-            if df is not None and len(df) > 0:
-                results[dt] = len(df) / total
-            else:
-                results[dt] = 0.0
-            failed = 0  # 重置连续失败计数
-        except Exception as e:
-            failed += 1
-            if failed <= 3:
-                print(f"  {dt}: {e}")
-            if failed >= 10:
-                print(f"  连续失败 {failed} 次，跳过更早日期")
+    # 找出缓存中缺失的最近日期（API 只保留 ~1 个月）
+    recent_dates = trade_dates[-max_days:]
+    missing = [dt for dt in recent_dates if dt not in cache]
+
+    if not missing:
+        print("  涨停缓存已覆盖最近日期，无需请求 API")
+    else:
+        # 从最新日期向后推，因为 API 只保留最近 ~1 个月
+        missing_reversed = list(reversed(missing))
+        print(f"  需获取 {len(missing_reversed)} 天 ({missing_reversed[-1]} ~ {missing_reversed[0]})")
+        consecutive_empty = 0
+        fetched = 0
+
+        for i, dt in enumerate(missing_reversed):
+            try:
+                df = ak.stock_zt_pool_em(date=dt.replace('-', ''))
+                year = int(dt[:4])
+                total = TOTAL_STOCKS.get(year, 5300)
+                if df is not None and len(df) > 0:
+                    count = len(df)
+                    cache[dt] = {"count": count, "ratio": count / total}
+                    consecutive_empty = 0
+                    fetched += 1
+                else:
+                    consecutive_empty += 1
+            except Exception as e:
+                consecutive_empty += 1
+                if consecutive_empty <= 3:
+                    print(f"  {dt}: {e}")
+
+            # 东方财富只保留 ~1 个月，连续空结果说明已超出范围
+            if consecutive_empty >= 8:
+                print(f"  连续 {consecutive_empty} 天无数据，已达 API 历史上限")
                 break
 
-        if (i + 1) % 50 == 0:
-            print(f"  进度: {i + 1}/{len(recent_dates)}")
+            if (i + 1) % 20 == 0:
+                print(f"  进度: {i + 1}/{len(missing_reversed)}")
 
-        time.sleep(0.25)  # 限频避免被封
+            time.sleep(0.3)
 
-    print(f"  涨停数据: {len(results)} 天")
+        _save_limitup_cache(cache)
+        print(f"  新获取 {fetched} 天，缓存共 {len(cache)} 天")
+
+    # 转换为 {date: ratio} 格式供后续计算
+    results = {}
+    for dt in trade_dates:
+        if dt in cache:
+            entry = cache[dt]
+            if isinstance(entry, dict):
+                results[dt] = entry["ratio"]
+            else:
+                results[dt] = float(entry)  # 兼容旧格式
+
+    print(f"  涨停数据可用: {len(results)} 天")
     return results
 
 
@@ -316,12 +365,8 @@ def generate_data():
     turnover_data = get_turnover_data(ak, trade_dates)
     margin_data = get_margin_data(ak)
 
-    if full_mode or not existing_dates:
-        limitup_data = get_limitup_data(ak, trade_dates, max_days=300)
-    else:
-        # 增量模式只取最近少量天数
-        limitup_data = get_limitup_data(ak, trade_dates,
-                                        max_days=min(30, len(new_dates) + 5))
+    # 涨停数据使用持久化缓存，每次只获取缺失的最近日期
+    limitup_data = get_limitup_data(ak, trade_dates, max_days=60)
 
     # ── 计算情绪指数 ──
     print("计算情绪指数...")

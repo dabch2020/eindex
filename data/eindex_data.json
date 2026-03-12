@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-12 20:07:28",
+  "updated_at": "2026-03-12 20:45:44",
   "data": [
     {
       "date": "2015-01-05",
@@ -24173,2633 +24173,2633 @@
     },
     {
       "date": "2024-12-12",
-      "eindex": 71.4,
+      "eindex": 92.8,
       "turnover_rate": 0.002321,
       "turnover_pct": 92.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 50.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-13",
-      "eindex": 97.2,
+      "eindex": 94.4,
       "turnover_rate": 0.002471,
       "turnover_pct": 94.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-16",
-      "eindex": 92.6,
+      "eindex": 85.2,
       "turnover_rate": 0.002064,
       "turnover_pct": 85.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-17",
-      "eindex": 90.4,
+      "eindex": 80.8,
       "turnover_rate": 0.001903,
       "turnover_pct": 80.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-18",
-      "eindex": 84.8,
+      "eindex": 69.6,
       "turnover_rate": 0.001671,
       "turnover_pct": 69.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-19",
-      "eindex": 85.4,
+      "eindex": 70.8,
       "turnover_rate": 0.001699,
       "turnover_pct": 70.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-20",
-      "eindex": 82.8,
+      "eindex": 65.6,
       "turnover_rate": 0.001631,
       "turnover_pct": 65.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-23",
-      "eindex": 88.4,
+      "eindex": 76.8,
       "turnover_rate": 0.001803,
       "turnover_pct": 76.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-24",
-      "eindex": 78.4,
+      "eindex": 56.8,
       "turnover_rate": 0.001516,
       "turnover_pct": 56.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-25",
-      "eindex": 78.6,
+      "eindex": 57.2,
       "turnover_rate": 0.001519,
       "turnover_pct": 57.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-26",
-      "eindex": 71.2,
+      "eindex": 42.4,
       "turnover_rate": 0.001355,
       "turnover_pct": 42.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-27",
-      "eindex": 80.0,
+      "eindex": 60.0,
       "turnover_rate": 0.001574,
       "turnover_pct": 60.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-30",
-      "eindex": 74.0,
+      "eindex": 48.0,
       "turnover_rate": 0.001419,
       "turnover_pct": 48.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2024-12-31",
-      "eindex": 78.4,
+      "eindex": 56.8,
       "turnover_rate": 0.001533,
       "turnover_pct": 56.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-02",
-      "eindex": 83.0,
+      "eindex": 66.0,
       "turnover_rate": 0.001645,
       "turnover_pct": 66.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-03",
-      "eindex": 79.8,
+      "eindex": 59.6,
       "turnover_rate": 0.001593,
       "turnover_pct": 59.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-06",
-      "eindex": 70.0,
+      "eindex": 40.0,
       "turnover_rate": 0.001347,
       "turnover_pct": 40.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-07",
-      "eindex": 68.6,
+      "eindex": 37.2,
       "turnover_rate": 0.001322,
       "turnover_pct": 37.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-08",
-      "eindex": 77.8,
+      "eindex": 55.6,
       "turnover_rate": 0.001531,
       "turnover_pct": 55.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-09",
-      "eindex": 67.0,
+      "eindex": 34.0,
       "turnover_rate": 0.001309,
       "turnover_pct": 34.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-10",
-      "eindex": 69.8,
+      "eindex": 39.6,
       "turnover_rate": 0.001351,
       "turnover_pct": 39.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-13",
-      "eindex": 60.0,
+      "eindex": 20.0,
       "turnover_rate": 0.001162,
       "turnover_pct": 20.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-14",
-      "eindex": 78.0,
+      "eindex": 56.0,
       "turnover_rate": 0.001536,
       "turnover_pct": 56.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-15",
-      "eindex": 70.8,
+      "eindex": 41.6,
       "turnover_rate": 0.001366,
       "turnover_pct": 41.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-16",
-      "eindex": 74.8,
+      "eindex": 49.6,
       "turnover_rate": 0.00147,
       "turnover_pct": 49.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-17",
-      "eindex": 65.6,
+      "eindex": 31.2,
       "turnover_rate": 0.001271,
       "turnover_pct": 31.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-20",
-      "eindex": 66.8,
+      "eindex": 33.6,
       "turnover_rate": 0.001312,
       "turnover_pct": 33.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-21",
-      "eindex": 66.0,
+      "eindex": 32.0,
       "turnover_rate": 0.0013,
       "turnover_pct": 32.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-22",
-      "eindex": 60.2,
+      "eindex": 20.4,
       "turnover_rate": 0.00119,
       "turnover_pct": 20.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-23",
-      "eindex": 74.6,
+      "eindex": 49.2,
       "turnover_rate": 0.001465,
       "turnover_pct": 49.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-24",
-      "eindex": 66.0,
+      "eindex": 32.0,
       "turnover_rate": 0.001309,
       "turnover_pct": 32.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-01-27",
-      "eindex": 62.2,
+      "eindex": 24.4,
       "turnover_rate": 0.001219,
       "turnover_pct": 24.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-05",
-      "eindex": 65.6,
+      "eindex": 31.2,
       "turnover_rate": 0.001302,
       "turnover_pct": 31.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-06",
-      "eindex": 78.2,
+      "eindex": 56.4,
       "turnover_rate": 0.001541,
       "turnover_pct": 56.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-07",
-      "eindex": 91.2,
+      "eindex": 82.4,
       "turnover_rate": 0.001957,
       "turnover_pct": 82.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-10",
-      "eindex": 87.8,
+      "eindex": 75.6,
       "turnover_rate": 0.001793,
       "turnover_pct": 75.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-11",
-      "eindex": 84.4,
+      "eindex": 68.8,
       "turnover_rate": 0.001687,
       "turnover_pct": 68.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-12",
-      "eindex": 84.0,
+      "eindex": 68.0,
       "turnover_rate": 0.001678,
       "turnover_pct": 68.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-13",
-      "eindex": 89.2,
+      "eindex": 78.4,
       "turnover_rate": 0.001852,
       "turnover_pct": 78.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-14",
-      "eindex": 85.0,
+      "eindex": 70.0,
       "turnover_rate": 0.001735,
       "turnover_pct": 70.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-17",
-      "eindex": 90.4,
+      "eindex": 80.8,
       "turnover_rate": 0.001916,
       "turnover_pct": 80.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-18",
-      "eindex": 88.6,
+      "eindex": 77.2,
       "turnover_rate": 0.001848,
       "turnover_pct": 77.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-19",
-      "eindex": 81.6,
+      "eindex": 63.2,
       "turnover_rate": 0.001649,
       "turnover_pct": 63.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-20",
-      "eindex": 83.8,
+      "eindex": 67.6,
       "turnover_rate": 0.001693,
       "turnover_pct": 67.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-21",
-      "eindex": 91.4,
+      "eindex": 82.8,
       "turnover_rate": 0.001993,
       "turnover_pct": 82.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-24",
-      "eindex": 90.6,
+      "eindex": 81.2,
       "turnover_rate": 0.001948,
       "turnover_pct": 81.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-25",
-      "eindex": 85.4,
+      "eindex": 70.8,
       "turnover_rate": 0.001763,
       "turnover_pct": 70.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-26",
-      "eindex": 88.2,
+      "eindex": 76.4,
       "turnover_rate": 0.001837,
       "turnover_pct": 76.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-27",
-      "eindex": 90.4,
+      "eindex": 80.8,
       "turnover_rate": 0.001934,
       "turnover_pct": 80.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-02-28",
-      "eindex": 88.0,
+      "eindex": 76.0,
       "turnover_rate": 0.001834,
       "turnover_pct": 76.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-03",
-      "eindex": 78.4,
+      "eindex": 56.8,
       "turnover_rate": 0.001605,
       "turnover_pct": 56.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-04",
-      "eindex": 70.0,
+      "eindex": 40.0,
       "turnover_rate": 0.001392,
       "turnover_pct": 40.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-05",
-      "eindex": 73.2,
+      "eindex": 46.4,
       "turnover_rate": 0.001476,
       "turnover_pct": 46.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-06",
-      "eindex": 86.2,
+      "eindex": 72.4,
       "turnover_rate": 0.001779,
       "turnover_pct": 72.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-07",
-      "eindex": 85.0,
+      "eindex": 70.0,
       "turnover_rate": 0.001749,
       "turnover_pct": 70.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-10",
-      "eindex": 73.0,
+      "eindex": 46.0,
       "turnover_rate": 0.001471,
       "turnover_pct": 46.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-11",
-      "eindex": 72.4,
+      "eindex": 44.8,
       "turnover_rate": 0.001463,
       "turnover_pct": 44.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-12",
-      "eindex": 81.0,
+      "eindex": 62.0,
       "turnover_rate": 0.001646,
       "turnover_pct": 62.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-13",
-      "eindex": 80.6,
+      "eindex": 61.2,
       "turnover_rate": 0.001633,
       "turnover_pct": 61.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-14",
-      "eindex": 85.2,
+      "eindex": 70.4,
       "turnover_rate": 0.001753,
       "turnover_pct": 70.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-17",
-      "eindex": 78.0,
+      "eindex": 56.0,
       "turnover_rate": 0.001592,
       "turnover_pct": 56.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-18",
-      "eindex": 73.2,
+      "eindex": 46.4,
       "turnover_rate": 0.001471,
       "turnover_pct": 46.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-19",
-      "eindex": 71.6,
+      "eindex": 43.2,
       "turnover_rate": 0.001436,
       "turnover_pct": 43.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-20",
-      "eindex": 72.0,
+      "eindex": 44.0,
       "turnover_rate": 0.001454,
       "turnover_pct": 44.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-21",
-      "eindex": 81.2,
+      "eindex": 62.4,
       "turnover_rate": 0.001646,
       "turnover_pct": 62.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-24",
-      "eindex": 80.0,
+      "eindex": 60.0,
       "turnover_rate": 0.001628,
       "turnover_pct": 60.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-25",
-      "eindex": 69.6,
+      "eindex": 39.2,
       "turnover_rate": 0.001385,
       "turnover_pct": 39.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-26",
-      "eindex": 64.4,
+      "eindex": 28.8,
       "turnover_rate": 0.001296,
       "turnover_pct": 28.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-27",
-      "eindex": 64.4,
+      "eindex": 28.8,
       "turnover_rate": 0.001292,
       "turnover_pct": 28.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-28",
-      "eindex": 63.0,
+      "eindex": 26.0,
       "turnover_rate": 0.001259,
       "turnover_pct": 26.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-03-31",
-      "eindex": 69.4,
+      "eindex": 38.8,
       "turnover_rate": 0.001359,
       "turnover_pct": 38.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-01",
-      "eindex": 60.2,
+      "eindex": 20.4,
       "turnover_rate": 0.001206,
       "turnover_pct": 20.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-02",
-      "eindex": 52.0,
+      "eindex": 4.0,
       "turnover_rate": 0.001051,
       "turnover_pct": 4.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-03",
-      "eindex": 60.4,
+      "eindex": 20.8,
       "turnover_rate": 0.001199,
       "turnover_pct": 20.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-07",
-      "eindex": 87.8,
+      "eindex": 75.6,
       "turnover_rate": 0.001808,
       "turnover_pct": 75.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-08",
-      "eindex": 90.6,
+      "eindex": 81.2,
       "turnover_rate": 0.001924,
       "turnover_pct": 81.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-09",
-      "eindex": 92.6,
+      "eindex": 85.2,
       "turnover_rate": 0.002023,
       "turnover_pct": 85.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-10",
-      "eindex": 87.2,
+      "eindex": 74.4,
       "turnover_rate": 0.001804,
       "turnover_pct": 74.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-11",
-      "eindex": 73.4,
+      "eindex": 46.8,
       "turnover_rate": 0.001446,
       "turnover_pct": 46.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-14",
-      "eindex": 72.6,
+      "eindex": 45.2,
       "turnover_rate": 0.001431,
       "turnover_pct": 45.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-15",
-      "eindex": 62.2,
+      "eindex": 24.4,
       "turnover_rate": 0.001222,
       "turnover_pct": 24.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-16",
-      "eindex": 65.2,
+      "eindex": 30.4,
       "turnover_rate": 0.001279,
       "turnover_pct": 30.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-17",
-      "eindex": 56.8,
+      "eindex": 13.6,
       "turnover_rate": 0.001138,
       "turnover_pct": 13.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-18",
-      "eindex": 54.6,
+      "eindex": 9.2,
       "turnover_rate": 0.001098,
       "turnover_pct": 9.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-21",
-      "eindex": 59.4,
+      "eindex": 18.8,
       "turnover_rate": 0.001186,
       "turnover_pct": 18.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-22",
-      "eindex": 64.8,
+      "eindex": 29.6,
       "turnover_rate": 0.001264,
       "turnover_pct": 29.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-23",
-      "eindex": 69.8,
+      "eindex": 39.6,
       "turnover_rate": 0.001341,
       "turnover_pct": 39.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-24",
-      "eindex": 64.8,
+      "eindex": 29.6,
       "turnover_rate": 0.001263,
       "turnover_pct": 29.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-25",
-      "eindex": 66.6,
+      "eindex": 33.2,
       "turnover_rate": 0.00129,
       "turnover_pct": 33.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-28",
-      "eindex": 64.4,
+      "eindex": 28.8,
       "turnover_rate": 0.001255,
       "turnover_pct": 28.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-29",
-      "eindex": 58.8,
+      "eindex": 17.6,
       "turnover_rate": 0.001165,
       "turnover_pct": 17.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-04-30",
-      "eindex": 67.2,
+      "eindex": 34.4,
       "turnover_rate": 0.001292,
       "turnover_pct": 34.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-06",
-      "eindex": 74.4,
+      "eindex": 48.8,
       "turnover_rate": 0.00143,
       "turnover_pct": 48.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-07",
-      "eindex": 79.8,
+      "eindex": 59.6,
       "turnover_rate": 0.001576,
       "turnover_pct": 59.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-08",
-      "eindex": 72.6,
+      "eindex": 45.2,
       "turnover_rate": 0.001377,
       "turnover_pct": 45.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-09",
-      "eindex": 67.0,
+      "eindex": 34.0,
       "turnover_rate": 0.00129,
       "turnover_pct": 34.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-12",
-      "eindex": 68.4,
+      "eindex": 36.8,
       "turnover_rate": 0.001307,
       "turnover_pct": 36.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-13",
-      "eindex": 70.6,
+      "eindex": 41.2,
       "turnover_rate": 0.001341,
       "turnover_pct": 41.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-14",
-      "eindex": 73.6,
+      "eindex": 47.2,
       "turnover_rate": 0.001403,
       "turnover_pct": 47.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-15",
-      "eindex": 67.0,
+      "eindex": 34.0,
       "turnover_rate": 0.001285,
       "turnover_pct": 34.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-16",
-      "eindex": 61.8,
+      "eindex": 23.6,
       "turnover_rate": 0.001209,
       "turnover_pct": 23.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-19",
-      "eindex": 63.8,
+      "eindex": 27.6,
       "turnover_rate": 0.001235,
       "turnover_pct": 27.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-20",
-      "eindex": 68.6,
+      "eindex": 37.2,
       "turnover_rate": 0.001297,
       "turnover_pct": 37.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-21",
-      "eindex": 67.2,
+      "eindex": 34.4,
       "turnover_rate": 0.00128,
       "turnover_pct": 34.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-22",
-      "eindex": 63.4,
+      "eindex": 26.8,
       "turnover_rate": 0.001228,
       "turnover_pct": 26.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-23",
-      "eindex": 64.8,
+      "eindex": 29.6,
       "turnover_rate": 0.001242,
       "turnover_pct": 29.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-26",
-      "eindex": 53.2,
+      "eindex": 6.4,
       "turnover_rate": 0.001074,
       "turnover_pct": 6.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-27",
-      "eindex": 54.4,
+      "eindex": 8.8,
       "turnover_rate": 0.001087,
       "turnover_pct": 8.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-28",
-      "eindex": 57.2,
+      "eindex": 14.4,
       "turnover_rate": 0.001132,
       "turnover_pct": 14.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-29",
-      "eindex": 70.0,
+      "eindex": 40.0,
       "turnover_rate": 0.001298,
       "turnover_pct": 40.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-05-30",
-      "eindex": 67.2,
+      "eindex": 34.4,
       "turnover_rate": 0.001267,
       "turnover_pct": 34.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-03",
-      "eindex": 64.2,
+      "eindex": 28.4,
       "turnover_rate": 0.001229,
       "turnover_pct": 28.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-04",
-      "eindex": 66.2,
+      "eindex": 32.4,
       "turnover_rate": 0.001249,
       "turnover_pct": 32.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-05",
-      "eindex": 73.2,
+      "eindex": 46.4,
       "turnover_rate": 0.001328,
       "turnover_pct": 46.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-06",
-      "eindex": 62.8,
+      "eindex": 25.6,
       "turnover_rate": 0.001209,
       "turnover_pct": 25.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-09",
-      "eindex": 73.4,
+      "eindex": 46.8,
       "turnover_rate": 0.001337,
       "turnover_pct": 46.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-10",
-      "eindex": 80.0,
+      "eindex": 60.0,
       "turnover_rate": 0.001529,
       "turnover_pct": 60.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-11",
-      "eindex": 73.0,
+      "eindex": 46.0,
       "turnover_rate": 0.001333,
       "turnover_pct": 46.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-12",
-      "eindex": 70.8,
+      "eindex": 41.6,
       "turnover_rate": 0.001301,
       "turnover_pct": 41.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-13",
-      "eindex": 80.8,
+      "eindex": 61.6,
       "turnover_rate": 0.001549,
       "turnover_pct": 61.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-16",
-      "eindex": 66.0,
+      "eindex": 32.0,
       "turnover_rate": 0.001249,
       "turnover_pct": 32.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-17",
-      "eindex": 67.8,
+      "eindex": 35.6,
       "turnover_rate": 0.001265,
       "turnover_pct": 35.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-18",
-      "eindex": 65.4,
+      "eindex": 30.8,
       "turnover_rate": 0.001239,
       "turnover_pct": 30.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-19",
-      "eindex": 72.6,
+      "eindex": 45.2,
       "turnover_rate": 0.001315,
       "turnover_pct": 45.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-20",
-      "eindex": 55.8,
+      "eindex": 11.6,
       "turnover_rate": 0.001109,
       "turnover_pct": 11.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-23",
-      "eindex": 60.2,
+      "eindex": 20.4,
       "turnover_rate": 0.001183,
       "turnover_pct": 20.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-24",
-      "eindex": 77.6,
+      "eindex": 55.2,
       "turnover_rate": 0.001446,
       "turnover_pct": 55.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-25",
-      "eindex": 81.4,
+      "eindex": 62.8,
       "turnover_rate": 0.001577,
       "turnover_pct": 62.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-26",
-      "eindex": 80.8,
+      "eindex": 61.6,
       "turnover_rate": 0.001561,
       "turnover_pct": 61.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-27",
-      "eindex": 80.8,
+      "eindex": 61.6,
       "turnover_rate": 0.001566,
       "turnover_pct": 61.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-06-30",
-      "eindex": 77.2,
+      "eindex": 54.4,
       "turnover_rate": 0.001453,
       "turnover_pct": 54.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-01",
-      "eindex": 77.4,
+      "eindex": 54.8,
       "turnover_rate": 0.001455,
       "turnover_pct": 54.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-02",
-      "eindex": 78.8,
+      "eindex": 57.6,
       "turnover_rate": 0.001502,
       "turnover_pct": 57.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-03",
-      "eindex": 74.0,
+      "eindex": 48.0,
       "turnover_rate": 0.001375,
       "turnover_pct": 48.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-04",
-      "eindex": 78.6,
+      "eindex": 57.2,
       "turnover_rate": 0.00149,
       "turnover_pct": 57.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-07",
-      "eindex": 68.8,
+      "eindex": 37.6,
       "turnover_rate": 0.001296,
       "turnover_pct": 37.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-08",
-      "eindex": 78.2,
+      "eindex": 56.4,
       "turnover_rate": 0.00148,
       "turnover_pct": 56.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-09",
-      "eindex": 80.8,
+      "eindex": 61.6,
       "turnover_rate": 0.001566,
       "turnover_pct": 61.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-10",
-      "eindex": 82.2,
+      "eindex": 64.4,
       "turnover_rate": 0.001616,
       "turnover_pct": 64.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-11",
-      "eindex": 87.2,
+      "eindex": 74.4,
       "turnover_rate": 0.001796,
       "turnover_pct": 74.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-14",
-      "eindex": 79.8,
+      "eindex": 59.6,
       "turnover_rate": 0.001556,
       "turnover_pct": 59.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-15",
-      "eindex": 83.4,
+      "eindex": 66.8,
       "turnover_rate": 0.001657,
       "turnover_pct": 66.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-16",
-      "eindex": 73.2,
+      "eindex": 46.4,
       "turnover_rate": 0.001388,
       "turnover_pct": 46.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-17",
-      "eindex": 73.8,
+      "eindex": 47.6,
       "turnover_rate": 0.001414,
       "turnover_pct": 47.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-18",
-      "eindex": 75.4,
+      "eindex": 50.8,
       "turnover_rate": 0.001453,
       "turnover_pct": 50.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-21",
-      "eindex": 85.2,
+      "eindex": 70.4,
       "turnover_rate": 0.001744,
       "turnover_pct": 70.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-22",
-      "eindex": 90.4,
+      "eindex": 80.8,
       "turnover_rate": 0.001918,
       "turnover_pct": 80.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-23",
-      "eindex": 91.6,
+      "eindex": 83.2,
       "turnover_rate": 0.001967,
       "turnover_pct": 83.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-24",
-      "eindex": 90.6,
+      "eindex": 81.2,
       "turnover_rate": 0.001935,
       "turnover_pct": 81.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-25",
-      "eindex": 87.2,
+      "eindex": 74.4,
       "turnover_rate": 0.001815,
       "turnover_pct": 74.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-28",
-      "eindex": 81.2,
+      "eindex": 62.4,
       "turnover_rate": 0.001632,
       "turnover_pct": 62.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-29",
-      "eindex": 82.4,
+      "eindex": 64.8,
       "turnover_rate": 0.001658,
       "turnover_pct": 64.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-30",
-      "eindex": 84.0,
+      "eindex": 68.0,
       "turnover_rate": 0.001725,
       "turnover_pct": 68.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-07-31",
-      "eindex": 85.8,
+      "eindex": 71.6,
       "turnover_rate": 0.001782,
       "turnover_pct": 71.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-01",
-      "eindex": 72.8,
+      "eindex": 45.6,
       "turnover_rate": 0.001441,
       "turnover_pct": 45.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-04",
-      "eindex": 68.0,
+      "eindex": 36.0,
       "turnover_rate": 0.001331,
       "turnover_pct": 36.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-05",
-      "eindex": 73.0,
+      "eindex": 46.0,
       "turnover_rate": 0.001446,
       "turnover_pct": 46.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-06",
-      "eindex": 77.2,
+      "eindex": 54.4,
       "turnover_rate": 0.001536,
       "turnover_pct": 54.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-07",
-      "eindex": 79.0,
+      "eindex": 58.0,
       "turnover_rate": 0.001585,
       "turnover_pct": 58.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-08",
-      "eindex": 76.6,
+      "eindex": 53.2,
       "turnover_rate": 0.001536,
       "turnover_pct": 53.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-11",
-      "eindex": 79.6,
+      "eindex": 59.2,
       "turnover_rate": 0.001608,
       "turnover_pct": 59.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-12",
-      "eindex": 78.8,
+      "eindex": 57.6,
       "turnover_rate": 0.001584,
       "turnover_pct": 57.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-13",
-      "eindex": 86.0,
+      "eindex": 72.0,
       "turnover_rate": 0.001791,
       "turnover_pct": 72.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-14",
-      "eindex": 90.2,
+      "eindex": 80.4,
       "turnover_rate": 0.001927,
       "turnover_pct": 80.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-15",
-      "eindex": 88.4,
+      "eindex": 76.8,
       "turnover_rate": 0.001878,
       "turnover_pct": 76.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-18",
-      "eindex": 95.4,
+      "eindex": 90.8,
       "turnover_rate": 0.002261,
       "turnover_pct": 90.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-19",
-      "eindex": 93.2,
+      "eindex": 86.4,
       "turnover_rate": 0.002084,
       "turnover_pct": 86.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-20",
-      "eindex": 91.6,
+      "eindex": 83.2,
       "turnover_rate": 0.002001,
       "turnover_pct": 83.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-21",
-      "eindex": 92.6,
+      "eindex": 85.2,
       "turnover_rate": 0.002043,
       "turnover_pct": 85.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-22",
-      "eindex": 91.8,
+      "eindex": 83.6,
       "turnover_rate": 0.002021,
       "turnover_pct": 83.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-25",
-      "eindex": 97.2,
+      "eindex": 94.4,
       "turnover_rate": 0.002487,
       "turnover_pct": 94.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-26",
-      "eindex": 94.0,
+      "eindex": 88.0,
       "turnover_rate": 0.002165,
       "turnover_pct": 88.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-27",
-      "eindex": 97.4,
+      "eindex": 94.8,
       "turnover_rate": 0.002545,
       "turnover_pct": 94.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-28",
-      "eindex": 96.4,
+      "eindex": 92.8,
       "turnover_rate": 0.002351,
       "turnover_pct": 92.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-08-29",
-      "eindex": 92.4,
+      "eindex": 84.8,
       "turnover_rate": 0.002085,
       "turnover_pct": 84.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-01",
-      "eindex": 92.6,
+      "eindex": 85.2,
       "turnover_rate": 0.002093,
       "turnover_pct": 85.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-02",
-      "eindex": 94.2,
+      "eindex": 88.4,
       "turnover_rate": 0.00222,
       "turnover_pct": 88.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-03",
-      "eindex": 86.6,
+      "eindex": 73.2,
       "turnover_rate": 0.001902,
       "turnover_pct": 73.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-04",
-      "eindex": 91.0,
+      "eindex": 82.0,
       "turnover_rate": 0.002037,
       "turnover_pct": 82.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-05",
-      "eindex": 84.0,
+      "eindex": 68.0,
       "turnover_rate": 0.001826,
       "turnover_pct": 68.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-08",
-      "eindex": 85.4,
+      "eindex": 70.8,
       "turnover_rate": 0.001876,
       "turnover_pct": 70.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-09",
-      "eindex": 79.8,
+      "eindex": 59.6,
       "turnover_rate": 0.00172,
       "turnover_pct": 59.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-10",
-      "eindex": 74.6,
+      "eindex": 49.2,
       "turnover_rate": 0.001584,
       "turnover_pct": 49.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-11",
-      "eindex": 84.4,
+      "eindex": 68.8,
       "turnover_rate": 0.001839,
       "turnover_pct": 68.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-12",
-      "eindex": 89.0,
+      "eindex": 78.0,
       "turnover_rate": 0.001986,
       "turnover_pct": 78.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-15",
-      "eindex": 83.4,
+      "eindex": 66.8,
       "turnover_rate": 0.001827,
       "turnover_pct": 66.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-16",
-      "eindex": 88.8,
+      "eindex": 77.6,
       "turnover_rate": 0.001978,
       "turnover_pct": 77.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-17",
-      "eindex": 86.8,
+      "eindex": 73.6,
       "turnover_rate": 0.00192,
       "turnover_pct": 73.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-18",
-      "eindex": 96.6,
+      "eindex": 93.2,
       "turnover_rate": 0.002468,
       "turnover_pct": 93.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-19",
-      "eindex": 85.4,
+      "eindex": 70.8,
       "turnover_rate": 0.001901,
       "turnover_pct": 70.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-22",
-      "eindex": 75.6,
+      "eindex": 51.2,
       "turnover_rate": 0.001633,
       "turnover_pct": 51.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-23",
-      "eindex": 88.4,
+      "eindex": 76.8,
       "turnover_rate": 0.001978,
       "turnover_pct": 76.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-24",
-      "eindex": 77.2,
+      "eindex": 54.4,
       "turnover_rate": 0.001683,
       "turnover_pct": 54.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-25",
-      "eindex": 77.2,
+      "eindex": 54.4,
       "turnover_rate": 0.001684,
       "turnover_pct": 54.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-26",
-      "eindex": 72.2,
+      "eindex": 44.4,
       "turnover_rate": 0.001577,
       "turnover_pct": 44.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-29",
-      "eindex": 74.2,
+      "eindex": 48.4,
       "turnover_rate": 0.001626,
       "turnover_pct": 48.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-09-30",
-      "eindex": 70.6,
+      "eindex": 41.2,
       "turnover_rate": 0.001555,
       "turnover_pct": 41.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-09",
-      "eindex": 86.2,
+      "eindex": 72.4,
       "turnover_rate": 0.001919,
       "turnover_pct": 72.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-10",
-      "eindex": 84.6,
+      "eindex": 69.2,
       "turnover_rate": 0.00189,
       "turnover_pct": 69.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-13",
-      "eindex": 82.4,
+      "eindex": 64.8,
       "turnover_rate": 0.00183,
       "turnover_pct": 64.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-14",
-      "eindex": 89.4,
+      "eindex": 78.8,
       "turnover_rate": 0.001994,
       "turnover_pct": 78.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-15",
-      "eindex": 76.0,
+      "eindex": 52.0,
       "turnover_rate": 0.001651,
       "turnover_pct": 52.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-16",
-      "eindex": 70.2,
+      "eindex": 40.4,
       "turnover_rate": 0.001545,
       "turnover_pct": 40.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-17",
-      "eindex": 74.2,
+      "eindex": 48.4,
       "turnover_rate": 0.00162,
       "turnover_pct": 48.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-20",
-      "eindex": 64.4,
+      "eindex": 28.8,
       "turnover_rate": 0.001427,
       "turnover_pct": 28.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-21",
-      "eindex": 71.2,
+      "eindex": 42.4,
       "turnover_rate": 0.001557,
       "turnover_pct": 42.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-22",
-      "eindex": 65.0,
+      "eindex": 30.0,
       "turnover_rate": 0.001433,
       "turnover_pct": 30.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-23",
-      "eindex": 68.4,
+      "eindex": 36.8,
       "turnover_rate": 0.001487,
       "turnover_pct": 36.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-24",
-      "eindex": 70.6,
+      "eindex": 41.2,
       "turnover_rate": 0.001538,
       "turnover_pct": 41.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-27",
-      "eindex": 79.4,
+      "eindex": 58.8,
       "turnover_rate": 0.001716,
       "turnover_pct": 58.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-28",
-      "eindex": 74.0,
+      "eindex": 48.0,
       "turnover_rate": 0.001588,
       "turnover_pct": 48.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-29",
-      "eindex": 79.4,
+      "eindex": 58.8,
       "turnover_rate": 0.001694,
       "turnover_pct": 58.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-30",
-      "eindex": 83.8,
+      "eindex": 67.6,
       "turnover_rate": 0.001817,
       "turnover_pct": 67.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-10-31",
-      "eindex": 82.6,
+      "eindex": 65.2,
       "turnover_rate": 0.001792,
       "turnover_pct": 65.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-03",
-      "eindex": 79.8,
+      "eindex": 59.6,
       "turnover_rate": 0.001705,
       "turnover_pct": 59.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-04",
-      "eindex": 76.0,
+      "eindex": 52.0,
       "turnover_rate": 0.00163,
       "turnover_pct": 52.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-05",
-      "eindex": 78.0,
+      "eindex": 56.0,
       "turnover_rate": 0.001653,
       "turnover_pct": 56.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-06",
-      "eindex": 78.8,
+      "eindex": 57.6,
       "turnover_rate": 0.001677,
       "turnover_pct": 57.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-07",
-      "eindex": 75.8,
+      "eindex": 51.6,
       "turnover_rate": 0.001628,
       "turnover_pct": 51.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-10",
-      "eindex": 81.8,
+      "eindex": 63.6,
       "turnover_rate": 0.001746,
       "turnover_pct": 63.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-11",
-      "eindex": 78.0,
+      "eindex": 56.0,
       "turnover_rate": 0.001651,
       "turnover_pct": 56.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-12",
-      "eindex": 78.6,
+      "eindex": 57.2,
       "turnover_rate": 0.001653,
       "turnover_pct": 57.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-13",
-      "eindex": 81.2,
+      "eindex": 62.4,
       "turnover_rate": 0.001708,
       "turnover_pct": 62.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-14",
-      "eindex": 82.6,
+      "eindex": 65.2,
       "turnover_rate": 0.001746,
       "turnover_pct": 65.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-17",
-      "eindex": 79.8,
+      "eindex": 59.6,
       "turnover_rate": 0.001683,
       "turnover_pct": 59.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-18",
-      "eindex": 82.4,
+      "eindex": 64.8,
       "turnover_rate": 0.001736,
       "turnover_pct": 64.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-19",
-      "eindex": 70.8,
+      "eindex": 41.6,
       "turnover_rate": 0.001539,
       "turnover_pct": 41.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-20",
-      "eindex": 69.2,
+      "eindex": 38.4,
       "turnover_rate": 0.001516,
       "turnover_pct": 38.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-21",
-      "eindex": 86.4,
+      "eindex": 72.8,
       "turnover_rate": 0.001811,
       "turnover_pct": 72.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-24",
-      "eindex": 68.8,
+      "eindex": 37.6,
       "turnover_rate": 0.001499,
       "turnover_pct": 37.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-25",
-      "eindex": 68.2,
+      "eindex": 36.4,
       "turnover_rate": 0.001479,
       "turnover_pct": 36.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-26",
-      "eindex": 65.2,
+      "eindex": 30.4,
       "turnover_rate": 0.001436,
       "turnover_pct": 30.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-27",
-      "eindex": 62.4,
+      "eindex": 24.8,
       "turnover_rate": 0.001358,
       "turnover_pct": 24.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-11-28",
-      "eindex": 61.0,
+      "eindex": 22.0,
       "turnover_rate": 0.001332,
       "turnover_pct": 22.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-01",
-      "eindex": 72.2,
+      "eindex": 44.4,
       "turnover_rate": 0.00154,
       "turnover_pct": 44.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-02",
-      "eindex": 63.2,
+      "eindex": 26.4,
       "turnover_rate": 0.001374,
       "turnover_pct": 26.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-03",
-      "eindex": 68.8,
+      "eindex": 37.6,
       "turnover_rate": 0.001472,
       "turnover_pct": 37.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-04",
-      "eindex": 62.2,
+      "eindex": 24.4,
       "turnover_rate": 0.001349,
       "turnover_pct": 24.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-05",
-      "eindex": 68.0,
+      "eindex": 36.0,
       "turnover_rate": 0.001462,
       "turnover_pct": 36.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-08",
-      "eindex": 77.0,
+      "eindex": 54.0,
       "turnover_rate": 0.001596,
       "turnover_pct": 54.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-09",
-      "eindex": 70.8,
+      "eindex": 41.6,
       "turnover_rate": 0.001516,
       "turnover_pct": 41.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-10",
-      "eindex": 68.6,
+      "eindex": 37.2,
       "turnover_rate": 0.001467,
       "turnover_pct": 37.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-11",
-      "eindex": 73.2,
+      "eindex": 46.4,
       "turnover_rate": 0.001539,
       "turnover_pct": 46.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-12",
-      "eindex": 77.6,
+      "eindex": 55.2,
       "turnover_rate": 0.001594,
       "turnover_pct": 55.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-15",
-      "eindex": 64.8,
+      "eindex": 29.6,
       "turnover_rate": 0.00141,
       "turnover_pct": 29.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-16",
-      "eindex": 69.4,
+      "eindex": 38.8,
       "turnover_rate": 0.001471,
       "turnover_pct": 38.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-17",
-      "eindex": 68.2,
+      "eindex": 36.4,
       "turnover_rate": 0.001457,
       "turnover_pct": 36.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-18",
-      "eindex": 60.2,
+      "eindex": 20.4,
       "turnover_rate": 0.001314,
       "turnover_pct": 20.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-19",
-      "eindex": 69.0,
+      "eindex": 38.0,
       "turnover_rate": 0.001463,
       "turnover_pct": 38.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-22",
-      "eindex": 69.8,
+      "eindex": 39.6,
       "turnover_rate": 0.001471,
       "turnover_pct": 39.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-23",
-      "eindex": 71.8,
+      "eindex": 43.6,
       "turnover_rate": 0.001495,
       "turnover_pct": 43.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-24",
-      "eindex": 64.8,
+      "eindex": 29.6,
       "turnover_rate": 0.001394,
       "turnover_pct": 29.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-25",
-      "eindex": 65.4,
+      "eindex": 30.8,
       "turnover_rate": 0.001413,
       "turnover_pct": 30.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-26",
-      "eindex": 80.6,
+      "eindex": 61.2,
       "turnover_rate": 0.001621,
       "turnover_pct": 61.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-29",
-      "eindex": 79.8,
+      "eindex": 59.6,
       "turnover_rate": 0.001597,
       "turnover_pct": 59.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-30",
-      "eindex": 76.2,
+      "eindex": 52.4,
       "turnover_rate": 0.001553,
       "turnover_pct": 52.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2025-12-31",
-      "eindex": 72.8,
+      "eindex": 45.6,
       "turnover_rate": 0.001505,
       "turnover_pct": 45.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-05",
-      "eindex": 89.0,
+      "eindex": 78.0,
       "turnover_rate": 0.001777,
       "turnover_pct": 78.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-06",
-      "eindex": 97.6,
+      "eindex": 95.2,
       "turnover_rate": 0.002034,
       "turnover_pct": 95.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-07",
-      "eindex": 96.4,
+      "eindex": 92.8,
       "turnover_rate": 0.001988,
       "turnover_pct": 92.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-08",
-      "eindex": 95.6,
+      "eindex": 91.2,
       "turnover_rate": 0.001975,
       "turnover_pct": 91.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-09",
-      "eindex": 98.8,
+      "eindex": 97.6,
       "turnover_rate": 0.00217,
       "turnover_pct": 97.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-12",
-      "eindex": 99.6,
+      "eindex": 99.2,
       "turnover_rate": 0.00248,
       "turnover_pct": 99.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-13",
@@ -26808,8 +26808,8 @@
       "turnover_pct": 100.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-14",
@@ -26818,228 +26818,228 @@
       "turnover_pct": 100.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-15",
-      "eindex": 97.2,
+      "eindex": 94.4,
       "turnover_rate": 0.002056,
       "turnover_pct": 94.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-16",
-      "eindex": 97.2,
+      "eindex": 94.4,
       "turnover_rate": 0.002079,
       "turnover_pct": 94.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-19",
-      "eindex": 91.6,
+      "eindex": 83.2,
       "turnover_rate": 0.001893,
       "turnover_pct": 83.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-20",
-      "eindex": 95.8,
+      "eindex": 91.6,
       "turnover_rate": 0.002012,
       "turnover_pct": 91.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-21",
-      "eindex": 89.0,
+      "eindex": 78.0,
       "turnover_rate": 0.001818,
       "turnover_pct": 78.0,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-22",
-      "eindex": 91.8,
+      "eindex": 83.6,
       "turnover_rate": 0.001907,
       "turnover_pct": 83.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-23",
-      "eindex": 98.2,
+      "eindex": 96.4,
       "turnover_rate": 0.002197,
       "turnover_pct": 96.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-26",
-      "eindex": 98.8,
+      "eindex": 97.6,
       "turnover_rate": 0.002378,
       "turnover_pct": 97.6,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-27",
-      "eindex": 96.6,
+      "eindex": 93.2,
       "turnover_rate": 0.002072,
       "turnover_pct": 93.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-28",
-      "eindex": 97.4,
+      "eindex": 94.8,
       "turnover_rate": 0.002124,
       "turnover_pct": 94.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-29",
-      "eindex": 98.6,
+      "eindex": 97.2,
       "turnover_rate": 0.002365,
       "turnover_pct": 97.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-01-30",
-      "eindex": 97.2,
+      "eindex": 94.4,
       "turnover_rate": 0.002124,
       "turnover_pct": 94.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-02-02",
-      "eindex": 90.6,
+      "eindex": 81.2,
       "turnover_rate": 0.001914,
       "turnover_pct": 81.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-02-03",
-      "eindex": 84.6,
+      "eindex": 69.2,
       "turnover_rate": 0.001761,
       "turnover_pct": 69.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-02-04",
-      "eindex": 88.6,
+      "eindex": 77.2,
       "turnover_rate": 0.001846,
       "turnover_pct": 77.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-02-05",
-      "eindex": 78.4,
+      "eindex": 56.8,
       "turnover_rate": 0.00164,
       "turnover_pct": 56.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-02-06",
-      "eindex": 75.4,
+      "eindex": 50.8,
       "turnover_rate": 0.001595,
       "turnover_pct": 50.8,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-02-09",
-      "eindex": 76.2,
+      "eindex": 52.4,
       "turnover_rate": 0.00161,
       "turnover_pct": 52.4,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-02-10",
-      "eindex": 72.6,
+      "eindex": 45.2,
       "turnover_rate": 0.001559,
       "turnover_pct": 45.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-02-11",
-      "eindex": 66.6,
+      "eindex": 33.2,
       "turnover_rate": 0.001466,
       "turnover_pct": 33.2,
       "margin_ratio": 0,
       "margin_pct": 0,
-      "limitup_ratio": 0.0,
-      "limitup_pct": 100.0
+      "limitup_ratio": 0,
+      "limitup_pct": 0
     },
     {
       "date": "2026-02-12",
-      "eindex": 70.2,
+      "eindex": 45.2,
       "turnover_rate": 0.001519,
       "turnover_pct": 40.4,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.010909,
-      "limitup_pct": 100.0
+      "limitup_pct": 50.0
     },
     {
       "date": "2026-02-13",
-      "eindex": 62.8,
+      "eindex": 38.0,
       "turnover_rate": 0.001415,
       "turnover_pct": 26.0,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.005818,
-      "limitup_pct": 99.6
+      "limitup_pct": 50.0
     },
     {
       "date": "2026-02-24",
@@ -27053,123 +27053,123 @@
     },
     {
       "date": "2026-02-25",
-      "eindex": 89.4,
+      "eindex": 77.1,
       "turnover_rate": 0.001882,
       "turnover_pct": 79.2,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.013636,
-      "limitup_pct": 99.6
+      "limitup_pct": 75.0
     },
     {
       "date": "2026-02-26",
-      "eindex": 85.2,
+      "eindex": 65.6,
       "turnover_rate": 0.001791,
       "turnover_pct": 71.2,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.011091,
-      "limitup_pct": 99.2
+      "limitup_pct": 60.0
     },
     {
       "date": "2026-02-27",
-      "eindex": 86.8,
+      "eindex": 78.67,
       "turnover_rate": 0.001814,
       "turnover_pct": 74.0,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.013636,
-      "limitup_pct": 99.6
+      "limitup_pct": 83.33
     },
     {
       "date": "2026-03-02",
-      "eindex": 97.6,
+      "eindex": 90.66,
       "turnover_rate": 0.002217,
       "turnover_pct": 95.6,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.016,
-      "limitup_pct": 99.6
+      "limitup_pct": 85.71
     },
     {
       "date": "2026-03-03",
-      "eindex": 97.8,
+      "eindex": 85.7,
       "turnover_rate": 0.002336,
       "turnover_pct": 96.4,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.014909,
-      "limitup_pct": 99.2
+      "limitup_pct": 75.0
     },
     {
       "date": "2026-03-04",
-      "eindex": 87.4,
+      "eindex": 49.91,
       "turnover_rate": 0.001859,
       "turnover_pct": 77.6,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.008,
-      "limitup_pct": 97.2
+      "limitup_pct": 22.22
     },
     {
       "date": "2026-03-05",
-      "eindex": 84.2,
+      "eindex": 60.2,
       "turnover_rate": 0.001789,
       "turnover_pct": 70.4,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.012545,
-      "limitup_pct": 98.0
+      "limitup_pct": 50.0
     },
     {
       "date": "2026-03-06",
-      "eindex": 81.0,
+      "eindex": 59.27,
       "turnover_rate": 0.001699,
       "turnover_pct": 64.0,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.013455,
-      "limitup_pct": 98.0
+      "limitup_pct": 54.55
     },
     {
       "date": "2026-03-09",
-      "eindex": 92.2,
+      "eindex": 52.53,
       "turnover_rate": 0.002019,
       "turnover_pct": 88.4,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.007636,
-      "limitup_pct": 96.0
+      "limitup_pct": 16.67
     },
     {
       "date": "2026-03-10",
-      "eindex": 81.6,
+      "eindex": 48.78,
       "turnover_rate": 0.001742,
       "turnover_pct": 66.8,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.010182,
-      "limitup_pct": 96.4
+      "limitup_pct": 30.77
     },
     {
       "date": "2026-03-11",
-      "eindex": 85.8,
+      "eindex": 52.09,
       "turnover_rate": 0.001826,
       "turnover_pct": 75.6,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.009636,
-      "limitup_pct": 96.0
+      "limitup_pct": 28.57
     },
     {
       "date": "2026-03-12",
-      "eindex": 89.2,
+      "eindex": 54.73,
       "turnover_rate": 0.00192,
       "turnover_pct": 82.8,
       "margin_ratio": 0,
       "margin_pct": 0,
       "limitup_ratio": 0.009455,
-      "limitup_pct": 95.6
+      "limitup_pct": 26.67
     }
   ]
 }
