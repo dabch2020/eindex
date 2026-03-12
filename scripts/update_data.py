@@ -1,20 +1,54 @@
 #!/usr/bin/env python3
 """
 eIndex 数据更新脚本
-使用 akshare 获取A股市场数据，计算情绪指数
+通过 akshare 获取A股市场实盘数据，计算情绪指数
+
+数据源：
+  - 换手率：新浪财经（沪深指数每日成交额）
+  - 融资余额：上交所 + 深交所
+  - 涨停家数：东方财富网
+
+用法：
+  python update_data.py          # 增量更新（只获取新数据）
+  python update_data.py --full   # 全量重建（涨停数据获取较慢）
 """
 
 import json
-import os
 import sys
-from datetime import datetime, timedelta
+import time
+from datetime import datetime
 from pathlib import Path
 
-import numpy as np
+DATA_DIR = Path(__file__).parent.parent / "data"
+DATA_FILE = DATA_DIR / "eindex_data.json"
+
+# ── 流通市值历史锚点（单位：元）──────────────────────────
+# 用于计算换手率 = 总成交额 / 流通市值
+# 最终取250日分位数会归一化，绝对值的小偏差影响有限
+FLOAT_MCAP_ANCHORS = [
+    ("2015-01", 32e12), ("2015-06", 58e12), ("2015-09", 38e12), ("2015-12", 40e12),
+    ("2016-06", 34e12), ("2016-12", 35e12),
+    ("2017-06", 38e12), ("2017-12", 42e12),
+    ("2018-06", 35e12), ("2018-12", 30e12),
+    ("2019-06", 38e12), ("2019-12", 42e12),
+    ("2020-06", 48e12), ("2020-12", 55e12),
+    ("2021-06", 62e12), ("2021-12", 65e12),
+    ("2022-06", 58e12), ("2022-12", 55e12),
+    ("2023-06", 58e12), ("2023-12", 57e12),
+    ("2024-06", 54e12), ("2024-09", 55e12), ("2024-10", 72e12), ("2024-12", 75e12),
+    ("2025-06", 78e12), ("2025-12", 80e12),
+    ("2026-06", 82e12),
+]
+
+# 各年份全市场股票总数（近似）
+TOTAL_STOCKS = {
+    2015: 2800, 2016: 3000, 2017: 3400, 2018: 3600,
+    2019: 3800, 2020: 4100, 2021: 4500, 2022: 4900,
+    2023: 5200, 2024: 5350, 2025: 5450, 2026: 5500,
+}
 
 
-def install_akshare():
-    """确保 akshare 已安装"""
+def ensure_akshare():
     try:
         import akshare
         return akshare
@@ -25,136 +59,274 @@ def install_akshare():
         return akshare
 
 
-def get_market_data(ak, start_date, end_date):
-    """获取市场数据"""
-    print("获取沪深两市成交额与流通市值...")
+def estimate_float_mcap(date_str):
+    """线性插值估算某日的全市场流通市值"""
+    ym = date_str[:7]
+    if ym <= FLOAT_MCAP_ANCHORS[0][0]:
+        return FLOAT_MCAP_ANCHORS[0][1]
+    if ym >= FLOAT_MCAP_ANCHORS[-1][0]:
+        return FLOAT_MCAP_ANCHORS[-1][1]
 
-    # 获取上证指数日线 (用于日期参考)
-    df_sh = ak.stock_zh_index_daily(symbol="sh000001")
-    df_sh = df_sh[(df_sh['date'] >= start_date) & (df_sh['date'] <= end_date)]
+    for i in range(len(FLOAT_MCAP_ANCHORS) - 1):
+        k0, v0 = FLOAT_MCAP_ANCHORS[i]
+        k1, v1 = FLOAT_MCAP_ANCHORS[i + 1]
+        if k0 <= ym <= k1:
+            d0 = datetime.strptime(k0 + "-15", "%Y-%m-%d")
+            d1 = datetime.strptime(k1 + "-15", "%Y-%m-%d")
+            dt = datetime.strptime(ym + "-15", "%Y-%m-%d")
+            ratio = (dt - d0).days / max((d1 - d0).days, 1)
+            return v0 + (v1 - v0) * ratio
 
-    # 获取沪深两市每日成交额
-    # 使用A股市场总貌数据
-    try:
-        df_market = ak.stock_szse_summary(date=end_date.replace("-", ""))
-    except Exception:
-        pass
+    return 70e12
 
-    return df_sh
+
+def get_trade_dates(ak, start="2015-01-01"):
+    """从上证指数获取真实交易日历（自动排除周末和节假日）"""
+    print("获取交易日历...")
+    df = ak.stock_zh_index_daily(symbol="sh000001")
+    df['date'] = df['date'].astype(str)
+    end = datetime.now().strftime("%Y-%m-%d")
+    dates = sorted(d for d in df['date'] if start <= d <= end)
+    print(f"  交易日: {dates[0]} ~ {dates[-1]}，共 {len(dates)} 天")
+    return dates
 
 
 def get_turnover_data(ak, trade_dates):
-    """获取换手率相关数据 - 全市场成交额与流通市值"""
-    print("计算全市场换手率...")
+    """全市场换手率 = (沪市成交额 + 深市成交额) / 估算流通市值"""
+    print("获取全市场成交额（新浪财经）...")
     results = {}
 
     try:
-        # 上证指数成交额
         df_sh = ak.stock_zh_index_daily(symbol="sh000001")
         df_sh['date'] = df_sh['date'].astype(str)
-        sh_volume = dict(zip(df_sh['date'], df_sh['volume']))
+        sh_vol = dict(zip(df_sh['date'], df_sh['volume']))
 
-        # 深证成指成交额
         df_sz = ak.stock_zh_index_daily(symbol="sz399001")
         df_sz['date'] = df_sz['date'].astype(str)
-        sz_volume = dict(zip(df_sz['date'], df_sz['volume']))
+        sz_vol = dict(zip(df_sz['date'], df_sz['volume']))
 
         for dt in trade_dates:
-            dt_str = dt if isinstance(dt, str) else dt.strftime('%Y-%m-%d')
-            sh_vol = sh_volume.get(dt_str, 0)
-            sz_vol = sz_volume.get(dt_str, 0)
-            total_vol = sh_vol + sz_vol
-            # 近似流通市值 (使用经验比例约 80万亿)
-            float_mcap = 80e12
-            if total_vol > 0:
-                results[dt_str] = total_vol / float_mcap
+            sh = sh_vol.get(dt, 0) or 0
+            sz = sz_vol.get(dt, 0) or 0
+            total = float(sh) + float(sz)
+            if total > 0:
+                mcap = estimate_float_mcap(dt)
+                results[dt] = total / mcap
+
+        print(f"  换手率数据: {len(results)} 天")
     except Exception as e:
-        print(f"获取换手率数据出错: {e}")
+        print(f"  换手率获取失败: {e}")
 
     return results
 
 
-def get_margin_data(ak, trade_dates):
-    """获取融资余额数据"""
-    print("获取融资余额...")
-    results = {}
-
+def _parse_date(val):
+    """把各种日期格式统一为 YYYY-MM-DD"""
+    s = str(val).strip()
+    if len(s) >= 10 and s[4] == '-':
+        return s[:10]
+    if len(s) == 8 and s.isdigit():
+        return f"{s[:4]}-{s[4:6]}-{s[6:8]}"
+    # pandas Timestamp
     try:
-        df_margin = ak.stock_margin_sse(start_date="20240101")
-        df_margin['信用交易日期'] = df_margin['信用交易日期'].astype(str)
-        for _, row in df_margin.iterrows():
-            dt = row['信用交易日期']
-            if len(dt) == 8:
-                dt = f"{dt[:4]}-{dt[4:6]}-{dt[6:8]}"
-            margin_balance = row.get('融资余额(元)', 0)
-            if margin_balance and margin_balance > 0:
-                float_mcap = 80e12
-                results[dt] = margin_balance / float_mcap
+        return val.strftime("%Y-%m-%d")
+    except Exception:
+        return None
+
+
+def _find_column(df, candidates):
+    """在 DataFrame 中按候选名查找列"""
+    for c in candidates:
+        if c in df.columns:
+            return c
+    return None
+
+
+def get_margin_data(ak):
+    """获取沪深两市融资余额占比（上交所 + 深交所）"""
+    print("获取融资余额（上交所 + 深交所）...")
+    sh_margin = {}
+    sz_margin = {}
+
+    # ── 上交所 ──
+    try:
+        df = ak.stock_margin_sse(start_date="20150101")
+        date_col = df.columns[0]  # 第一列通常是日期
+        bal_col = _find_column(df, ['融资余额(元)', '融资余额', '融资余额（元）'])
+        if bal_col is None:
+            bal_col = df.columns[4] if len(df.columns) > 4 else None
+
+        if bal_col:
+            for _, row in df.iterrows():
+                dt = _parse_date(row[date_col])
+                if dt is None:
+                    continue
+                try:
+                    balance = float(row[bal_col])
+                    if balance > 0:
+                        sh_margin[dt] = balance
+                except (ValueError, TypeError):
+                    continue
+
+        print(f"  上交所融资: {len(sh_margin)} 天")
     except Exception as e:
-        print(f"获取融资数据出错: {e}")
+        print(f"  上交所融资获取失败: {e}")
 
-    return results
+    # ── 深交所 ──
+    # akshare 深交所融资 API 名称可能随版本变化，逐个尝试
+    szse_fetchers = [
+        ("stock_margin_szse", {"start_date": "20150101"}),
+        ("stock_margin_detail_szse", {}),
+    ]
 
+    for func_name, kwargs in szse_fetchers:
+        if hasattr(ak, func_name):
+            try:
+                df = getattr(ak, func_name)(**kwargs)
+                date_col = df.columns[0]
+                bal_col = _find_column(df, ['融资余额(元)', '融资余额', '融资余额（元）'])
+                if bal_col is None:
+                    bal_col = df.columns[4] if len(df.columns) > 4 else None
 
-def get_limitup_data(ak, trade_dates):
-    """获取涨停股票数量"""
-    print("获取涨停数据...")
+                if bal_col:
+                    for _, row in df.iterrows():
+                        dt = _parse_date(row[date_col])
+                        if dt is None:
+                            continue
+                        try:
+                            balance = float(row[bal_col])
+                            if balance > 0:
+                                sz_margin[dt] = balance
+                        except (ValueError, TypeError):
+                            continue
+
+                print(f"  深交所融资: {len(sz_margin)} 天 (via {func_name})")
+                break
+            except Exception as e:
+                print(f"  {func_name} 失败: {e}")
+
+    # ── 合并 ──
     results = {}
+    if sh_margin and not sz_margin:
+        # 深交所数据不可用，用上交所 × 1.67 估算全市场
+        print("  深交所数据不可用，使用上交所 × 1.67 估算全市场")
+        for dt, val in sh_margin.items():
+            mcap = estimate_float_mcap(dt)
+            results[dt] = val * 1.67 / mcap
+    else:
+        all_dates = sorted(set(list(sh_margin.keys()) + list(sz_margin.keys())))
+        for dt in all_dates:
+            sh = sh_margin.get(dt, 0)
+            sz = sz_margin.get(dt, 0)
+            total = sh + sz
+            if total > 0:
+                mcap = estimate_float_mcap(dt)
+                results[dt] = total / mcap
 
-    total_stocks = 5300  # 近似全市场股票数
-
-    for dt_str in trade_dates[-60:]:  # 只获取最近60天避免频率限制
-        try:
-            dt_clean = dt_str.replace('-', '')
-            df = ak.stock_zt_pool_em(date=dt_clean)
-            if df is not None and len(df) > 0:
-                results[dt_str] = len(df) / total_stocks
-        except Exception:
-            pass
-
+    print(f"  融资占比数据: {len(results)} 天")
     return results
 
 
-def compute_percentile(values, current, window=250):
-    """计算分位数"""
-    if len(values) < 2:
+def get_limitup_data(ak, trade_dates, max_days=300):
+    """获取涨停家数占比（东方财富网）
+
+    stock_zt_pool_em 需逐日调用，为避免频率限制：
+    - 全量模式：获取最近 max_days 个交易日
+    - 增量模式：只获取缺失的日期
+    """
+    print(f"获取涨停数据（最近 {max_days} 天）...")
+    results = {}
+    recent_dates = trade_dates[-max_days:]
+    failed = 0
+
+    for i, dt in enumerate(recent_dates):
+        try:
+            df = ak.stock_zt_pool_em(date=dt.replace('-', ''))
+            year = int(dt[:4])
+            total = TOTAL_STOCKS.get(year, 5300)
+            if df is not None and len(df) > 0:
+                results[dt] = len(df) / total
+            else:
+                results[dt] = 0.0
+            failed = 0  # 重置连续失败计数
+        except Exception as e:
+            failed += 1
+            if failed <= 3:
+                print(f"  {dt}: {e}")
+            if failed >= 10:
+                print(f"  连续失败 {failed} 次，跳过更早日期")
+                break
+
+        if (i + 1) % 50 == 0:
+            print(f"  进度: {i + 1}/{len(recent_dates)}")
+
+        time.sleep(0.25)  # 限频避免被封
+
+    print(f"  涨停数据: {len(results)} 天")
+    return results
+
+
+def compute_percentile(history, current, window=250):
+    """计算当前值在最近 window 个值中的分位数（0-100）"""
+    if len(history) < 2:
         return 50.0
-    recent = values[-window:] if len(values) >= window else values
+    recent = history[-window:] if len(history) >= window else history
     rank = sum(1 for v in recent if v <= current)
     return (rank / len(recent)) * 100
 
 
+def load_existing():
+    """加载已有数据"""
+    if DATA_FILE.exists():
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return None
+
+
 def generate_data():
-    """主函数：获取数据并计算eIndex"""
-    ak = install_akshare()
+    """主函数：获取实盘数据并计算eIndex"""
+    ak = ensure_akshare()
 
-    end_date = datetime.now().strftime('%Y-%m-%d')
-    start_date = '2015-01-01'  # 数据从2015年开始
+    full_mode = '--full' in sys.argv
 
-    # 获取交易日历
-    print("获取交易日历...")
-    df_cal = ak.stock_zh_index_daily(symbol="sh000001")
-    df_cal['date'] = df_cal['date'].astype(str)
-    trade_dates = sorted([d for d in df_cal['date'].tolist()
-                         if start_date <= d <= end_date])
+    # 加载已有数据
+    existing_dates = set()
+    if not full_mode:
+        old_data = load_existing()
+        if old_data:
+            existing_dates = {d['date'] for d in old_data.get('data', [])}
+            print(f"已有 {len(existing_dates)} 天历史数据")
+
+    # 获取交易日历（来自上证指数真实交易日，自动排除节假日）
+    trade_dates = get_trade_dates(ak)
 
     if not trade_dates:
         print("无交易日数据")
         return
 
-    print(f"交易日范围: {trade_dates[0]} ~ {trade_dates[-1]}, 共 {len(trade_dates)} 天")
+    # 增量模式检查
+    if existing_dates and not full_mode:
+        new_dates = [d for d in trade_dates if d not in existing_dates]
+        if not new_dates:
+            print("数据已是最新，无需更新")
+            return
+        print(f"需要更新: {len(new_dates)} 天 ({new_dates[0]} ~ {new_dates[-1]})")
 
-    # 获取三大指标
+    # ── 获取三大指标 ──
     turnover_data = get_turnover_data(ak, trade_dates)
-    margin_data = get_margin_data(ak, trade_dates)
-    limitup_data = get_limitup_data(ak, trade_dates)
+    margin_data = get_margin_data(ak)
 
-    # 计算情绪指数
+    if full_mode or not existing_dates:
+        limitup_data = get_limitup_data(ak, trade_dates, max_days=300)
+    else:
+        # 增量模式只取最近少量天数
+        limitup_data = get_limitup_data(ak, trade_dates,
+                                        max_days=min(30, len(new_dates) + 5))
+
+    # ── 计算情绪指数 ──
     print("计算情绪指数...")
     results = []
-    turnover_history = []
-    margin_history = []
-    limitup_history = []
+    t_hist, m_hist, l_hist = [], [], []
 
     for dt in trade_dates:
         t_val = turnover_data.get(dt)
@@ -162,49 +334,53 @@ def generate_data():
         l_val = limitup_data.get(dt)
 
         if t_val is not None:
-            turnover_history.append(t_val)
+            t_hist.append(t_val)
         if m_val is not None:
-            margin_history.append(m_val)
+            m_hist.append(m_val)
         if l_val is not None:
-            limitup_history.append(l_val)
+            l_hist.append(l_val)
 
+        # 至少需要一个指标有数据
         if t_val is None and m_val is None and l_val is None:
             continue
 
-        t_pct = compute_percentile(turnover_history, t_val) if t_val else 50
-        m_pct = compute_percentile(margin_history, m_val) if m_val else 50
-        l_pct = compute_percentile(limitup_history, l_val) if l_val else 50
+        t_pct = compute_percentile(t_hist, t_val) if t_val is not None else None
+        m_pct = compute_percentile(m_hist, m_val) if m_val is not None else None
+        l_pct = compute_percentile(l_hist, l_val) if l_val is not None else None
 
-        eindex = (t_pct + m_pct + l_pct) / 3
+        # 有几个指标就用几个的均值（而非缺失时默认50）
+        pcts = [p for p in [t_pct, m_pct, l_pct] if p is not None]
+        if not pcts:
+            continue
+        eindex = sum(pcts) / len(pcts)
 
         results.append({
             "date": dt,
             "eindex": round(eindex, 2),
-            "turnover_rate": round(t_val, 6) if t_val else 0,
-            "turnover_pct": round(t_pct, 2),
-            "margin_ratio": round(m_val, 6) if m_val else 0,
-            "margin_pct": round(m_pct, 2),
-            "limitup_ratio": round(l_val, 6) if l_val else 0,
-            "limitup_pct": round(l_pct, 2)
+            "turnover_rate": round(t_val, 6) if t_val is not None else 0,
+            "turnover_pct": round(t_pct, 2) if t_pct is not None else 0,
+            "margin_ratio": round(m_val, 6) if m_val is not None else 0,
+            "margin_pct": round(m_pct, 2) if m_pct is not None else 0,
+            "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
+            "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
         })
 
-    # 保存数据
+    # ── 保存 ──
     output = {
         "updated_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         "data": results
     }
 
-    data_dir = Path(__file__).parent.parent / "data"
-    data_dir.mkdir(exist_ok=True)
-    output_file = data_dir / "eindex_data.json"
-    with open(output_file, 'w', encoding='utf-8') as f:
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
 
-    print(f"数据已保存: {output_file}")
+    print(f"\n数据已保存: {DATA_FILE}")
     print(f"共 {len(results)} 条记录")
     if results:
         latest = results[-1]
-        print(f"最新情绪指数: {latest['eindex']} ({latest['date']})")
+        sig = "买入" if latest['eindex'] <= 20 else "卖出" if latest['eindex'] >= 80 else "持有"
+        print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}")
 
 
 if __name__ == '__main__':

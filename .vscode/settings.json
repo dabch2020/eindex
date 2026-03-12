@@ -37,6 +37,23 @@
         "/^python3 scripts/generate_sample\\.py && git add -A && git commit -m \"fix: use realistic A-share market phases for sample data\" && git push 2>&1$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "pip": true,
+        "/^python3 scripts/update_data\\.py --full 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\nprint\\(f'总天数: \\{len\\(data\\)\\}'\\)\nprint\\(f'eIndex >= 80: \\{len\\(\\[d for d in data if d\\[\\\\\"eindex\\\\\"\\] >= 80\\]\\)\\}'\\)\nprint\\(f'eIndex <= 20: \\{len\\(\\[d for d in data if d\\[\\\\\"eindex\\\\\"\\] <= 20\\]\\)\\}'\\)\nprint\\(f'范围: \\{min\\(d\\[\\\\\"eindex\\\\\"\\] for d in data\\):\\.1f\\} ~ \\{max\\(d\\[\\\\\"eindex\\\\\"\\] for d in data\\):\\.1f\\}'\\)\nprint\\(\\)\nyears = sorted\\(set\\(d\\['date'\\]\\[:4\\] for d in data\\)\\)\nfor y in years:\n    yd = \\[d for d in data if d\\['date'\\]\\.startswith\\(y\\)\\]\n    a80 = len\\(\\[d for d in yd if d\\['eindex'\\] >= 80\\]\\)\n    b20 = len\\(\\[d for d in yd if d\\['eindex'\\] <= 20\\]\\)\n    avg = sum\\(d\\['eindex'\\] for d in yd\\) / len\\(yd\\)\n    print\\(f'\\{y\\}: \\{len\\(yd\\):3d\\}天 avg=\\{avg:5\\.1f\\} >=80:\\{a80:3d\\} <=20:\\{b20:3d\\}'\\)\nprint\\(\\)\nprint\\('最近5天:'\\)\nfor d in data\\[-5:\\]:\n    sig = '买入' if d\\['eindex'\\]<=20 else '卖出' if d\\['eindex'\\]>=80 else '持有'\n    print\\(f\\\\\"  \\{d\\['date'\\]\\} eIndex=\\{d\\['eindex'\\]:5\\.1f\\} \\{sig\\}  换手率=\\{d\\['turnover_rate'\\]\\*100:\\.3f\\}%  融资=\\{d\\['margin_ratio'\\]\\*100:\\.3f\\}%  涨停=\\{d\\['limitup_ratio'\\]\\*100:\\.3f\\}%\\\\\"\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 scripts/check_data\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 /Users/gachen2/MyProject/eindex/scripts/check_data\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
     }
 }
