@@ -35,6 +35,7 @@
                     <span class="signal-text" id="signalText">加载中...</span>
                 </div>
                 <div class="update-time" id="updateTime">数据更新时间: --</div>
+                <div class="recent-days" id="recentDays"></div>
             </div>
         </section>
 
@@ -47,14 +48,7 @@
                         <span class="indicator-icon">🔄</span>
                         <span class="indicator-name">全市场换手率</span>
                     </div>
-                    <div class="indicator-value" id="turnoverValue">--</div>
-                    <div class="indicator-percentile">
-                        <span>分位数</span>
-                        <span class="percentile-value" id="turnoverPercentile">--</span>
-                    </div>
-                    <div class="percentile-bar">
-                        <div class="percentile-fill" id="turnoverBar"></div>
-                    </div>
+                    <div class="indicator-days" id="turnoverDays"></div>
                     <div class="indicator-formula">= 总成交额 / 总流通市值</div>
                 </div>
                 <div class="indicator-card">
@@ -62,14 +56,7 @@
                         <span class="indicator-icon">💰</span>
                         <span class="indicator-name">融资余额占比</span>
                     </div>
-                    <div class="indicator-value" id="marginValue">--</div>
-                    <div class="indicator-percentile">
-                        <span>分位数</span>
-                        <span class="percentile-value" id="marginPercentile">--</span>
-                    </div>
-                    <div class="percentile-bar">
-                        <div class="percentile-fill" id="marginBar"></div>
-                    </div>
+                    <div class="indicator-days" id="marginDays"></div>
                     <div class="indicator-formula">= 融资余额 / 总流通市值</div>
                 </div>
                 <div class="indicator-card">
@@ -77,14 +64,7 @@
                         <span class="indicator-icon">🚀</span>
                         <span class="indicator-name">涨停家数占比</span>
                     </div>
-                    <div class="indicator-value" id="limitUpValue">--</div>
-                    <div class="indicator-percentile">
-                        <span>分位数</span>
-                        <span class="percentile-value" id="limitUpPercentile">--</span>
-                    </div>
-                    <div class="percentile-bar">
-                        <div class="percentile-fill" id="limitUpBar"></div>
-                    </div>
+                    <div class="indicator-days" id="limitUpDays"></div>
                     <div class="indicator-formula">= 涨停股票数 / 全市场股票总数</div>
                 </div>
             </div>

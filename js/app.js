@@ -37,16 +37,17 @@ async function loadData() {
 // 渲染全部
 function renderAll() {
     if (!allData.length) return;
-    const latest = allData[allData.length - 1];
-    renderMainIndex(latest);
-    renderIndicators(latest);
+    const recent3 = allData.slice(-3).reverse(); // 最新在前
+    renderMainIndex(recent3);
+    renderIndicators(recent3);
     renderMainChart();
     renderIndicatorsChart();
     renderTable();
 }
 
 // 渲染主指标
-function renderMainIndex(d) {
+function renderMainIndex(recent3) {
+    const d = recent3[0]; // 最新一天
     const val = d.eindex;
     const el = document.getElementById('mainIndexValue');
     el.textContent = val.toFixed(1);
@@ -64,6 +65,20 @@ function renderMainIndex(d) {
 
     // 渲染仪表盘
     renderGauge(val);
+
+    // 最近三天明细
+    const container = document.getElementById('recentDays');
+    container.innerHTML = '<div class="recent-days-title">最近三天</div>' +
+        '<table class="recent-days-table"><thead><tr>' +
+        '<th>日期</th><th>情绪指数</th><th>信号</th>' +
+        '</tr></thead><tbody>' +
+        recent3.map(r => {
+            const s = getSignal(r.eindex);
+            return `<tr><td>${r.date}</td>` +
+                `<td style="color:${getIndexColor(r.eindex)};font-weight:700">${r.eindex.toFixed(1)}</td>` +
+                `<td class="signal-cell ${s.cls}">${s.icon} ${s.text}</td></tr>`;
+        }).join('') +
+        '</tbody></table>';
 }
 
 // 仪表盘
@@ -110,28 +125,33 @@ function renderGauge(value) {
     window.addEventListener('resize', () => chart.resize());
 }
 
-// 渲染指标卡片
-function renderIndicators(d) {
-    // 换手率
-    document.getElementById('turnoverValue').textContent = (d.turnover_rate * 100).toFixed(3) + '%';
-    document.getElementById('turnoverPercentile').textContent = d.turnover_pct.toFixed(1);
-    const turnoverBar = document.getElementById('turnoverBar');
-    turnoverBar.style.width = d.turnover_pct + '%';
-    turnoverBar.style.background = getIndexColor(d.turnover_pct);
+// 渲染指标卡片（最近三天）
+function renderIndicators(recent3) {
+    function renderDays(containerId, getVal, getPct) {
+        const el = document.getElementById(containerId);
+        el.innerHTML = recent3.map(d => {
+            const val = getVal(d);
+            const pct = getPct(d);
+            return `<div class="day-row">
+                <span class="day-date">${d.date.slice(5)}</span>
+                <span class="day-value">${val}</span>
+                <div class="day-pct-wrap">
+                    <span class="day-pct" style="color:${getIndexColor(pct)}">${pct.toFixed(1)}</span>
+                    <div class="percentile-bar"><div class="percentile-fill" style="width:${pct}%;background:${getIndexColor(pct)}"></div></div>
+                </div>
+            </div>`;
+        }).join('');
+    }
 
-    // 融资占比
-    document.getElementById('marginValue').textContent = (d.margin_ratio * 100).toFixed(3) + '%';
-    document.getElementById('marginPercentile').textContent = d.margin_pct.toFixed(1);
-    const marginBar = document.getElementById('marginBar');
-    marginBar.style.width = d.margin_pct + '%';
-    marginBar.style.background = getIndexColor(d.margin_pct);
-
-    // 涨停占比
-    document.getElementById('limitUpValue').textContent = (d.limitup_ratio * 100).toFixed(3) + '%';
-    document.getElementById('limitUpPercentile').textContent = d.limitup_pct.toFixed(1);
-    const limitUpBar = document.getElementById('limitUpBar');
-    limitUpBar.style.width = d.limitup_pct + '%';
-    limitUpBar.style.background = getIndexColor(d.limitup_pct);
+    renderDays('turnoverDays',
+        d => (d.turnover_rate * 100).toFixed(3) + '%',
+        d => d.turnover_pct);
+    renderDays('marginDays',
+        d => (d.margin_ratio * 100).toFixed(3) + '%',
+        d => d.margin_pct);
+    renderDays('limitUpDays',
+        d => (d.limitup_ratio * 100).toFixed(3) + '%',
+        d => d.limitup_pct);
 }
 
 // 主走势图
