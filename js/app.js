@@ -22,6 +22,12 @@ function getSignal(value) {
 // 加载数据
 async function loadData() {
     try {
+        // 优先使用 script 标签预加载的数据（本地 file:// 协议下 fetch 不可用）
+        if (window.__EINDEX_DATA__) {
+            allData = window.__EINDEX_DATA__.data;
+            renderAll();
+            return;
+        }
         const resp = await fetch('data/eindex_data.json');
         if (!resp.ok) throw new Error('数据文件加载失败');
         const json = await resp.json();

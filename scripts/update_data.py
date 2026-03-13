@@ -21,6 +21,7 @@ from pathlib import Path
 
 DATA_DIR = Path(__file__).parent.parent / "data"
 DATA_FILE = DATA_DIR / "eindex_data.json"
+DATA_JS_FILE = DATA_DIR / "eindex_data.js"
 
 # ── 流通市值历史锚点（单位：元）──────────────────────────
 # 用于计算换手率 = 总成交额 / 流通市值
@@ -430,6 +431,7 @@ def generate_data():
     DATA_DIR.mkdir(exist_ok=True)
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
+    _save_js_version(output)
 
     print(f"\n数据已保存: {DATA_FILE}")
     print(f"共 {len(results)} 条记录")
@@ -515,12 +517,20 @@ def generate_data_recent(n_days=3):
     DATA_DIR.mkdir(exist_ok=True)
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
+    _save_js_version(output)
 
     print(f"\n增量更新完成: 更新/新增 {updated} 天，总计 {len(merged)} 条")
     if merged:
         latest = merged[-1]
         sig = "买入" if latest['eindex'] <= 20 else "卖出" if latest['eindex'] >= 80 else "持有"
         print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}")
+
+
+def _save_js_version(output):
+    """同时保存 JS 版本，供本地 file:// 打开时使用"""
+    js_content = 'window.__EINDEX_DATA__ = ' + json.dumps(output, ensure_ascii=False) + ';\n'
+    with open(DATA_JS_FILE, 'w', encoding='utf-8') as f:
+        f.write(js_content)
 
 
 if __name__ == '__main__':
