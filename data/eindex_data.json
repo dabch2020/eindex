@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-13 22:46:24",
+  "updated_at": "2026-03-13 14:49:32",
   "data": [
     {
       "date": "2016-01-26",
@@ -27008,14 +27008,14 @@
     },
     {
       "date": "2026-03-11",
-      "eindex": 70.53,
+      "eindex": 70.4,
       "turnover_rate": 0.030972,
       "turnover_pct": 82.8,
       "margin_ratio": 0.032525,
       "margin_pct": 90.0,
       "limitup_count": 67,
       "limitup_ratio": 0.012182,
-      "limitup_pct": 38.8
+      "limitup_pct": 38.4
     },
     {
       "date": "2026-03-12",
