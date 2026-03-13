@@ -209,6 +209,34 @@ def get_margin_data(ak):
     except Exception as e:
         print(f"  深市融资获取失败: {e}")
 
+    # ── 深市补漏：用 stock_margin_szse 逐日查询缺失日期 ──
+    if sh_margin and sz_margin:
+        missing_sz = sorted(set(sh_margin.keys()) - set(sz_margin.keys()))
+        if missing_sz:
+            print(f"  深市缺失 {len(missing_sz)} 天，尝试 stock_margin_szse 逐日补漏...")
+            filled_sz = 0
+            failed_sz = 0
+            for dt in missing_sz:
+                date_str = dt.replace('-', '')
+                success = False
+                for attempt in range(5):
+                    try:
+                        df_day = ak.stock_margin_szse(date=date_str)
+                        bal = float(df_day['融资余额'].iloc[0])
+                        if bal > 0:
+                            sz_margin[dt] = bal
+                            filled_sz += 1
+                            success = True
+                        break
+                    except Exception:
+                        if attempt < 4:
+                            time.sleep(5)
+                if not success:
+                    failed_sz += 1
+                if filled_sz % 10 == 0 and filled_sz > 0:
+                    print(f"    已补 {filled_sz} 天...")
+            print(f"  深市补漏完成: 成功 {filled_sz} 天, 失败 {failed_sz} 天")
+
     # ── 合并（前值填充单市场缺失） ──
     results = {}
     margin_gaps = []  # 记录缺失明细：(date, missing_side)
