@@ -5,6 +5,8 @@ on:
     # 每天北京时间18:30运行 (UTC 10:30)
     - cron: '30 10 * * 1-5'
   workflow_dispatch:
+  repository_dispatch:
+    types: [refresh]
 
 permissions:
   contents: write
@@ -24,7 +26,12 @@ jobs:
         run: pip install akshare numpy mootdx
 
       - name: Update eIndex data
-        run: python scripts/update_data.py
+        run: |
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            python scripts/update_data.py --recent
+          else
+            python scripts/update_data.py
+          fi
 
       - name: Commit and push
         run: |

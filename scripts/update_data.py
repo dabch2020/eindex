@@ -439,5 +439,92 @@ def generate_data():
         print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}")
 
 
+def generate_data_recent(n_days=3):
+    """增量更新最近 n_days 个交易日的数据（由刷新按钮触发）"""
+    ak = ensure_akshare()
+
+    old_data = load_existing()
+    if not old_data or not old_data.get('data'):
+        print("无已有数据，请先执行 --full 全量更新")
+        return
+
+    existing = old_data['data']
+    existing_by_date = {d['date']: d for d in existing}
+
+    # 获取交易日历
+    trade_dates = get_trade_dates(ak)
+    recent_dates = trade_dates[-n_days:]
+    print(f"增量更新最近 {n_days} 个交易日: {recent_dates[0]} ~ {recent_dates[-1]}")
+
+    # 获取三大指标（API 返回全量，但只处理最近几天）
+    turnover_data = get_turnover_data(ak, recent_dates)
+    margin_data = get_margin_data(ak)
+    limitup_data = get_limitup_data(ak, recent_dates)
+
+    # 从已有数据重建历史分位序列（用于计算分位数）
+    t_hist = [d['turnover_rate'] for d in existing if d['turnover_rate'] > 0 and d['date'] < recent_dates[0]]
+    m_hist = [d['margin_ratio'] for d in existing if d['margin_ratio'] > 0 and d['date'] < recent_dates[0]]
+    l_hist = [d['limitup_ratio'] for d in existing if d['limitup_ratio'] > 0 and d['date'] < recent_dates[0]]
+
+    updated = 0
+    for dt in recent_dates:
+        t_val = turnover_data.get(dt)
+        m_val = margin_data.get(dt)
+        l_entry = limitup_data.get(dt)
+        l_val = l_entry[0] if l_entry is not None else None
+        l_count = l_entry[1] if l_entry is not None else 0
+
+        if t_val is not None:
+            t_hist.append(t_val)
+        if m_val is not None:
+            m_hist.append(m_val)
+        if l_val is not None:
+            l_hist.append(l_val)
+
+        if t_val is None and m_val is None and l_val is None:
+            continue
+
+        t_pct = compute_percentile(t_hist, t_val) if t_val is not None else None
+        m_pct = compute_percentile(m_hist, m_val) if m_val is not None else None
+        l_pct = compute_percentile(l_hist, l_val) if l_val is not None else None
+
+        pcts = [p for p in [t_pct, m_pct, l_pct] if p is not None]
+        if not pcts:
+            continue
+        eindex = sum(pcts) / len(pcts)
+
+        existing_by_date[dt] = {
+            "date": dt,
+            "eindex": round(eindex, 2),
+            "turnover_rate": round(t_val, 6) if t_val is not None else 0,
+            "turnover_pct": round(t_pct, 2) if t_pct is not None else 0,
+            "margin_ratio": round(m_val, 6) if m_val is not None else 0,
+            "margin_pct": round(m_pct, 2) if m_pct is not None else 0,
+            "limitup_count": l_count,
+            "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
+            "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
+        }
+        updated += 1
+
+    merged = sorted(existing_by_date.values(), key=lambda x: x['date'])
+    output = {
+        "updated_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "data": merged
+    }
+
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+        json.dump(output, f, ensure_ascii=False, indent=2)
+
+    print(f"\n增量更新完成: 更新/新增 {updated} 天，总计 {len(merged)} 条")
+    if merged:
+        latest = merged[-1]
+        sig = "买入" if latest['eindex'] <= 20 else "卖出" if latest['eindex'] >= 80 else "持有"
+        print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}")
+
+
 if __name__ == '__main__':
-    generate_data()
+    if '--recent' in sys.argv:
+        generate_data_recent()
+    else:
+        generate_data()

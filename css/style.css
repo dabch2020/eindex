@@ -61,6 +61,49 @@ header {
     gap: 8px;
 }
 
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.btn-refresh {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 18px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--accent-blue);
+    background: rgba(79, 143, 247, 0.12);
+    border: 1px solid rgba(79, 143, 247, 0.3);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .2s, transform .15s;
+    box-shadow: 0 2px 6px rgba(0,0,0,.2);
+    white-space: nowrap;
+}
+.btn-refresh:hover {
+    background: rgba(79, 143, 247, 0.22);
+}
+.btn-refresh:active {
+    transform: scale(.95);
+}
+.btn-refresh .icon {
+    display: inline-block;
+    transition: transform .4s;
+}
+.btn-refresh.loading {
+    pointer-events: none;
+    opacity: .7;
+}
+.btn-refresh.loading .icon {
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 .logo-icon {
     font-size: 32px;
 }

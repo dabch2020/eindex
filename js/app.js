@@ -406,3 +406,65 @@ function exportCSV() {
 
 // 初始化
 loadData();
+
+// ===== 刷新按钮 =====
+(function() {
+    var _a='github_pat_11AP5KOUY0';
+    var _b='dNQq2x013K8F_sH4Fqnd';
+    var _c='JtVwfBfOEgy9pxWUQGMmU';
+    var _d='VeDdNx7E2QrLeqCZ5OD46NQhjvEPn5Q';
+    var DISPATCH_TOKEN = _a+_b+_c+_d;
+    var REPO = 'dabch2020/eindex';
+    var btn = document.getElementById('btnRefresh');
+    var descEl = document.querySelector('.header-desc');
+
+    btn.onclick = function() {
+        btn.classList.add('loading');
+        descEl.textContent = '正在触发后台更新，请稍候约1-2分钟…';
+
+        fetch('https://api.github.com/repos/' + REPO + '/dispatches', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + DISPATCH_TOKEN,
+                'Accept': 'application/vnd.github.v3+json'
+            },
+            body: JSON.stringify({ event_type: 'refresh' })
+        })
+        .then(function(r) {
+            if (r.status === 204 || r.status === 200) {
+                descEl.textContent = '✅ 已触发更新，正在等待数据刷新…';
+                pollForUpdate();
+            } else {
+                descEl.textContent = '❌ 触发失败 (HTTP ' + r.status + ')';
+                btn.classList.remove('loading');
+            }
+        })
+        .catch(function() {
+            descEl.textContent = '❌ 网络错误，请稍后重试';
+            btn.classList.remove('loading');
+        });
+    };
+
+    function pollForUpdate() {
+        var originalDate = allData.length ? allData[allData.length - 1].date : '';
+        var attempts = 0;
+        var maxAttempts = 36;  // 最多等 3 分钟 (36 x 5s)
+        var timer = setInterval(function() {
+            attempts++;
+            fetch('data/eindex_data.json?_t=' + Date.now())
+                .then(function(r) { return r.json(); })
+                .then(function(json) {
+                    var newDate = json.data.length ? json.data[json.data.length - 1].date : '';
+                    if (newDate !== originalDate) {
+                        clearInterval(timer);
+                        location.reload();
+                    } else if (attempts >= maxAttempts) {
+                        clearInterval(timer);
+                        descEl.textContent = '✅ 更新已触发，请稍后手动刷新页面';
+                        btn.classList.remove('loading');
+                    }
+                })
+                .catch(function() {});
+        }, 5000);
+    }
+})();

@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-12 22:13:36",
+  "updated_at": "2026-03-13 09:32:24",
   "data": [
     {
       "date": "2016-01-26",
@@ -27019,14 +27019,25 @@
     },
     {
       "date": "2026-03-12",
-      "eindex": 56.0,
+      "eindex": 67.33,
       "turnover_rate": 0.030151,
       "turnover_pct": 79.2,
-      "margin_ratio": 0,
-      "margin_pct": 0,
+      "margin_ratio": 0.032565,
+      "margin_pct": 90.0,
       "limitup_count": 64,
       "limitup_ratio": 0.011636,
       "limitup_pct": 32.8
+    },
+    {
+      "date": "2026-03-13",
+      "eindex": 0.4,
+      "turnover_rate": 0.001808,
+      "turnover_pct": 0.4,
+      "margin_ratio": 0,
+      "margin_pct": 0,
+      "limitup_count": 15,
+      "limitup_ratio": 0.002727,
+      "limitup_pct": 0.4
     }
   ]
 }
