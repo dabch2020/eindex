@@ -147,73 +147,80 @@ def _find_column(df, candidates):
 def get_margin_data(ak):
     """获取沪深两市融资余额占比
 
-    数据源：
-    - 主要：macro_china_market_margin_sh/sz（东方财富，2010 至今，每日更新）
-    - 备用：stock_margin_sse（上交所，end_date 写死 20230922，仅覆盖到 2023-09）
+    数据流程：
+    1. 加载本地 margin_cache.json（单位统一为亿元）
+    2. 用 macro 接口批量获取缺失日期（元 → 亿元）
+    3. 用交易所接口逐日补漏（stock_margin_detail_sse / stock_margin_szse）
+    4. 保存缓存，计算 ratio
     """
     print("获取融资余额（沪市 + 深市）...")
-    sh_margin = {}
-    sz_margin = {}
 
-    # ── 沪市（macro 接口，数据最全） ──
+    cache = _load_margin_cache()
+    sh_cached = {dt: v['sh'] for dt, v in cache.items() if 'sh' in v and v['sh'] > 0}
+    sz_cached = {dt: v['sz'] for dt, v in cache.items() if 'sz' in v and v['sz'] > 0}
+    print(f"  缓存: 沪市 {len(sh_cached)} 天, 深市 {len(sz_cached)} 天")
+
+    sh_margin = dict(sh_cached)  # 亿元
+    sz_margin = dict(sz_cached)  # 亿元
+
+    # ── 沪市 macro 批量获取 ──
     try:
         df = ak.macro_china_market_margin_sh()
+        new_sh = 0
         for _, row in df.iterrows():
             dt = _parse_date(row['日期'])
             if dt is None or dt < '2016-01-26':
                 continue
+            if dt in sh_margin:
+                continue
             try:
-                balance = float(row['融资余额'])
+                balance = float(row['融资余额'])  # 元
                 if balance > 0:
-                    sh_margin[dt] = balance
+                    sh_margin[dt] = balance / 1e8  # 元 → 亿元
+                    new_sh += 1
             except (ValueError, TypeError):
                 continue
-        print(f"  沪市融资: {len(sh_margin)} 天")
+        print(f"  沪市 macro: 新增 {new_sh} 天, 共 {len(sh_margin)} 天")
     except Exception as e:
-        print(f"  沪市融资获取失败: {e}")
-        # 备用：stock_margin_sse（截止 2023-09）
-        try:
-            df = ak.stock_margin_sse(start_date="20160126")
-            bal_col = _find_column(df, ['融资余额(元)', '融资余额', '融资余额（元）'])
-            if bal_col is None:
-                bal_col = df.columns[4] if len(df.columns) > 4 else None
-            if bal_col:
-                for _, row in df.iterrows():
-                    dt = _parse_date(row[df.columns[0]])
-                    if dt is None:
-                        continue
-                    try:
-                        balance = float(row[bal_col])
-                        if balance > 0:
-                            sh_margin[dt] = balance
-                    except (ValueError, TypeError):
-                        continue
-            print(f"  沪市融资(备用): {len(sh_margin)} 天")
-        except Exception as e2:
-            print(f"  沪市融资备用也失败: {e2}")
+        print(f"  沪市 macro 获取失败: {e}")
 
-    # ── 深市 ──
+    # ── 深市 macro 批量获取 ──
     try:
         df = ak.macro_china_market_margin_sz()
+        new_sz = 0
         for _, row in df.iterrows():
             dt = _parse_date(row['日期'])
             if dt is None or dt < '2016-01-26':
                 continue
+            if dt in sz_margin:
+                continue
             try:
-                balance = float(row['融资余额'])
+                balance = float(row['融资余额'])  # 元
                 if balance > 0:
-                    sz_margin[dt] = balance
+                    sz_margin[dt] = balance / 1e8  # 元 → 亿元
+                    new_sz += 1
             except (ValueError, TypeError):
                 continue
-        print(f"  深市融资: {len(sz_margin)} 天")
+        print(f"  深市 macro: 新增 {new_sz} 天, 共 {len(sz_margin)} 天")
     except Exception as e:
-        print(f"  深市融资获取失败: {e}")
+        print(f"  深市 macro 获取失败: {e}")
 
-    # ── 深市补漏：用 stock_margin_szse 逐日查询缺失日期 ──
-    if sh_margin and sz_margin:
+    # ── 保存 macro 数据到缓存（避免中断丢失） ──
+    for dt in sorted(set(list(sh_margin.keys()) + list(sz_margin.keys()))):
+        if dt not in cache:
+            cache[dt] = {}
+        if dt in sh_margin:
+            cache[dt]['sh'] = round(sh_margin[dt], 4)
+        if dt in sz_margin:
+            cache[dt]['sz'] = round(sz_margin[dt], 4)
+    _save_margin_cache(cache)
+    print(f"  macro 缓存已保存: {len(cache)} 天")
+
+    # ── 深市补漏：stock_margin_szse（返回亿元，直接存） ──
+    if sh_margin:
         missing_sz = sorted(set(sh_margin.keys()) - set(sz_margin.keys()))
         if missing_sz:
-            print(f"  深市缺失 {len(missing_sz)} 天，尝试 stock_margin_szse 逐日补漏...")
+            print(f"  深市缺失 {len(missing_sz)} 天，尝试 stock_margin_szse 补漏...")
             filled_sz = 0
             failed_sz = 0
             for dt in missing_sz:
@@ -222,9 +229,9 @@ def get_margin_data(ak):
                 for attempt in range(5):
                     try:
                         df_day = ak.stock_margin_szse(date=date_str)
-                        bal = float(df_day['融资余额'].iloc[0])
+                        bal = float(df_day['融资余额'].iloc[0])  # 亿元
                         if bal > 0:
-                            sz_margin[dt] = bal
+                            sz_margin[dt] = bal  # 已经是亿元
                             filled_sz += 1
                             success = True
                         break
@@ -233,68 +240,106 @@ def get_margin_data(ak):
                             time.sleep(5)
                 if not success:
                     failed_sz += 1
-                if filled_sz % 10 == 0 and filled_sz > 0:
-                    print(f"    已补 {filled_sz} 天...")
-            print(f"  深市补漏完成: 成功 {filled_sz} 天, 失败 {failed_sz} 天")
+                if filled_sz > 0 and filled_sz % 10 == 0:
+                    # 增量保存缓存
+                    for d in list(sz_margin.keys()):
+                        if d not in cache:
+                            cache[d] = {}
+                        cache[d]['sz'] = round(sz_margin[d], 4)
+                    _save_margin_cache(cache)
+                    print(f"    已补 {filled_sz} 天...（缓存已保存）")
+            print(f"  深市补漏: 成功 {filled_sz}, 失败 {failed_sz}")
 
-    # ── 合并（前值填充单市场缺失） ──
+    # ── 沪市补漏：stock_margin_detail_sse（返回元，逐券汇总 → 亿元） ──
+    if sz_margin:
+        missing_sh = sorted(set(sz_margin.keys()) - set(sh_margin.keys()))
+        if missing_sh:
+            print(f"  沪市缺失 {len(missing_sh)} 天，尝试 stock_margin_detail_sse 补漏...")
+            filled_sh = 0
+            failed_sh = 0
+            for dt in missing_sh:
+                date_str = dt.replace('-', '')
+                success = False
+                for attempt in range(5):
+                    try:
+                        df_day = ak.stock_margin_detail_sse(date=date_str)
+                        total = df_day['融资余额'].astype(float).sum()  # 元
+                        if total > 0:
+                            sh_margin[dt] = total / 1e8  # 元 → 亿元
+                            filled_sh += 1
+                            success = True
+                        break
+                    except Exception:
+                        if attempt < 4:
+                            time.sleep(5)
+                if not success:
+                    failed_sh += 1
+                if filled_sh > 0 and filled_sh % 10 == 0:
+                    for d in list(sh_margin.keys()):
+                        if d not in cache:
+                            cache[d] = {}
+                        cache[d]['sh'] = round(sh_margin[d], 4)
+                    _save_margin_cache(cache)
+                    print(f"    已补 {filled_sh} 天...")
+            if missing_sh:
+                print(f"  沪市补漏: 成功 {filled_sh}, 失败 {failed_sh}")
+
+    # ── 保存缓存（亿元） ──
+    for dt in sorted(set(list(sh_margin.keys()) + list(sz_margin.keys()))):
+        if dt not in cache:
+            cache[dt] = {}
+        if dt in sh_margin:
+            cache[dt]['sh'] = round(sh_margin[dt], 4)
+        if dt in sz_margin:
+            cache[dt]['sz'] = round(sz_margin[dt], 4)
+    _save_margin_cache(cache)
+    print(f"  缓存已保存: {len(cache)} 天")
+
+    # ── 合并计算 ratio（前值填充单市场缺失） ──
     results = {}
-    margin_gaps = []  # 记录缺失明细：(date, missing_side)
-    if sh_margin and not sz_margin:
-        print("  深市数据不可用，使用沪市 × 1.67 估算全市场")
-        for dt, val in sh_margin.items():
-            mcap = estimate_float_mcap(dt)
-            results[dt] = val * 1.67 / mcap
-    elif not sh_margin and sz_margin:
-        print("  沪市数据不可用，使用深市 × 2.5 估算全市场")
-        for dt, val in sz_margin.items():
-            mcap = estimate_float_mcap(dt)
-            results[dt] = val * 2.5 / mcap
-    else:
-        all_dates = sorted(set(list(sh_margin.keys()) + list(sz_margin.keys())))
-        last_sh = None
-        last_sz = None
-        filled = 0
-        for dt in all_dates:
-            sh = sh_margin.get(dt)
-            sz = sz_margin.get(dt)
+    margin_gaps = []
+    all_dates = sorted(set(list(sh_margin.keys()) + list(sz_margin.keys())))
+    last_sh = None
+    last_sz = None
+    filled = 0
 
-            if sh is not None:
-                last_sh = sh
-            if sz is not None:
-                last_sz = sz
+    for dt in all_dates:
+        sh = sh_margin.get(dt)
+        sz = sz_margin.get(dt)
 
-            # 两边都没有数据，跳过
-            if sh is None and sz is None:
-                margin_gaps.append((dt, "沪市+深市"))
+        if sh is not None:
+            last_sh = sh
+        if sz is not None:
+            last_sz = sz
+
+        if sh is None and sz is None:
+            margin_gaps.append((dt, "沪市+深市"))
+            continue
+
+        if sh is None:
+            if last_sh is not None:
+                sh = last_sh
+                margin_gaps.append((dt, "沪市"))
+                filled += 1
+            else:
+                margin_gaps.append((dt, "沪市(无前值)"))
+                continue
+        if sz is None:
+            if last_sz is not None:
+                sz = last_sz
+                margin_gaps.append((dt, "深市"))
+                filled += 1
+            else:
+                margin_gaps.append((dt, "深市(无前值)"))
                 continue
 
-            # 单边缺失：用前值填充，避免 total 变成一半
-            if sh is None:
-                if last_sh is not None:
-                    sh = last_sh
-                    margin_gaps.append((dt, "沪市"))
-                    filled += 1
-                else:
-                    margin_gaps.append((dt, "沪市(无前值)"))
-                    continue
-            if sz is None:
-                if last_sz is not None:
-                    sz = last_sz
-                    margin_gaps.append((dt, "深市"))
-                    filled += 1
-                else:
-                    margin_gaps.append((dt, "深市(无前值)"))
-                    continue
+        total_yuan = (sh + sz) * 1e8  # 亿元 → 元
+        if total_yuan > 0:
+            mcap = estimate_float_mcap(dt)
+            results[dt] = total_yuan / mcap
 
-            total = sh + sz
-            if total > 0:
-                mcap = estimate_float_mcap(dt)
-                results[dt] = total / mcap
-
-        if filled:
-            print(f"  前值填充单市场缺失: {filled} 次")
-
+    if filled:
+        print(f"  前值填充单市场缺失: {filled} 次")
     if margin_gaps:
         _append_margin_gaps_to_log(margin_gaps)
 
@@ -315,6 +360,24 @@ def _append_margin_gaps_to_log(gaps):
     with open(LOG_FILE, 'a', encoding='utf-8') as f:
         f.writelines(lines)
     print(f"  缺失记录已写入 log.md（{len(gaps)} 条）")
+
+
+MARGIN_CACHE = DATA_DIR / "margin_cache.json"
+
+
+def _load_margin_cache():
+    """加载融资余额缓存（亿元）"""
+    if MARGIN_CACHE.exists():
+        with open(MARGIN_CACHE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+
+def _save_margin_cache(cache):
+    """保存融资余额缓存（亿元）"""
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(MARGIN_CACHE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
 
 
 LIMITUP_CACHE = DATA_DIR / "limitup_cache.json"
