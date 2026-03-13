@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eIndex - A股情绪指数</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="header-row">
+                    <h1><span class="logo-icon">📊</span> eIndex <span class="subtitle">A股情绪指数</span></h1>
+                    <button class="btn-refresh" id="btnRefresh">
+                        <span class="icon">&#x21bb;</span> 刷新
+                    </button>
+                </div>
+                <p class="header-desc">基于换手率、融资余额占比、涨停家数占比三大核心指标的市场情绪量化分析工具</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 核心指标卡片 -->
+        <section class="hero-section">
+            <div class="index-card main-card" id="mainIndexCard">
+                <div class="card-label">综合情绪指数</div>
+                <div class="index-value" id="mainIndexValue">--</div>
+                <div class="index-gauge" id="mainGauge"></div>
+                <div class="signal-badge" id="signalBadge">
+                    <span class="signal-icon" id="signalIcon">⏳</span>
+                    <span class="signal-text" id="signalText">加载中...</span>
+                </div>
+                <div class="update-time" id="updateTime">数据更新时间: --</div>
+                <div class="recent-days" id="recentDays"></div>
+            </div>
+        </section>
+
+        <!-- 三大指标 -->
+        <section class="indicators-section">
+            <h2 class="section-title">三大核心指标</h2>
+            <div class="indicators-grid">
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-icon">🔄</span>
+                        <span class="indicator-name">全市场换手率</span>
+                    </div>
+                    <div class="indicator-days" id="turnoverDays"></div>
+                    <div class="indicator-formula">= 总成交额 / 总流通市值</div>
+                </div>
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-icon">💰</span>
+                        <span class="indicator-name">融资余额占比</span>
+                    </div>
+                    <div class="indicator-days" id="marginDays"></div>
+                    <div class="indicator-formula">= 融资余额 / 总流通市值</div>
+                </div>
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-icon">🚀</span>
+                        <span class="indicator-name">涨停家数占比</span>
+                    </div>
+                    <div class="indicator-days" id="limitUpDays"></div>
+                    <div class="indicator-formula">= 涨停股票数 / 全市场股票总数</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 情绪指数走势图 -->
+        <section class="chart-section">
+            <h2 class="section-title">情绪指数历史走势</h2>
+            <div class="chart-container" id="mainChart"></div>
+        </section>
+
+        <!-- 三大指标分位数对比 -->
+        <section class="chart-section">
+            <h2 class="section-title">三大指标分位数走势对比</h2>
+            <div class="chart-container" id="indicatorsChart"></div>
+        </section>
+
+        <!-- 数据表格 -->
+        <section class="table-section">
+            <div class="table-header">
+                <h2 class="section-title">历史数据明细</h2>
+                <button class="export-btn" id="exportBtn" onclick="exportCSV()">
+                    📥 导出CSV
+                </button>
+            </div>
+            <div class="table-wrapper">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="date" class="sortable">日期 ▼</th>
+                            <th data-sort="eindex" class="sortable">情绪指数</th>
+                            <th data-sort="signal" class="sortable">信号</th>
+                            <th data-sort="turnover_rate" class="sortable">换手率</th>
+                            <th data-sort="turnover_pct" class="sortable">换手率分位</th>
+                            <th data-sort="margin_ratio" class="sortable">融资占比</th>
+                            <th data-sort="margin_pct" class="sortable">融资分位</th>
+                            <th data-sort="limitup_count" class="sortable">涨停家数</th>
+                            <th data-sort="limitup_ratio" class="sortable">涨停占比</th>
+                            <th data-sort="limitup_pct" class="sortable">涨停分位</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 策略说明 -->
+        <section class="strategy-section">
+            <h2 class="section-title">策略说明</h2>
+            <div class="strategy-grid">
+                <div class="strategy-card buy">
+                    <div class="strategy-icon">🟢</div>
+                    <h3>买入信号</h3>
+                    <p>情绪指数 ≤ 20</p>
+                    <p class="strategy-desc">市场极度恐慌，往往是底部区域，适合逢低布局</p>
+                </div>
+                <div class="strategy-card hold">
+                    <div class="strategy-icon">🟡</div>
+                    <h3>持有信号</h3>
+                    <p>20 &lt; 情绪指数 &lt; 80</p>
+                    <p class="strategy-desc">市场情绪正常，维持现有仓位，等待极端信号</p>
+                </div>
+                <div class="strategy-card sell">
+                    <div class="strategy-icon">🔴</div>
+                    <h3>卖出信号</h3>
+                    <p>情绪指数 ≥ 80</p>
+                    <p class="strategy-desc">市场极度狂热，往往是顶部区域，适合逐步减仓</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>eIndex - A股情绪指数 | 数据仅供参考，不构成投资建议</p>
+            <p class="footer-sub">基于全市场换手率、融资余额占比、涨停家数占比三大指标的250日分位数综合计算</p>
+        </div>
+    </footer>
+
+    <script src="data/eindex_data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

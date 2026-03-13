@@ -1,0 +1,79 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python3 scripts/generate_sample\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "git init": true,
+        "git add": true,
+        "git commit": true,
+        "/^which gh && gh auth status 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^brew install gh 2>&1 \\| tail -5$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "git config": true,
+        "git remote": true,
+        "/^git remote add origin https://github\\.com/dabch2020/eindex\\.git && git push -u origin main 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "git push": true,
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\ndates = \\[d\\['date'\\] for d in data\\]\n# 检查2025春节 \\(1/28-2/4\\) 和2025国庆 \\(10/1-10/7\\)\nprint\\('春节期间\\(2025-01-28~02-04\\):'\\)\nprint\\(\\[d for d in dates if '2025-01-28' <= d <= '2025-02-04'\\]\\)\nprint\\('国庆期间\\(2025-10-01~10-07\\):'\\)\nprint\\(\\[d for d in dates if '2025-10-01' <= d <= '2025-10-07'\\]\\)\nprint\\('2025元旦:'\\)\nprint\\(\\[d for d in dates if d == '2025-01-01'\\]\\)\nprint\\(f'总交易日: \\{len\\(dates\\)\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\nabove80 = \\[d for d in data if d\\['eindex'\\] >= 80\\]\nbelow20 = \\[d for d in data if d\\['eindex'\\] <= 20\\]\nprint\\(f'总天数: \\{len\\(data\\)\\}'\\)\nprint\\(f'eIndex >= 80 的天数: \\{len\\(above80\\)\\}'\\)\nprint\\(f'eIndex <= 20 的天数: \\{len\\(below20\\)\\}'\\)\nprint\\(f'eIndex 范围: \\{min\\(d\\[\\\\\"eindex\\\\\"\\] for d in data\\):\\.1f\\} ~ \\{max\\(d\\[\\\\\"eindex\\\\\"\\] for d in data\\):\\.1f\\}'\\)\nprint\\(\\)\n# 分年份统计\nfrom collections import Counter\nyears = sorted\\(set\\(d\\['date'\\]\\[:4\\] for d in data\\)\\)\nfor y in years:\n    yd = \\[d for d in data if d\\['date'\\]\\.startswith\\(y\\)\\]\n    a80 = len\\(\\[d for d in yd if d\\['eindex'\\] >= 80\\]\\)\n    b20 = len\\(\\[d for d in yd if d\\['eindex'\\] <= 20\\]\\)\n    avg = sum\\(d\\['eindex'\\] for d in yd\\) / len\\(yd\\)\n    mn = min\\(d\\['eindex'\\] for d in yd\\)\n    mx = max\\(d\\['eindex'\\] for d in yd\\)\n    print\\(f'\\{y\\}: \\{len\\(yd\\)\\}天, avg=\\{avg:\\.1f\\}, min=\\{mn:\\.1f\\}, max=\\{mx:\\.1f\\}, >=80:\\{a80\\}, <=20:\\{b20\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\nabove80 = \\[d for d in data if d\\['eindex'\\] >= 80\\]\nbelow20 = \\[d for d in data if d\\['eindex'\\] <= 20\\]\nprint\\(f'总天数: \\{len\\(data\\)\\}'\\)\nprint\\(f'eIndex >= 80: \\{len\\(above80\\)\\} \\(\\{len\\(above80\\)/len\\(data\\)\\*100:\\.1f\\}%\\)'\\)\nprint\\(f'eIndex <= 20: \\{len\\(below20\\)\\} \\(\\{len\\(below20\\)/len\\(data\\)\\*100:\\.1f\\}%\\)'\\)\nprint\\(f'eIndex 范围: \\{min\\(d\\[\\\\\"eindex\\\\\"\\] for d in data\\):\\.1f\\} ~ \\{max\\(d\\[\\\\\"eindex\\\\\"\\] for d in data\\):\\.1f\\}'\\)\nprint\\(\\)\nfrom collections import Counter\nyears = sorted\\(set\\(d\\['date'\\]\\[:4\\] for d in data\\)\\)\nfor y in years:\n    yd = \\[d for d in data if d\\['date'\\]\\.startswith\\(y\\)\\]\n    a80 = len\\(\\[d for d in yd if d\\['eindex'\\] >= 80\\]\\)\n    b20 = len\\(\\[d for d in yd if d\\['eindex'\\] <= 20\\]\\)\n    avg = sum\\(d\\['eindex'\\] for d in yd\\) / len\\(yd\\)\n    mn = min\\(d\\['eindex'\\] for d in yd\\)\n    mx = max\\(d\\['eindex'\\] for d in yd\\)\n    print\\(f'\\{y\\}: \\{len\\(yd\\):3d\\}天 avg=\\{avg:5\\.1f\\} \\[\\{mn:5\\.1f\\}~\\{mx:5\\.1f\\}\\] >=80:\\{a80:3d\\} <=20:\\{b20:3d\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 scripts/generate_sample\\.py && git add -A && git commit -m \"fix: use realistic A-share market phases for sample data\" && git push 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "pip": true,
+        "/^python3 scripts/update_data\\.py --full 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\nprint\\(f'总天数: \\{len\\(data\\)\\}'\\)\nprint\\(f'eIndex >= 80: \\{len\\(\\[d for d in data if d\\[\\\\\"eindex\\\\\"\\] >= 80\\]\\)\\}'\\)\nprint\\(f'eIndex <= 20: \\{len\\(\\[d for d in data if d\\[\\\\\"eindex\\\\\"\\] <= 20\\]\\)\\}'\\)\nprint\\(f'范围: \\{min\\(d\\[\\\\\"eindex\\\\\"\\] for d in data\\):\\.1f\\} ~ \\{max\\(d\\[\\\\\"eindex\\\\\"\\] for d in data\\):\\.1f\\}'\\)\nprint\\(\\)\nyears = sorted\\(set\\(d\\['date'\\]\\[:4\\] for d in data\\)\\)\nfor y in years:\n    yd = \\[d for d in data if d\\['date'\\]\\.startswith\\(y\\)\\]\n    a80 = len\\(\\[d for d in yd if d\\['eindex'\\] >= 80\\]\\)\n    b20 = len\\(\\[d for d in yd if d\\['eindex'\\] <= 20\\]\\)\n    avg = sum\\(d\\['eindex'\\] for d in yd\\) / len\\(yd\\)\n    print\\(f'\\{y\\}: \\{len\\(yd\\):3d\\}天 avg=\\{avg:5\\.1f\\} >=80:\\{a80:3d\\} <=20:\\{b20:3d\\}'\\)\nprint\\(\\)\nprint\\('最近5天:'\\)\nfor d in data\\[-5:\\]:\n    sig = '买入' if d\\['eindex'\\]<=20 else '卖出' if d\\['eindex'\\]>=80 else '持有'\n    print\\(f\\\\\"  \\{d\\['date'\\]\\} eIndex=\\{d\\['eindex'\\]:5\\.1f\\} \\{sig\\}  换手率=\\{d\\['turnover_rate'\\]\\*100:\\.3f\\}%  融资=\\{d\\['margin_ratio'\\]\\*100:\\.3f\\}%  涨停=\\{d\\['limitup_ratio'\\]\\*100:\\.3f\\}%\\\\\"\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 scripts/check_data\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 /Users/gachen2/MyProject/eindex/scripts/check_data\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\nwith open\\('data/eindex_data\\.json'\\) as f:\n    data = json\\.load\\(f\\)\nrecords = data\\['data'\\]\nprint\\(f'Total records: \\{len\\(records\\)\\}'\\)\nprint\\(f'Date range: \\{records\\[0\\]\\[\\\\\"date\\\\\"\\]\\} ~ \\{records\\[-1\\]\\[\\\\\"date\\\\\"\\]\\}'\\)\n\n# Check margin_ratio for gaps and sudden percentile jumps\nprev_m_pct = None\nprev_m_ratio = None\nprev_date = None\njumps = \\[\\]\nzero_margin = \\[\\]\nfor r in records:\n    m_ratio = r\\['margin_ratio'\\]\n    m_pct = r\\['margin_pct'\\]\n    \n    if m_ratio == 0:\n        zero_margin\\.append\\(r\\['date'\\]\\)\n    \n    if prev_m_pct is not None and abs\\(m_pct - prev_m_pct\\) > 15:\n        jumps\\.append\\(\\{\n            'date': r\\['date'\\],\n            'prev_date': prev_date,\n            'm_pct': m_pct,\n            'prev_m_pct': prev_m_pct,\n            'jump': round\\(m_pct - prev_m_pct, 2\\),\n            'm_ratio': m_ratio,\n            'prev_m_ratio': prev_m_ratio\n        \\}\\)\n    prev_m_pct = m_pct\n    prev_m_ratio = m_ratio\n    prev_date = r\\['date'\\]\n\nprint\\(f'\\\\nMargin ratio = 0 days: \\{len\\(zero_margin\\)\\}'\\)\nif zero_margin:\n    print\\(f'  First 20: \\{zero_margin\\[:20\\]\\}'\\)\n\nprint\\(f'\\\\nLarge margin_pct jumps \\(>15\\): \\{len\\(jumps\\)\\}'\\)\nfor j in jumps\\[:30\\]:\n    print\\(f'  \\{j\\[\\\\\"prev_date\\\\\"\\]\\} -> \\{j\\[\\\\\"date\\\\\"\\]\\}: pct \\{j\\[\\\\\"prev_m_pct\\\\\"\\]\\} -> \\{j\\[\\\\\"m_pct\\\\\"\\]\\} \\(jump=\\{j\\[\\\\\"jump\\\\\"\\]\\}\\), ratio \\{j\\[\\\\\"prev_m_ratio\\\\\"\\]\\} -> \\{j\\[\\\\\"m_ratio\\\\\"\\]\\}'\\)\n\"\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\nwith open\\('data/eindex_data\\.json'\\) as f:\n    data = json\\.load\\(f\\)\nrecords = data\\['data'\\]\n\n# Look at the 2017-03 and 2017-09 episodes closely\n# The ratio drops by ~half on certain days, suggesting only one market's data\nprint\\('=== 2017-03 margin_ratio pattern ==='\\)\nfor r in records:\n    if '2017-03-0' in r\\['date'\\] or '2017-03-1' in r\\['date'\\] or '2017-03-2' in r\\['date'\\]:\n        print\\(f'  \\{r\\[\\\\\"date\\\\\"\\]\\}  ratio=\\{r\\[\\\\\"margin_ratio\\\\\"\\]:>10\\}  pct=\\{r\\[\\\\\"margin_pct\\\\\"\\]:>6\\}'\\)\n\nprint\\(\\)\nprint\\('=== 2017-09 margin_ratio pattern ==='\\)\nfor r in records:\n    if '2017-09-1' in r\\['date'\\] or '2017-09-2' in r\\['date'\\]:\n        print\\(f'  \\{r\\[\\\\\"date\\\\\"\\]\\}  ratio=\\{r\\[\\\\\"margin_ratio\\\\\"\\]:>10\\}  pct=\\{r\\[\\\\\"margin_pct\\\\\"\\]:>6\\}'\\)\n\nprint\\(\\)\nprint\\('=== 2018-07/08 margin_ratio pattern ==='\\)\nfor r in records:\n    if r\\['date'\\] >= '2018-07-25' and r\\['date'\\] <= '2018-08-15':\n        print\\(f'  \\{r\\[\\\\\"date\\\\\"\\]\\}  ratio=\\{r\\[\\\\\"margin_ratio\\\\\"\\]:>10\\}  pct=\\{r\\[\\\\\"margin_pct\\\\\"\\]:>6\\}'\\)\n\n# Check ratio of normal to half values\nprint\\(\\)\nprint\\('=== Ratio analysis: half-values vs normal ==='\\)\nratios = \\[\\(r\\['date'\\], r\\['margin_ratio'\\]\\) for r in records if r\\['margin_ratio'\\] > 0\\]\n# Around 2017-03, the normal value is ~0\\.025, the half is ~0\\.014\n# Ratio 0\\.014/0\\.025 = 0\\.56 which is close to SH/\\(SH\\+SZ\\) ratio\nhalfcount = sum\\(1 for _, r in ratios if 0\\.008 < r < 0\\.018\\)\nprint\\(f'Suspicious half-values \\(0\\.008-0\\.018\\): \\{halfcount\\}'\\)\n\"\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex/scripts && python3 analyze_margin\\.py 2>&1 \\| head -120$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 analyze_margin\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex/scripts && python3 -c \"\n# Verify the half-value theory: check if half values match roughly SH-only or SZ-only\n# Normal ratio ~0\\.025, half ratio ~0\\.014-0\\.016\n# SH/\\(SH\\+SZ\\) ratio was historically about 0\\.58-0\\.62\n# So SH-only would give ~0\\.025 \\* 0\\.6 = 0\\.015 -- matches!\n# SZ-only would give ~0\\.025 \\* 0\\.4 = 0\\.010 -- matches 2017-09-14 \\(0\\.010009\\)!\nprint\\('Half-value analysis:'\\)\nprint\\('Normal ratio: ~0\\.025'\\)\nprint\\('SH-only:      ~0\\.014-0\\.016 \\(SH is about 58-62% of total\\)'\\)\nprint\\('SZ-only:      ~0\\.010       \\(SZ is about 38-42% of total\\)'\\)\nprint\\(\\)\nprint\\('2017-03-10 = 0\\.01446 -> likely SH-only'\\)\nprint\\('2017-09-14 = 0\\.01001 -> likely SZ-only'\\)\nprint\\('2018-08-01 = 0\\.01596 -> likely SH-only for consecutive week'\\)\n\"\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}
