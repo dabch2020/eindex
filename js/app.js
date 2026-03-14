@@ -443,10 +443,16 @@ loadData();
     var REPO = 'dabch2020/eindex';
     var btn = document.getElementById('btnRefresh');
     var descEl = document.querySelector('.header-desc');
+    var isLocal = location.protocol === 'file:';
 
     btn.onclick = function() {
+        if (isLocal) {
+            descEl.textContent = '本地模式：请在终端运行 python scripts/update_data.py --recent，然后刷新页面';
+            return;
+        }
+
         btn.classList.add('loading');
-        descEl.textContent = '正在触发后台更新，请稍候约1-2分钟…';
+        descEl.textContent = '正在触发后台更新（最近2个交易日），请稍候约1-2分钟…';
 
         fetch('https://api.github.com/repos/' + REPO + '/dispatches', {
             method: 'POST',
@@ -472,18 +478,19 @@ loadData();
     };
 
     function pollForUpdate() {
-        var originalDate = allData.length ? allData[allData.length - 1].date : '';
+        var originalUpdated = window.__EINDEX_DATA__ ? window.__EINDEX_DATA__.updated_at : '';
         var attempts = 0;
         var maxAttempts = 36;  // 最多等 3 分钟 (36 x 5s)
         var timer = setInterval(function() {
             attempts++;
+            descEl.textContent = '✅ 已触发更新，正在等待数据刷新… (' + (attempts * 5) + 's)';
             fetch('data/eindex_data.json?_t=' + Date.now())
                 .then(function(r) { return r.json(); })
                 .then(function(json) {
-                    var newDate = json.data.length ? json.data[json.data.length - 1].date : '';
-                    if (newDate !== originalDate) {
+                    if (json.updated_at !== originalUpdated) {
                         clearInterval(timer);
-                        location.reload();
+                        descEl.textContent = '✅ 数据已更新，正在刷新页面…';
+                        setTimeout(function() { location.reload(); }, 500);
                     } else if (attempts >= maxAttempts) {
                         clearInterval(timer);
                         descEl.textContent = '✅ 更新已触发，请稍后手动刷新页面';

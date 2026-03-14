@@ -23,24 +23,8 @@ DATA_DIR = Path(__file__).parent.parent / "data"
 DATA_FILE = DATA_DIR / "eindex_data.json"
 DATA_JS_FILE = DATA_DIR / "eindex_data.js"
 LOG_FILE = Path(__file__).parent.parent / "log.md"
-
-# ── 流通市值历史锚点（单位：元）──────────────────────────
-# 用于计算换手率 = 总成交额 / 流通市值
-# 最终取250日分位数会归一化，绝对值的小偏差影响有限
-FLOAT_MCAP_ANCHORS = [
-    ("2015-01", 32e12), ("2015-06", 58e12), ("2015-09", 38e12), ("2015-12", 40e12),
-    ("2016-06", 34e12), ("2016-12", 35e12),
-    ("2017-06", 38e12), ("2017-12", 42e12),
-    ("2018-06", 35e12), ("2018-12", 30e12),
-    ("2019-06", 38e12), ("2019-12", 42e12),
-    ("2020-06", 48e12), ("2020-12", 55e12),
-    ("2021-06", 62e12), ("2021-12", 65e12),
-    ("2022-06", 58e12), ("2022-12", 55e12),
-    ("2023-06", 58e12), ("2023-12", 57e12),
-    ("2024-06", 54e12), ("2024-09", 55e12), ("2024-10", 72e12), ("2024-12", 75e12),
-    ("2025-06", 78e12), ("2025-12", 80e12),
-    ("2026-06", 82e12),
-]
+LTSZ_CACHE_FILE = DATA_DIR / "ltsz_cache.json"
+TURNOVER_CACHE = DATA_DIR / "turn_rate_cache.json"
 
 # 各年份全市场股票总数（近似）
 TOTAL_STOCKS = {
@@ -48,6 +32,66 @@ TOTAL_STOCKS = {
     2019: 3800, 2020: 4100, 2021: 4500, 2022: 4900,
     2023: 5200, 2024: 5350, 2025: 5450, 2026: 5500,
 }
+
+
+# ── 流通市值缓存（单位：亿元）──────────────────────────
+_ltsz_cache = None
+_sh_sz_ratio = None  # SH/SZ 比值，用于估算 2018 前的 SH 数据
+
+def _load_ltsz_cache():
+    """加载 ltsz_cache.json，返回 {date: {sh, sz}} 字典"""
+    global _ltsz_cache
+    if _ltsz_cache is None:
+        if LTSZ_CACHE_FILE.exists():
+            with open(LTSZ_CACHE_FILE, 'r', encoding='utf-8') as f:
+                _ltsz_cache = json.load(f)
+        else:
+            _ltsz_cache = {}
+    return _ltsz_cache
+
+
+def _get_sh_sz_ratio():
+    """从缓存中计算 2018 年最早期的 SH/SZ 流通市值比值，用于估算 2018 前的 SH。"""
+    global _sh_sz_ratio
+    if _sh_sz_ratio is not None:
+        return _sh_sz_ratio
+    cache = _load_ltsz_cache()
+    # 取 2018 年初有完整数据的最早 20 个交易日的 SH/SZ 比值的中位数
+    ratios = []
+    for dt in sorted(cache.keys()):
+        entry = cache[dt]
+        sh = entry.get('sh', 0)
+        sz = entry.get('sz', 0)
+        if sh > 0 and sz > 0 and dt >= '2018-01-01':
+            ratios.append(sh / sz)
+            if len(ratios) >= 20:
+                break
+    if ratios:
+        ratios.sort()
+        _sh_sz_ratio = ratios[len(ratios) // 2]  # 中位数
+    else:
+        _sh_sz_ratio = 1.85  # 历史近似值（沪市≈65%，深市≈35%）
+    return _sh_sz_ratio
+
+
+def get_float_mcap(date_str):
+    """获取某日全市场流通市值（亿元）。
+    优先使用 ltsz_cache.json 真实数据；
+    若仅有 SZ 数据（2018 前 SSE 无数据），按 SH/SZ 比值估算 SH。"""
+    cache = _load_ltsz_cache()
+    entry = cache.get(date_str)
+    if not entry:
+        return None
+    sh = entry.get('sh', 0)
+    sz = entry.get('sz', 0)
+    if sh > 0 and sz > 0:
+        return sh + sz
+    if sz > 0 and sh == 0:
+        ratio = _get_sh_sz_ratio()
+        return sz * (1 + ratio)  # total = sz + sz * ratio
+    if sh > 0 and sz == 0:
+        return None  # 不应该出现此情况
+    return None
 
 
 def ensure_akshare():
@@ -61,64 +105,108 @@ def ensure_akshare():
         return akshare
 
 
-def estimate_float_mcap(date_str):
-    """线性插值估算某日的全市场流通市值"""
-    ym = date_str[:7]
-    if ym <= FLOAT_MCAP_ANCHORS[0][0]:
-        return FLOAT_MCAP_ANCHORS[0][1]
-    if ym >= FLOAT_MCAP_ANCHORS[-1][0]:
-        return FLOAT_MCAP_ANCHORS[-1][1]
-
-    for i in range(len(FLOAT_MCAP_ANCHORS) - 1):
-        k0, v0 = FLOAT_MCAP_ANCHORS[i]
-        k1, v1 = FLOAT_MCAP_ANCHORS[i + 1]
-        if k0 <= ym <= k1:
-            d0 = datetime.strptime(k0 + "-15", "%Y-%m-%d")
-            d1 = datetime.strptime(k1 + "-15", "%Y-%m-%d")
-            dt = datetime.strptime(ym + "-15", "%Y-%m-%d")
-            ratio = (dt - d0).days / max((d1 - d0).days, 1)
-            return v0 + (v1 - v0) * ratio
-
-    return 70e12
-
-
-def get_trade_dates(ak, start="2016-01-26"):
-    """从上证指数获取真实交易日历（自动排除周末和节假日）"""
+def get_trade_dates(ak=None, start="2016-01-26"):
+    """获取真实交易日历（自动排除周末和节假日）
+    优先从本地缓存推导（turn_rate_cache / limitup_cache 的 keys），
+    仅当本地无缓存时才调用 akshare API。"""
     print("获取交易日历...")
+    end = datetime.now().strftime("%Y-%m-%d")
+
+    # 优先从本地缓存推导交易日历
+    cache_dates = set()
+    tc = _load_turnover_cache()
+    if tc:
+        cache_dates.update(tc.keys())
+    lc_path = DATA_DIR / "limitup_cache.json"
+    if lc_path.exists():
+        with open(lc_path, 'r', encoding='utf-8') as f:
+            lc = json.load(f)
+        cache_dates.update(lc.keys())
+
+    if cache_dates:
+        dates = sorted(d for d in cache_dates if start <= d <= end)
+        if dates:
+            print(f"  交易日(缓存): {dates[0]} ~ {dates[-1]}，共 {len(dates)} 天")
+            return dates
+
+    # 回退：调用 akshare API
+    if ak is None:
+        ak = ensure_akshare()
     df = ak.stock_zh_index_daily_em(symbol="sh000001")
     df['date'] = df['date'].astype(str)
-    end = datetime.now().strftime("%Y-%m-%d")
     dates = sorted(d for d in df['date'] if start <= d <= end)
-    print(f"  交易日: {dates[0]} ~ {dates[-1]}，共 {len(dates)} 天")
+    print(f"  交易日(API): {dates[0]} ~ {dates[-1]}，共 {len(dates)} 天")
     return dates
 
 
+def _load_turnover_cache():
+    """加载换手率缓存"""
+    if TURNOVER_CACHE.exists():
+        with open(TURNOVER_CACHE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+
+def _save_turnover_cache(cache):
+    """保存换手率缓存"""
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(TURNOVER_CACHE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+
 def get_turnover_data(ak, trade_dates):
-    """全市场换手率 = (沪市成交额 + 深市成交额) / 估算流通市值"""
+    """全市场换手率 = (沪市成交额 + 深市成交额) / 流通市值"""
     print("获取全市场成交额（东方财富）...")
+
+    cache = _load_turnover_cache()
+    cached_dates = set(cache.keys())
+    missing = [dt for dt in trade_dates if dt not in cached_dates]
+    print(f"  缓存: {len(cached_dates)} 天已有, {len(missing)} 天缺失")
+
+    if missing:
+        missing_mcap = 0
+        try:
+            df_sh = ak.stock_zh_index_daily_em(symbol="sh000001")
+            df_sh['date'] = df_sh['date'].astype(str)
+            sh_amt = dict(zip(df_sh['date'], df_sh['amount']))
+
+            df_sz = ak.stock_zh_index_daily_em(symbol="sz399001")
+            df_sz['date'] = df_sz['date'].astype(str)
+            sz_amt = dict(zip(df_sz['date'], df_sz['amount']))
+
+            new_count = 0
+            for dt in missing:
+                sh = sh_amt.get(dt, 0) or 0
+                sz = sz_amt.get(dt, 0) or 0
+                total = float(sh) + float(sz)  # 元
+                if total > 0:
+                    mcap_yi = get_float_mcap(dt)  # 亿元
+                    if mcap_yi and mcap_yi > 0:
+                        rate = total / (mcap_yi * 1e8)  # 元 / 元
+                        cache[dt] = {"sh_amount": round(float(sh) / 1e8, 4),
+                                     "sz_amount": round(float(sz) / 1e8, 4),
+                                     "turnover_rate": round(rate, 8)}
+                        new_count += 1
+                    else:
+                        missing_mcap += 1
+
+            _save_turnover_cache(cache)
+            print(f"  新增 {new_count} 天, 缓存共 {len(cache)} 天")
+            if missing_mcap:
+                print(f"  ⚠ {missing_mcap} 天缺少流通市值数据，请运行 fetch_ltsz.py 补齐")
+        except Exception as e:
+            print(f"  换手率获取失败: {e}")
+
     results = {}
+    for dt in trade_dates:
+        if dt in cache:
+            entry = cache[dt]
+            if isinstance(entry, dict):
+                results[dt] = entry["turnover_rate"]
+            else:
+                results[dt] = float(entry)
 
-    try:
-        df_sh = ak.stock_zh_index_daily_em(symbol="sh000001")
-        df_sh['date'] = df_sh['date'].astype(str)
-        sh_amt = dict(zip(df_sh['date'], df_sh['amount']))
-
-        df_sz = ak.stock_zh_index_daily_em(symbol="sz399001")
-        df_sz['date'] = df_sz['date'].astype(str)
-        sz_amt = dict(zip(df_sz['date'], df_sz['amount']))
-
-        for dt in trade_dates:
-            sh = sh_amt.get(dt, 0) or 0
-            sz = sz_amt.get(dt, 0) or 0
-            total = float(sh) + float(sz)
-            if total > 0:
-                mcap = estimate_float_mcap(dt)
-                results[dt] = total / mcap
-
-        print(f"  换手率数据: {len(results)} 天")
-    except Exception as e:
-        print(f"  换手率获取失败: {e}")
-
+    print(f"  换手率数据: {len(results)} 天")
     return results
 
 
@@ -144,202 +232,109 @@ def _find_column(df, candidates):
     return None
 
 
-def get_margin_data(ak):
-    """获取沪深两市融资余额占比
+def get_margin_data(ak, trade_dates):
+    """获取沪深两市融资余额占比（缓存优先）
 
     数据流程：
     1. 加载本地 margin_cache.json（单位统一为亿元）
-    2. 用 macro 接口批量获取缺失日期（元 → 亿元）
-    3. 用交易所接口逐日补漏（stock_margin_detail_sse / stock_margin_szse）
-    4. 保存缓存，计算 ratio
+    2. 仅对 trade_dates 中缺失的日期，用交易所逐日接口获取
+    3. 保存缓存，计算 ratio
     """
     print("获取融资余额（沪市 + 深市）...")
 
     cache = _load_margin_cache()
-    sh_cached = {dt: v['sh'] for dt, v in cache.items() if 'sh' in v and v['sh'] > 0}
-    sz_cached = {dt: v['sz'] for dt, v in cache.items() if 'sz' in v and v['sz'] > 0}
-    print(f"  缓存: 沪市 {len(sh_cached)} 天, 深市 {len(sz_cached)} 天")
+    sh_margin = {dt: v['sh'] for dt, v in cache.items() if 'sh' in v and v['sh'] > 0}
+    sz_margin = {dt: v['sz'] for dt, v in cache.items() if 'sz' in v and v['sz'] > 0}
+    print(f"  缓存: 沪市 {len(sh_margin)} 天, 深市 {len(sz_margin)} 天")
 
-    sh_margin = dict(sh_cached)  # 亿元
-    sz_margin = dict(sz_cached)  # 亿元
+    # ── 仅对缺失日期逐日获取 ──
+    missing_sh = [dt for dt in trade_dates if dt not in sh_margin]
+    missing_sz = [dt for dt in trade_dates if dt not in sz_margin]
+    need_fetch = sorted(set(missing_sh + missing_sz))
+    print(f"  缺失: 沪市 {len(missing_sh)} 天, 深市 {len(missing_sz)} 天")
 
-    # ── 沪市 macro 批量获取 ──
-    try:
-        df = ak.macro_china_market_margin_sh()
-        new_sh = 0
-        for _, row in df.iterrows():
-            dt = _parse_date(row['日期'])
-            if dt is None or dt < '2016-01-26':
-                continue
-            if dt in sh_margin:
-                continue
-            try:
-                balance = float(row['融资余额'])  # 元
-                if balance > 0:
-                    sh_margin[dt] = balance / 1e8  # 元 → 亿元
-                    new_sh += 1
-            except (ValueError, TypeError):
-                continue
-        print(f"  沪市 macro: 新增 {new_sh} 天, 共 {len(sh_margin)} 天")
-    except Exception as e:
-        print(f"  沪市 macro 获取失败: {e}")
+    if need_fetch:
+        filled_sh = 0
+        filled_sz = 0
+        for dt in need_fetch:
+            date_str = dt.replace('-', '')
 
-    # ── 深市 macro 批量获取 ──
-    try:
-        df = ak.macro_china_market_margin_sz()
-        new_sz = 0
-        for _, row in df.iterrows():
-            dt = _parse_date(row['日期'])
-            if dt is None or dt < '2016-01-26':
-                continue
-            if dt in sz_margin:
-                continue
-            try:
-                balance = float(row['融资余额'])  # 元
-                if balance > 0:
-                    sz_margin[dt] = balance / 1e8  # 元 → 亿元
-                    new_sz += 1
-            except (ValueError, TypeError):
-                continue
-        print(f"  深市 macro: 新增 {new_sz} 天, 共 {len(sz_margin)} 天")
-    except Exception as e:
-        print(f"  深市 macro 获取失败: {e}")
-
-    # ── 保存 macro 数据到缓存（避免中断丢失） ──
-    for dt in sorted(set(list(sh_margin.keys()) + list(sz_margin.keys()))):
-        if dt not in cache:
-            cache[dt] = {}
-        if dt in sh_margin:
-            cache[dt]['sh'] = round(sh_margin[dt], 4)
-        if dt in sz_margin:
-            cache[dt]['sz'] = round(sz_margin[dt], 4)
-    _save_margin_cache(cache)
-    print(f"  macro 缓存已保存: {len(cache)} 天")
-
-    # ── 深市补漏：stock_margin_szse（返回亿元，直接存） ──
-    if sh_margin:
-        missing_sz = sorted(set(sh_margin.keys()) - set(sz_margin.keys()))
-        if missing_sz:
-            print(f"  深市缺失 {len(missing_sz)} 天，尝试 stock_margin_szse 补漏...")
-            filled_sz = 0
-            failed_sz = 0
-            for dt in missing_sz:
-                date_str = dt.replace('-', '')
-                success = False
-                for attempt in range(5):
-                    try:
-                        df_day = ak.stock_margin_szse(date=date_str)
-                        bal = float(df_day['融资余额'].iloc[0])  # 亿元
-                        if bal > 0:
-                            sz_margin[dt] = bal  # 已经是亿元
-                            filled_sz += 1
-                            success = True
-                        break
-                    except Exception:
-                        if attempt < 4:
-                            time.sleep(5)
-                if not success:
-                    failed_sz += 1
-                if filled_sz > 0 and filled_sz % 10 == 0:
-                    # 增量保存缓存
-                    for d in list(sz_margin.keys()):
-                        if d not in cache:
-                            cache[d] = {}
-                        cache[d]['sz'] = round(sz_margin[d], 4)
-                    _save_margin_cache(cache)
-                    print(f"    已补 {filled_sz} 天...（缓存已保存）")
-            print(f"  深市补漏: 成功 {filled_sz}, 失败 {failed_sz}")
-
-    # ── 沪市补漏：stock_margin_detail_sse（返回元，逐券汇总 → 亿元） ──
-    if sz_margin:
-        missing_sh = sorted(set(sz_margin.keys()) - set(sh_margin.keys()))
-        if missing_sh:
-            print(f"  沪市缺失 {len(missing_sh)} 天，尝试 stock_margin_detail_sse 补漏...")
-            filled_sh = 0
-            failed_sh = 0
-            for dt in missing_sh:
-                date_str = dt.replace('-', '')
-                success = False
-                for attempt in range(5):
+            # 沪市：stock_margin_detail_sse（返回元，逐券汇总 → 亿元）
+            if dt not in sh_margin:
+                for attempt in range(3):
                     try:
                         df_day = ak.stock_margin_detail_sse(date=date_str)
-                        total = df_day['融资余额'].astype(float).sum()  # 元
+                        total = df_day['融资余额'].astype(float).sum()
                         if total > 0:
-                            sh_margin[dt] = total / 1e8  # 元 → 亿元
+                            sh_margin[dt] = total / 1e8
                             filled_sh += 1
-                            success = True
                         break
                     except Exception:
-                        if attempt < 4:
+                        if attempt < 2:
                             time.sleep(5)
-                if not success:
-                    failed_sh += 1
-                if filled_sh > 0 and filled_sh % 10 == 0:
-                    for d in list(sh_margin.keys()):
-                        if d not in cache:
-                            cache[d] = {}
+
+            # 深市：stock_margin_szse（返回亿元）
+            if dt not in sz_margin:
+                for attempt in range(3):
+                    try:
+                        df_day = ak.stock_margin_szse(date=date_str)
+                        bal = float(df_day['融资余额'].iloc[0])
+                        if bal > 0:
+                            sz_margin[dt] = bal
+                            filled_sz += 1
+                        break
+                    except Exception:
+                        if attempt < 2:
+                            time.sleep(5)
+
+            # 增量保存
+            if (filled_sh + filled_sz) > 0 and (filled_sh + filled_sz) % 20 == 0:
+                for d in set(list(sh_margin.keys()) + list(sz_margin.keys())):
+                    if d not in cache:
+                        cache[d] = {}
+                    if d in sh_margin:
                         cache[d]['sh'] = round(sh_margin[d], 4)
-                    _save_margin_cache(cache)
-                    print(f"    已补 {filled_sh} 天...")
-            if missing_sh:
-                print(f"  沪市补漏: 成功 {filled_sh}, 失败 {failed_sh}")
+                    if d in sz_margin:
+                        cache[d]['sz'] = round(sz_margin[d], 4)
+                _save_margin_cache(cache)
+                print(f"    已获取... 沪市+{filled_sh} 深市+{filled_sz}")
 
-    # ── 保存缓存（亿元） ──
-    for dt in sorted(set(list(sh_margin.keys()) + list(sz_margin.keys()))):
-        if dt not in cache:
-            cache[dt] = {}
-        if dt in sh_margin:
-            cache[dt]['sh'] = round(sh_margin[dt], 4)
-        if dt in sz_margin:
-            cache[dt]['sz'] = round(sz_margin[dt], 4)
-    _save_margin_cache(cache)
-    print(f"  缓存已保存: {len(cache)} 天")
+        # 保存缓存
+        for d in set(list(sh_margin.keys()) + list(sz_margin.keys())):
+            if d not in cache:
+                cache[d] = {}
+            if d in sh_margin:
+                cache[d]['sh'] = round(sh_margin[d], 4)
+            if d in sz_margin:
+                cache[d]['sz'] = round(sz_margin[d], 4)
+        _save_margin_cache(cache)
+        print(f"  补漏完成: 沪市+{filled_sh}, 深市+{filled_sz}, 缓存共 {len(cache)} 天")
 
-    # ── 合并计算 ratio（前值填充单市场缺失） ──
+    # ── 合并计算 ratio（仅使用当天有完整沪深数据的日期） ──
     results = {}
     margin_gaps = []
     all_dates = sorted(set(list(sh_margin.keys()) + list(sz_margin.keys())))
-    last_sh = None
-    last_sz = None
-    filled = 0
 
     for dt in all_dates:
         sh = sh_margin.get(dt)
         sz = sz_margin.get(dt)
 
-        if sh is not None:
-            last_sh = sh
-        if sz is not None:
-            last_sz = sz
-
         if sh is None and sz is None:
             margin_gaps.append((dt, "沪市+深市"))
             continue
-
         if sh is None:
-            if last_sh is not None:
-                sh = last_sh
-                margin_gaps.append((dt, "沪市"))
-                filled += 1
-            else:
-                margin_gaps.append((dt, "沪市(无前值)"))
-                continue
+            margin_gaps.append((dt, "沪市"))
+            continue
         if sz is None:
-            if last_sz is not None:
-                sz = last_sz
-                margin_gaps.append((dt, "深市"))
-                filled += 1
-            else:
-                margin_gaps.append((dt, "深市(无前值)"))
-                continue
+            margin_gaps.append((dt, "深市"))
+            continue
 
-        total_yuan = (sh + sz) * 1e8  # 亿元 → 元
-        if total_yuan > 0:
-            mcap = estimate_float_mcap(dt)
-            results[dt] = total_yuan / mcap
+        total_yi = sh + sz  # 亿元
+        if total_yi > 0:
+            mcap_yi = get_float_mcap(dt)  # 亿元
+            if mcap_yi and mcap_yi > 0:
+                results[dt] = total_yi / mcap_yi  # 亿元 / 亿元 = 无量纲比率
 
-    if filled:
-        print(f"  前值填充单市场缺失: {filled} 次")
     if margin_gaps:
         _append_margin_gaps_to_log(margin_gaps)
 
@@ -360,6 +355,44 @@ def _append_margin_gaps_to_log(gaps):
     with open(LOG_FILE, 'a', encoding='utf-8') as f:
         f.writelines(lines)
     print(f"  缺失记录已写入 log.md（{len(gaps)} 条）")
+
+
+def _invalidate_recent_caches(dates):
+    """清除指定日期的所有缓存，强制重新获取"""
+    # 换手率缓存
+    tc = _load_turnover_cache()
+    tc_changed = False
+    for dt in dates:
+        if dt in tc:
+            del tc[dt]
+            tc_changed = True
+    if tc_changed:
+        _save_turnover_cache(tc)
+
+    # 融资余额缓存
+    if MARGIN_CACHE.exists():
+        with open(MARGIN_CACHE, 'r', encoding='utf-8') as f:
+            mc = json.load(f)
+        mc_changed = False
+        for dt in dates:
+            if dt in mc:
+                del mc[dt]
+                mc_changed = True
+        if mc_changed:
+            with open(MARGIN_CACHE, 'w', encoding='utf-8') as f:
+                json.dump(mc, f, ensure_ascii=False, indent=2)
+
+    # 涨停缓存
+    lc = _load_limitup_cache()
+    lc_changed = False
+    for dt in dates:
+        if dt in lc:
+            del lc[dt]
+            lc_changed = True
+    if lc_changed:
+        _save_limitup_cache(lc)
+
+    print(f"  已清除 {len(dates)} 天缓存，准备重新获取")
 
 
 MARGIN_CACHE = DATA_DIR / "margin_cache.json"
@@ -434,7 +467,7 @@ def get_limitup_data(ak, trade_dates, max_days=60):
             import pandas as pd
             all_data = []
             for start in range(0, 5000, 800):
-                data = client.index(symbol='880006', frequency=9, start=start, offset=800)
+                data = client.index(symbol='880006', frequency=9, start=start, offset=800) # type: ignore
                 if data is None or len(data) == 0:
                     break
                 all_data.append(data)
@@ -523,7 +556,7 @@ def generate_data():
 
     # ── 获取三大指标 ──
     turnover_data = get_turnover_data(ak, trade_dates)
-    margin_data = get_margin_data(ak)
+    margin_data = get_margin_data(ak, trade_dates)
 
     # 涨停数据使用通达信 880006 + 持久化缓存
     limitup_data = get_limitup_data(ak, trade_dates)
@@ -592,7 +625,51 @@ def generate_data():
         print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}")
 
 
-def generate_data_recent(n_days=3):
+def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
+    """刷新模式下，获取不到的数据按 0 存入缓存和结果字典"""
+    # 换手率
+    tc = _load_turnover_cache()
+    tc_changed = False
+    for dt in dates:
+        if dt not in turnover_data:
+            turnover_data[dt] = 0
+            tc[dt] = {"sh_amount": 0, "sz_amount": 0, "turnover_rate": 0}
+            tc_changed = True
+            print(f"  ⚠ {dt} 换手率获取失败，存入 0")
+    if tc_changed:
+        _save_turnover_cache(tc)
+
+    # 融资余额
+    if MARGIN_CACHE.exists():
+        with open(MARGIN_CACHE, 'r', encoding='utf-8') as f:
+            mc = json.load(f)
+    else:
+        mc = {}
+    mc_changed = False
+    for dt in dates:
+        if dt not in margin_data:
+            margin_data[dt] = 0
+            mc[dt] = {"sh": 0, "sz": 0}
+            mc_changed = True
+            print(f"  ⚠ {dt} 融资余额获取失败，存入 0")
+    if mc_changed:
+        with open(MARGIN_CACHE, 'w', encoding='utf-8') as f:
+            json.dump(mc, f, ensure_ascii=False, indent=2)
+
+    # 涨停
+    lc = _load_limitup_cache()
+    lc_changed = False
+    for dt in dates:
+        if dt not in limitup_data:
+            limitup_data[dt] = (0, 0)
+            lc[dt] = {"count": 0, "ratio": 0}
+            lc_changed = True
+            print(f"  ⚠ {dt} 涨停数据获取失败，存入 0")
+    if lc_changed:
+        _save_limitup_cache(lc)
+
+
+def generate_data_recent(n_days=2):
     """增量更新最近 n_days 个交易日的数据（由刷新按钮触发）"""
     ak = ensure_akshare()
 
@@ -609,10 +686,16 @@ def generate_data_recent(n_days=3):
     recent_dates = trade_dates[-n_days:]
     print(f"增量更新最近 {n_days} 个交易日: {recent_dates[0]} ~ {recent_dates[-1]}")
 
-    # 获取三大指标（API 返回全量，但只处理最近几天）
+    # 强制清除最近几天的缓存，确保重新获取
+    _invalidate_recent_caches(recent_dates)
+
+    # 获取三大指标（仅重新获取 recent_dates）
     turnover_data = get_turnover_data(ak, recent_dates)
-    margin_data = get_margin_data(ak)
+    margin_data = get_margin_data(ak, recent_dates)
     limitup_data = get_limitup_data(ak, recent_dates)
+
+    # 刷新模式：获取不到的数据按 0 存入缓存
+    _fill_missing_with_zero(recent_dates, turnover_data, margin_data, limitup_data)
 
     # 从已有数据重建历史分位序列（用于计算分位数）
     t_hist = [d['turnover_rate'] for d in existing if d['turnover_rate'] > 0 and d['date'] < recent_dates[0]]
