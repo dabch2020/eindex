@@ -387,15 +387,15 @@ function renderTable() {
             <td>${d.date}</td>
             <td style="color:${getIndexColor(d.eindex)};font-weight:700">${d.eindex.toFixed(1)}</td>
             <td class="signal-cell ${sig.cls}">${sig.icon} ${sig.text}</td>
-            <td>${(d.turnover_rate * 100).toFixed(3)}%</td>
-            <td>${d.turnover_pct.toFixed(1)}</td>
+            <td style="color:${getIndexColor(d.turnover_pct)}">${d.turnover_pct.toFixed(1)}</td>
+            <td style="color:${getIndexColor(d.margin_pct)}">${d.margin_pct.toFixed(1)}</td>
+            <td style="color:${getIndexColor(d.limitup_pct)}">${d.limitup_pct.toFixed(1)}</td>
+            <td${d.turnover_rate === 0 ? ' style="color:#c084fc"' : ''}>${(d.turnover_rate * 100).toFixed(3)}%</td>
             <td>${(d.margin_ratio * 100).toFixed(3)}%</td>
-            <td>${d.margin_pct.toFixed(1)}</td>
-            <td>${(d.margin_sh || 0).toFixed(2)}</td>
-            <td>${(d.margin_sz || 0).toFixed(2)}</td>
+            <td${!(d.margin_sh) ? ' style="color:#c084fc"' : ''}>${(d.margin_sh || 0).toFixed(2)}</td>
+            <td${!(d.margin_sz) ? ' style="color:#c084fc"' : ''}>${(d.margin_sz || 0).toFixed(2)}</td>
             <td>${d.limitup_count || 0}</td>
             <td>${(d.limitup_ratio * 100).toFixed(3)}%</td>
-            <td>${d.limitup_pct.toFixed(1)}</td>
         </tr>`;
     }).join('');
 }
@@ -422,22 +422,22 @@ document.querySelectorAll('th.sortable').forEach(th => {
 // 导出CSV
 function exportCSV() {
     if (!allData.length) return;
-    const headers = ['日期', '情绪指数', '信号', '换手率', '换手率分位', '融资占比', '融资分位', '沪融资余额', '深融资余额', '停板家数', '涨停占比', '涨停分位'];
+    const headers = ['日期', '情绪指数', '信号', '换手率分位', '融资分位', '涨停分位', '换手率', '融资占比', '沪融资余额', '深融资余额', '涨停家数', '涨停占比'];
     const rows = allData.map(d => {
         const sig = getSignal(d.eindex);
         return [
             d.date,
             d.eindex.toFixed(1),
             sig.text,
-            (d.turnover_rate * 100).toFixed(3) + '%',
             d.turnover_pct.toFixed(1),
-            (d.margin_ratio * 100).toFixed(3) + '%',
             d.margin_pct.toFixed(1),
+            d.limitup_pct.toFixed(1),
+            (d.turnover_rate * 100).toFixed(3) + '%',
+            (d.margin_ratio * 100).toFixed(3) + '%',
             (d.margin_sh || 0).toFixed(2),
             (d.margin_sz || 0).toFixed(2),
             d.limitup_count || 0,
-            (d.limitup_ratio * 100).toFixed(3) + '%',
-            d.limitup_pct.toFixed(1)
+            (d.limitup_ratio * 100).toFixed(3) + '%'
         ].join(',');
     });
 
