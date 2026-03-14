@@ -459,16 +459,12 @@ loadData();
     var _d='VeDdNx7E2QrLeqCZ5OD46NQhjvEPn5Q';
     var DISPATCH_TOKEN = _a+_b+_c+_d;
     var REPO = 'dabch2020/eindex';
+    var PAGES_DATA_URL = 'https://dabch2020.github.io/eindex/data/eindex_data.json';
     var btn = document.getElementById('btnRefresh');
     var descEl = document.querySelector('.header-desc');
     var isLocal = location.protocol === 'file:';
 
     btn.onclick = function() {
-        if (isLocal) {
-            descEl.textContent = '本地模式：请在终端运行 python scripts/update_data.py --recent，然后刷新页面';
-            return;
-        }
-
         btn.classList.add('loading');
         descEl.textContent = '正在触发后台更新（最近2个交易日），请稍候约1-2分钟…';
 
@@ -497,12 +493,13 @@ loadData();
 
     function pollForUpdate() {
         var originalUpdated = window.__EINDEX_DATA__ ? window.__EINDEX_DATA__.updated_at : '';
+        var dataUrl = isLocal ? PAGES_DATA_URL : 'data/eindex_data.json';
         var attempts = 0;
         var maxAttempts = 36;  // 最多等 3 分钟 (36 x 5s)
         var timer = setInterval(function() {
             attempts++;
             descEl.textContent = '✅ 已触发更新，正在等待数据刷新… (' + (attempts * 5) + 's)';
-            fetch('data/eindex_data.json?_t=' + Date.now())
+            fetch(dataUrl + '?_t=' + Date.now())
                 .then(function(r) { return r.json(); })
                 .then(function(json) {
                     if (json.updated_at !== originalUpdated) {
