@@ -599,16 +599,16 @@ footer {
     }
 }
 
-/* ===== Warnings ===== */
-.warnings-section {
-    background: rgba(255, 193, 7, 0.08);
+/* ===== Warnings (below refresh button) ===== */
+.header-warnings {
+    margin-top: 8px;
+    background: rgba(255, 193, 7, 0.1);
     border: 1px solid rgba(255, 193, 7, 0.3);
     border-radius: var(--radius-sm);
-    padding: 12px 16px;
-    margin-bottom: 24px;
+    padding: 8px 12px;
 }
 .warning-item {
     color: var(--accent-yellow);
-    font-size: 14px;
-    padding: 3px 0;
+    font-size: 13px;
+    padding: 2px 0;
 }

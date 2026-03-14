@@ -19,6 +19,9 @@
                     </button>
                 </div>
                 <p class="header-desc">基于换手率、融资余额占比、涨停家数占比三大核心指标的市场情绪量化分析工具</p>
+                <div class="header-warnings" id="warningsSection" style="display:none">
+                    <div id="warningsContent"></div>
+                </div>
             </div>
         </div>
     </header>
@@ -37,11 +40,6 @@
                 <div class="update-time" id="updateTime">数据更新时间: --</div>
                 <div class="recent-days" id="recentDays"></div>
             </div>
-        </section>
-
-        <!-- 数据缺失警告 -->
-        <section class="warnings-section" id="warningsSection" style="display:none">
-            <div id="warningsContent"></div>
         </section>
 
         <!-- 三大指标 -->
@@ -106,6 +104,8 @@
                             <th data-sort="turnover_pct" class="sortable">换手率分位</th>
                             <th data-sort="margin_ratio" class="sortable">融资占比</th>
                             <th data-sort="margin_pct" class="sortable">融资分位</th>
+                            <th data-sort="margin_sh" class="sortable">沪融资余额</th>
+                            <th data-sort="margin_sz" class="sortable">深融资余额</th>
                             <th data-sort="limitup_count" class="sortable">涨停家数</th>
                             <th data-sort="limitup_ratio" class="sortable">涨停占比</th>
                             <th data-sort="limitup_pct" class="sortable">涨停分位</th>

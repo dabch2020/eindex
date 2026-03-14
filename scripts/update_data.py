@@ -170,6 +170,8 @@ def get_turnover_data(ak, trade_dates):
             df_sh['date'] = df_sh['date'].astype(str)
             sh_amt = dict(zip(df_sh['date'], df_sh['amount']))
 
+            time.sleep(1)
+
             df_sz = ak.stock_zh_index_daily_em(symbol="sz399001")
             df_sz['date'] = df_sz['date'].astype(str)
             sz_amt = dict(zip(df_sz['date'], df_sz['amount']))
@@ -273,6 +275,8 @@ def get_margin_data(ak, trade_dates):
                         if attempt < 2:
                             time.sleep(5)
 
+            time.sleep(1)
+
             # 深市：stock_margin_szse（返回亿元）
             if dt not in sz_margin:
                 for attempt in range(3):
@@ -335,7 +339,7 @@ def get_margin_data(ak, trade_dates):
         if total_yi > 0:
             mcap_yi = get_float_mcap(dt)  # 亿元
             if mcap_yi and mcap_yi > 0:
-                results[dt] = total_yi / mcap_yi  # 亿元 / 亿元 = 无量纲比率
+                results[dt] = (total_yi / mcap_yi, round(sh, 4), round(sz, 4))  # (ratio, sh亿, sz亿)
 
     if margin_gaps:
         _append_margin_gaps_to_log(margin_gaps)
@@ -360,16 +364,9 @@ def _append_margin_gaps_to_log(gaps):
 
 
 def _invalidate_recent_caches(dates):
-    """清除指定日期的所有缓存，强制重新获取"""
-    # 换手率缓存
-    tc = _load_turnover_cache()
-    tc_changed = False
-    for dt in dates:
-        if dt in tc:
-            del tc[dt]
-            tc_changed = True
-    if tc_changed:
-        _save_turnover_cache(tc)
+    """清除指定日期的所有缓存，强制重新获取
+    注意：不清除换手率缓存，因为已完成交易日的指数成交额不会变，
+    且重新计算需要 ltsz_cache（流通市值）支持，清除后可能无法恢复。"""
 
     # 融资余额缓存
     if MARGIN_CACHE.exists():
@@ -468,13 +465,20 @@ def get_limitup_data(ak, trade_dates, max_days=60):
 
             import pandas as pd
             all_data = []
-            for start in range(0, 5000, 800):
-                data = client.index(symbol='880006', frequency=9, start=start, offset=800) # type: ignore
-                if data is None or len(data) == 0:
-                    break
-                all_data.append(data)
-                if len(data) < 800:
-                    break
+            # 只缺少几天时，仅取最近一小批数据（刷新模式）
+            if len(missing) <= 10:
+                data = client.index(symbol='880006', frequency=9, start=0, offset=20) # type: ignore
+                if data is not None and len(data) > 0:
+                    all_data.append(data)
+            else:
+                for start in range(0, 5000, 800):
+                    data = client.index(symbol='880006', frequency=9, start=start, offset=800) # type: ignore
+                    if data is None or len(data) == 0:
+                        break
+                    all_data.append(data)
+                    if len(data) < 800:
+                        break
+                    time.sleep(1)
 
             if all_data:
                 combined = pd.concat(all_data)
@@ -570,7 +574,10 @@ def generate_data():
 
     for dt in trade_dates:
         t_val = turnover_data.get(dt)
-        m_val = margin_data.get(dt)
+        m_entry = margin_data.get(dt)
+        m_val = m_entry[0] if m_entry is not None else None
+        m_sh = m_entry[1] if m_entry is not None else 0
+        m_sz = m_entry[2] if m_entry is not None else 0
         l_entry = limitup_data.get(dt)
         l_val = l_entry[0] if l_entry is not None else None
         l_count = l_entry[1] if l_entry is not None else 0
@@ -603,6 +610,8 @@ def generate_data():
             "turnover_pct": round(t_pct, 2) if t_pct is not None else 0,
             "margin_ratio": round(m_val, 6) if m_val is not None else 0,
             "margin_pct": round(m_pct, 2) if m_pct is not None else 0,
+            "margin_sh": round(m_sh, 2),
+            "margin_sz": round(m_sz, 2),
             "limitup_count": l_count,
             "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
@@ -645,19 +654,25 @@ def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
         _save_turnover_cache(tc)
 
     # 融资余额
-    if MARGIN_CACHE.exists():
-        with open(MARGIN_CACHE, 'r', encoding='utf-8') as f:
-            mc = json.load(f)
-    else:
-        mc = {}
+    mc = _load_margin_cache()
     mc_changed = False
     for dt in dates:
         if dt not in margin_data:
-            margin_data[dt] = 0
-            mc[dt] = {"sh": 0, "sz": 0}
+            margin_data[dt] = (0, 0, 0)
+            # 判断具体缺失哪个交易所
+            entry = mc.get(dt, {})
+            has_sh = entry.get('sh', 0) > 0
+            has_sz = entry.get('sz', 0) > 0
+            if not has_sh and not has_sz:
+                missing_side = "上交所+深交所"
+            elif not has_sh:
+                missing_side = "上交所"
+            else:
+                missing_side = "深交所"
+            mc[dt] = {"sh": entry.get('sh', 0), "sz": entry.get('sz', 0)}
             mc_changed = True
-            warnings.append(f"{dt} 融资余额数据缺失")
-            print(f"  ⚠ {dt} 融资余额获取失败，存入 0")
+            warnings.append(f"{dt} 融资余额数据缺失（{missing_side}）")
+            print(f"  ⚠ {dt} 融资余额获取失败（{missing_side}），存入 0")
     if mc_changed:
         with open(MARGIN_CACHE, 'w', encoding='utf-8') as f:
             json.dump(mc, f, ensure_ascii=False, indent=2)
@@ -714,7 +729,10 @@ def generate_data_recent(n_days=2):
     updated = 0
     for dt in recent_dates:
         t_val = turnover_data.get(dt)
-        m_val = margin_data.get(dt)
+        m_entry = margin_data.get(dt)
+        m_val = m_entry[0] if m_entry is not None else None
+        m_sh = m_entry[1] if m_entry is not None else 0
+        m_sz = m_entry[2] if m_entry is not None else 0
         l_entry = limitup_data.get(dt)
         l_val = l_entry[0] if l_entry is not None else None
         l_count = l_entry[1] if l_entry is not None else 0
@@ -745,6 +763,8 @@ def generate_data_recent(n_days=2):
             "turnover_pct": round(t_pct, 2) if t_pct is not None else 0,
             "margin_ratio": round(m_val, 6) if m_val is not None else 0,
             "margin_pct": round(m_pct, 2) if m_pct is not None else 0,
+            "margin_sh": round(m_sh, 2),
+            "margin_sz": round(m_sz, 2),
             "limitup_count": l_count,
             "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
