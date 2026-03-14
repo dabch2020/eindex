@@ -15,7 +15,7 @@ function getIndexColor(value) {
 }
 
 function getSignal(value) {
-    if (value <= 20) return { text: '买入信号', icon: '🟢', cls: 'buy' };
+    if (value <= 30) return { text: '买入信号', icon: '🟢', cls: 'buy' };
     if (value >= 80) return { text: '卖出信号', icon: '🔴', cls: 'sell' };
     return { text: '持有信号', icon: '🟡', cls: 'hold' };
 }
@@ -188,7 +188,7 @@ function renderMainChart() {
     const buyPoints = [];
     const sellPoints = [];
     allData.forEach((d, i) => {
-        if (d.eindex <= 20) buyPoints.push({ value: [d.date, d.eindex], itemStyle: { color: '#00d4aa' } });
+        if (d.eindex <= 30) buyPoints.push({ value: [d.date, d.eindex], itemStyle: { color: '#00d4aa' } });
         if (d.eindex >= 80) sellPoints.push({ value: [d.date, d.eindex], itemStyle: { color: '#ff5252' } });
     });
 
@@ -206,7 +206,7 @@ function renderMainChart() {
                 return `<b>${d.date}</b><br/>` +
                     `情绪指数: <b style="color:${getIndexColor(d.eindex)}">${d.eindex.toFixed(1)}</b><br/>` +
                     `信号: ${sig.icon} ${sig.text}<br/>` +
-                    `换手率分位: ${d.turnover_pct.toFixed(1)}<br/>` +
+                    `成交额分位: ${(d.cje_pct || 0).toFixed(1)}<br/>` +
                     `融资分位: ${d.margin_pct.toFixed(1)}<br/>` +
                     `涨停分位: ${d.limitup_pct.toFixed(1)}`;
             }
@@ -238,8 +238,8 @@ function renderMainChart() {
         visualMap: {
             show: false,
             pieces: [
-                { lte: 20, color: '#00d4aa' },
-                { gt: 20, lte: 80, color: '#4f8ff7' },
+                { lte: 30, color: '#00d4aa' },
+                { gt: 30, lte: 80, color: '#4f8ff7' },
                 { gt: 80, color: '#ff5252' }
             ]
         },
@@ -260,7 +260,7 @@ function renderMainChart() {
                     silent: true,
                     lineStyle: { type: 'dashed' },
                     data: [
-                        { yAxis: 20, lineStyle: { color: '#00d4aa' }, label: { formatter: '买入线 (20)', color: '#00d4aa', fontSize: 11 } },
+                        { yAxis: 30, lineStyle: { color: '#00d4aa' }, label: { formatter: '买入线 (30)', color: '#00d4aa', fontSize: 11 } },
                         { yAxis: 80, lineStyle: { color: '#ff5252' }, label: { formatter: '卖出线 (80)', color: '#ff5252', fontSize: 11 } }
                     ]
                 }
@@ -301,7 +301,7 @@ function renderIndicatorsChart() {
             textStyle: { color: '#e8eaed' }
         },
         legend: {
-            data: ['换手率分位', '融资余额分位', '涨停家数分位'],
+            data: ['成交额分位', '融资余额分位', '涨停家数分位'],
             textStyle: { color: '#9aa0b0' },
             top: 5
         },
@@ -331,12 +331,12 @@ function renderIndicatorsChart() {
         },
         series: [
             {
-                name: '换手率分位',
+                name: '成交额分位',
                 type: 'line',
-                data: allData.map(d => d.turnover_pct),
+                data: allData.map(d => d.cje_pct || 0),
                 smooth: true,
-                lineStyle: { width: 2, color: '#4f8ff7' },
-                itemStyle: { color: '#4f8ff7' },
+                lineStyle: { width: 2, color: '#e040fb' },
+                itemStyle: { color: '#e040fb' },
                 symbol: 'none'
             },
             {
@@ -372,8 +372,8 @@ function renderTable() {
             va = new Date(va); vb = new Date(vb);
         }
         if (sortField === 'signal') {
-            va = a.eindex <= 20 ? 0 : a.eindex >= 80 ? 2 : 1;
-            vb = b.eindex <= 20 ? 0 : b.eindex >= 80 ? 2 : 1;
+            va = a.eindex <= 30 ? 0 : a.eindex >= 80 ? 2 : 1;
+            vb = b.eindex <= 30 ? 0 : b.eindex >= 80 ? 2 : 1;
         }
         return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
     });
@@ -387,7 +387,7 @@ function renderTable() {
             <td>${d.date}</td>
             <td style="color:${getIndexColor(d.eindex)};font-weight:700">${d.eindex.toFixed(1)}</td>
             <td class="signal-cell ${sig.cls}">${sig.icon} ${sig.text}</td>
-            <td style="color:${getIndexColor(d.turnover_pct)}">${d.turnover_pct.toFixed(1)}</td>
+            <td style="color:${getIndexColor(d.cje_pct || 0)}">${(d.cje_pct || 0).toFixed(1)}</td>
             <td style="color:${getIndexColor(d.margin_pct)}">${d.margin_pct.toFixed(1)}</td>
             <td style="color:${getIndexColor(d.limitup_pct)}">${d.limitup_pct.toFixed(1)}</td>
             <td${d.turnover_rate === 0 ? ' style="color:#c084fc"' : ''}>${(d.turnover_rate * 100).toFixed(3)}%</td>
@@ -422,14 +422,14 @@ document.querySelectorAll('th.sortable').forEach(th => {
 // 导出CSV
 function exportCSV() {
     if (!allData.length) return;
-    const headers = ['日期', '情绪指数', '信号', '换手率分位', '融资分位', '涨停分位', '换手率', '融资占比', '沪融资余额', '深融资余额', '涨停家数', '涨停占比'];
+    const headers = ['日期', '情绪指数', '信号', '成交额分位', '融资分位', '涨停分位', '换手率', '融资占比', '沪融资余额', '深融资余额', '涨停家数', '涨停占比'];
     const rows = allData.map(d => {
         const sig = getSignal(d.eindex);
         return [
             d.date,
             d.eindex.toFixed(1),
             sig.text,
-            d.turnover_pct.toFixed(1),
+            (d.cje_pct || 0).toFixed(1),
             d.margin_pct.toFixed(1),
             d.limitup_pct.toFixed(1),
             (d.turnover_rate * 100).toFixed(3) + '%',

@@ -25,6 +25,7 @@ DATA_JS_FILE = DATA_DIR / "eindex_data.js"
 LOG_FILE = Path(__file__).parent.parent / "log.md"
 LTSZ_CACHE_FILE = DATA_DIR / "ltsz_cache.json"
 TURNOVER_CACHE = DATA_DIR / "turn_rate_cache.json"
+CJE_CACHE = DATA_DIR / "cje_cache.json"
 
 # 各年份全市场股票总数（近似）
 TOTAL_STOCKS = {
@@ -154,11 +155,27 @@ def _save_turnover_cache(cache):
         json.dump(cache, f, ensure_ascii=False, indent=2)
 
 
+def _load_cje_cache():
+    """加载成交额缓存（亿元）"""
+    if CJE_CACHE.exists():
+        with open(CJE_CACHE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+
+def _save_cje_cache(cache):
+    """保存成交额缓存（亿元）"""
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(CJE_CACHE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+
 def get_turnover_data(ak, trade_dates):
     """全市场换手率 = (沪市成交额 + 深市成交额) / 流通市值"""
     print("获取全市场成交额（东方财富）...")
 
     cache = _load_turnover_cache()
+    cje = _load_cje_cache()
     cached_dates = set(cache.keys())
     missing = [dt for dt in trade_dates if dt not in cached_dates]
     print(f"  缓存: {len(cached_dates)} 天已有, {len(missing)} 天缺失")
@@ -182,17 +199,21 @@ def get_turnover_data(ak, trade_dates):
                 sz = sz_amt.get(dt, 0) or 0
                 total = float(sh) + float(sz)  # 元
                 if total > 0:
+                    sh_yi = round(float(sh) / 1e8, 4)
+                    sz_yi = round(float(sz) / 1e8, 4)
                     mcap_yi = get_float_mcap(dt)  # 亿元
                     if mcap_yi and mcap_yi > 0:
                         rate = total / (mcap_yi * 1e8)  # 元 / 元
-                        cache[dt] = {"sh_amount": round(float(sh) / 1e8, 4),
-                                     "sz_amount": round(float(sz) / 1e8, 4),
+                        cache[dt] = {"sh_amount": sh_yi,
+                                     "sz_amount": sz_yi,
                                      "turnover_rate": round(rate, 8)}
+                        cje[dt] = {"sh": sh_yi, "sz": sz_yi}
                         new_count += 1
                     else:
                         missing_mcap += 1
 
             _save_turnover_cache(cache)
+            _save_cje_cache(cje)
             print(f"  新增 {new_count} 天, 缓存共 {len(cache)} 天")
             if missing_mcap:
                 print(f"  ⚠ {missing_mcap} 天缺少流通市值数据，请运行 fetch_ltsz.py 补齐")
@@ -567,10 +588,13 @@ def generate_data():
     # 涨停数据使用通达信 880006 + 持久化缓存
     limitup_data = get_limitup_data(ak, trade_dates)
 
+    # 成交额数据（亿元）
+    cje_cache = _load_cje_cache()
+
     # ── 计算情绪指数 ──
     print("计算情绪指数...")
     results = []
-    t_hist, m_hist, l_hist = [], [], []
+    t_hist, m_hist, l_hist, cje_hist = [], [], [], []
 
     for dt in trade_dates:
         t_val = turnover_data.get(dt)
@@ -582,23 +606,29 @@ def generate_data():
         l_val = l_entry[0] if l_entry is not None else None
         l_count = l_entry[1] if l_entry is not None else 0
 
+        cje_entry = cje_cache.get(dt)
+        cje_val = round(cje_entry['sh'] + cje_entry['sz'], 4) if cje_entry else None
+
         if t_val is not None:
             t_hist.append(t_val)
         if m_val is not None:
             m_hist.append(m_val)
         if l_val is not None:
             l_hist.append(l_val)
+        if cje_val is not None and cje_val > 0:
+            cje_hist.append(cje_val)
 
         # 至少需要一个指标有数据
-        if t_val is None and m_val is None and l_val is None:
+        if cje_val is None and m_val is None and l_val is None:
             continue
 
         t_pct = compute_percentile(t_hist, t_val) if t_val is not None else None
         m_pct = compute_percentile(m_hist, m_val) if m_val is not None else None
         l_pct = compute_percentile(l_hist, l_val) if l_val is not None else None
+        cje_pct = compute_percentile(cje_hist, cje_val) if (cje_val is not None and cje_val > 0) else None
 
-        # 有几个指标就用几个的均值（而非缺失时默认50）
-        pcts = [p for p in [t_pct, m_pct, l_pct] if p is not None]
+        # 三大核心指标：成交额分位、融资分位、涨停分位
+        pcts = [p for p in [cje_pct, m_pct, l_pct] if p is not None]
         if not pcts:
             continue
         eindex = sum(pcts) / len(pcts)
@@ -615,6 +645,8 @@ def generate_data():
             "limitup_count": l_count,
             "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
+            "cje_amount": round(cje_val, 2) if cje_val is not None else 0,
+            "cje_pct": round(cje_pct, 2) if cje_pct is not None else 0,
         })
 
     # ── 保存 ──
@@ -632,7 +664,7 @@ def generate_data():
     print(f"共 {len(results)} 条记录")
     if results:
         latest = results[-1]
-        sig = "买入" if latest['eindex'] <= 20 else "卖出" if latest['eindex'] >= 80 else "持有"
+        sig = "买入" if latest['eindex'] <= 30 else "卖出" if latest['eindex'] >= 80 else "持有"
         print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}")
 
 
@@ -642,16 +674,19 @@ def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
 
     # 换手率
     tc = _load_turnover_cache()
+    cje = _load_cje_cache()
     tc_changed = False
     for dt in dates:
         if dt not in turnover_data:
             turnover_data[dt] = 0
             tc[dt] = {"sh_amount": 0, "sz_amount": 0, "turnover_rate": 0}
+            cje[dt] = {"sh": 0, "sz": 0}
             tc_changed = True
             warnings.append(f"{dt} 换手率数据缺失")
             print(f"  ⚠ {dt} 换手率获取失败，存入 0")
     if tc_changed:
         _save_turnover_cache(tc)
+        _save_cje_cache(cje)
 
     # 融资余额
     mc = _load_margin_cache()
@@ -721,10 +756,14 @@ def generate_data_recent(n_days=2):
     # 刷新模式：获取不到的数据按 0 存入缓存
     warnings = _fill_missing_with_zero(recent_dates, turnover_data, margin_data, limitup_data)
 
+    # 成交额数据（亿元）
+    cje_cache = _load_cje_cache()
+
     # 从已有数据重建历史分位序列（用于计算分位数）
     t_hist = [d['turnover_rate'] for d in existing if d['turnover_rate'] > 0 and d['date'] < recent_dates[0]]
     m_hist = [d['margin_ratio'] for d in existing if d['margin_ratio'] > 0 and d['date'] < recent_dates[0]]
     l_hist = [d['limitup_ratio'] for d in existing if d['limitup_ratio'] > 0 and d['date'] < recent_dates[0]]
+    cje_hist = [d.get('cje_amount', 0) for d in existing if d.get('cje_amount', 0) > 0 and d['date'] < recent_dates[0]]
 
     updated = 0
     for dt in recent_dates:
@@ -737,21 +776,28 @@ def generate_data_recent(n_days=2):
         l_val = l_entry[0] if l_entry is not None else None
         l_count = l_entry[1] if l_entry is not None else 0
 
+        cje_entry = cje_cache.get(dt)
+        cje_val = round(cje_entry['sh'] + cje_entry['sz'], 4) if cje_entry else None
+
         if t_val is not None:
             t_hist.append(t_val)
         if m_val is not None:
             m_hist.append(m_val)
         if l_val is not None:
             l_hist.append(l_val)
+        if cje_val is not None and cje_val > 0:
+            cje_hist.append(cje_val)
 
-        if t_val is None and m_val is None and l_val is None:
+        if cje_val is None and m_val is None and l_val is None:
             continue
 
         t_pct = compute_percentile(t_hist, t_val) if t_val is not None else None
         m_pct = compute_percentile(m_hist, m_val) if m_val is not None else None
         l_pct = compute_percentile(l_hist, l_val) if l_val is not None else None
+        cje_pct = compute_percentile(cje_hist, cje_val) if (cje_val is not None and cje_val > 0) else None
 
-        pcts = [p for p in [t_pct, m_pct, l_pct] if p is not None]
+        # 三大核心指标：成交额分位、融资分位、涨停分位
+        pcts = [p for p in [cje_pct, m_pct, l_pct] if p is not None]
         if not pcts:
             continue
         eindex = sum(pcts) / len(pcts)
@@ -768,6 +814,8 @@ def generate_data_recent(n_days=2):
             "limitup_count": l_count,
             "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
+            "cje_amount": round(cje_val, 2) if cje_val is not None else 0,
+            "cje_pct": round(cje_pct, 2) if cje_pct is not None else 0,
         }
         updated += 1
 
@@ -786,7 +834,7 @@ def generate_data_recent(n_days=2):
     print(f"\n增量更新完成: 更新/新增 {updated} 天，总计 {len(merged)} 条")
     if merged:
         latest = merged[-1]
-        sig = "买入" if latest['eindex'] <= 20 else "卖出" if latest['eindex'] >= 80 else "持有"
+        sig = "买入" if latest['eindex'] <= 30 else "卖出" if latest['eindex'] >= 80 else "持有"
         print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}")
 
 
