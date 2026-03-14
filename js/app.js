@@ -507,8 +507,11 @@ loadData();
                 .then(function(json) {
                     if (json.updated_at !== originalUpdated) {
                         clearInterval(timer);
-                        descEl.textContent = '✅ 数据已更新，正在刷新页面…';
-                        setTimeout(function() { location.reload(); }, 500);
+                        allData = json.data;
+                        dataWarnings = json.warnings || [];
+                        renderAll();
+                        descEl.textContent = '✅ 数据已更新（' + json.updated_at + '）';
+                        btn.classList.remove('loading');
                     } else if (attempts >= maxAttempts) {
                         clearInterval(timer);
                         descEl.textContent = '✅ 更新已触发，请稍后手动刷新页面';
