@@ -1,6 +1,7 @@
 // ===== eIndex - A股情绪指数 =====
 
 let allData = [];
+let dataWarnings = [];
 let sortField = 'date';
 let sortAsc = false;
 
@@ -25,6 +26,7 @@ async function loadData() {
         // 优先使用 script 标签预加载的数据（本地 file:// 协议下 fetch 不可用）
         if (window.__EINDEX_DATA__) {
             allData = window.__EINDEX_DATA__.data;
+            dataWarnings = window.__EINDEX_DATA__.warnings || [];
             renderAll();
             return;
         }
@@ -32,6 +34,7 @@ async function loadData() {
         if (!resp.ok) throw new Error('数据文件加载失败');
         const json = await resp.json();
         allData = json.data;
+        dataWarnings = json.warnings || [];
         renderAll();
     } catch (e) {
         console.error('加载数据失败:', e);
@@ -49,6 +52,21 @@ function renderAll() {
     renderMainChart();
     renderIndicatorsChart();
     renderTable();
+    renderWarnings();
+}
+
+// 渲染数据缺失警告
+function renderWarnings() {
+    var section = document.getElementById('warningsSection');
+    var content = document.getElementById('warningsContent');
+    if (!dataWarnings.length) {
+        section.style.display = 'none';
+        return;
+    }
+    section.style.display = 'block';
+    content.innerHTML = dataWarnings.map(function(w) {
+        return '<div class="warning-item">⚠️ ' + w + '</div>';
+    }).join('');
 }
 
 // 渲染主指标

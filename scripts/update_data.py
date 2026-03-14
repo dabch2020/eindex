@@ -299,6 +299,8 @@ def get_margin_data(ak, trade_dates):
                 _save_margin_cache(cache)
                 print(f"    已获取... 沪市+{filled_sh} 深市+{filled_sz}")
 
+            time.sleep(1)  # 每日查询间隔
+
         # 保存缓存
         for d in set(list(sh_margin.keys()) + list(sz_margin.keys())):
             if d not in cache:
@@ -626,7 +628,9 @@ def generate_data():
 
 
 def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
-    """刷新模式下，获取不到的数据按 0 存入缓存和结果字典"""
+    """刷新模式下，获取不到的数据按 0 存入缓存和结果字典，返回警告列表"""
+    warnings = []
+
     # 换手率
     tc = _load_turnover_cache()
     tc_changed = False
@@ -635,6 +639,7 @@ def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
             turnover_data[dt] = 0
             tc[dt] = {"sh_amount": 0, "sz_amount": 0, "turnover_rate": 0}
             tc_changed = True
+            warnings.append(f"{dt} 换手率数据缺失")
             print(f"  ⚠ {dt} 换手率获取失败，存入 0")
     if tc_changed:
         _save_turnover_cache(tc)
@@ -651,6 +656,7 @@ def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
             margin_data[dt] = 0
             mc[dt] = {"sh": 0, "sz": 0}
             mc_changed = True
+            warnings.append(f"{dt} 融资余额数据缺失")
             print(f"  ⚠ {dt} 融资余额获取失败，存入 0")
     if mc_changed:
         with open(MARGIN_CACHE, 'w', encoding='utf-8') as f:
@@ -664,9 +670,12 @@ def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
             limitup_data[dt] = (0, 0)
             lc[dt] = {"count": 0, "ratio": 0}
             lc_changed = True
+            warnings.append(f"{dt} 涨停数据缺失")
             print(f"  ⚠ {dt} 涨停数据获取失败，存入 0")
     if lc_changed:
         _save_limitup_cache(lc)
+
+    return warnings
 
 
 def generate_data_recent(n_days=2):
@@ -695,7 +704,7 @@ def generate_data_recent(n_days=2):
     limitup_data = get_limitup_data(ak, recent_dates)
 
     # 刷新模式：获取不到的数据按 0 存入缓存
-    _fill_missing_with_zero(recent_dates, turnover_data, margin_data, limitup_data)
+    warnings = _fill_missing_with_zero(recent_dates, turnover_data, margin_data, limitup_data)
 
     # 从已有数据重建历史分位序列（用于计算分位数）
     t_hist = [d['turnover_rate'] for d in existing if d['turnover_rate'] > 0 and d['date'] < recent_dates[0]]
@@ -745,6 +754,7 @@ def generate_data_recent(n_days=2):
     merged = sorted(existing_by_date.values(), key=lambda x: x['date'])
     output = {
         "updated_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "warnings": warnings,
         "data": merged
     }
 
