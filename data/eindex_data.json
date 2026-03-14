@@ -1,6 +1,7 @@
 {
-  "updated_at": "2026-03-14 14:30:59",
+  "updated_at": "2026-03-14 15:36:50",
   "warnings": [
+    "2026-03-12 融资余额数据缺失（深交所）",
     "2026-03-13 融资余额数据缺失（深交所）"
   ],
   "data": [
@@ -31934,24 +31935,24 @@
     },
     {
       "date": "2026-03-12",
-      "eindex": 57.2,
+      "eindex": 35.47,
       "turnover_rate": 0.023478,
       "turnover_pct": 73.2,
-      "margin_ratio": 0.025308,
-      "margin_pct": 65.6,
-      "margin_sh": 13342.24,
-      "margin_sz": 12980.16,
+      "margin_ratio": 0,
+      "margin_pct": 0.4,
+      "margin_sh": 0,
+      "margin_sz": 0,
       "limitup_count": 64,
       "limitup_ratio": 0.011636,
       "limitup_pct": 32.8
     },
     {
       "date": "2026-03-13",
-      "eindex": 37.87,
+      "eindex": 38.0,
       "turnover_rate": 0.023271,
       "turnover_pct": 72.8,
       "margin_ratio": 0,
-      "margin_pct": 0.4,
+      "margin_pct": 0.8,
       "margin_sh": 0,
       "margin_sz": 0,
       "limitup_count": 68,
