@@ -34,11 +34,11 @@ RETURN_CACHE = DATA_DIR / "return_cache.json"  # 880008 收益率缓存
 RETURN_LOOKBACK = 3
 
 # 分位数计算滚动窗口（交易日数）
-PERCENTILE_WINDOW = 200
+PERCENTILE_WINDOW = 120
 
 # 恐惧/贪婪信号的分位数阈值（基于滚动窗口内 eIndex 的百分位）
-FEAR_PERCENTILE = 10
-GREED_PERCENTILE = 85
+FEAR_PERCENTILE = 15
+GREED_PERCENTILE = 84
 
 # 各因子权重（加权平均替代等权）
 W_CJE = 0.20       # 成交额
