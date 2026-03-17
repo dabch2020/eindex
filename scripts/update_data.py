@@ -40,6 +40,12 @@ PERCENTILE_WINDOW = 200
 FEAR_PERCENTILE = 10
 GREED_PERCENTILE = 85
 
+# 各因子权重（加权平均替代等权）
+W_CJE = 0.20       # 成交额
+W_MARGIN = 0.05    # 融资余额（信号区分度最弱，降权）
+W_LIMITUP = 0.30   # 涨停家数
+W_RETURN = 0.35    # 市场方向（880008收益率）
+
 # 各年份全市场股票总数（近似）
 TOTAL_STOCKS = {
     2015: 2800, 2016: 3000, 2017: 3400, 2018: 3600,
@@ -759,11 +765,19 @@ def generate_data():
         cje_pct = compute_percentile(cje_hist, cje_val) if (cje_val is not None and cje_val > 0) else None
         ret_pct = compute_percentile(ret_hist, ret_val) if ret_val is not None else None
 
-        # 四大核心指标：成交额分位、融资分位、涨停分位、市场方向分位
-        pcts = [p for p in [cje_pct, m_pct, l_pct, ret_pct] if p is not None]
-        if not pcts:
+        # 四大核心指标加权平均
+        parts, weights = [], []
+        if cje_pct is not None:
+            parts.append(cje_pct * W_CJE); weights.append(W_CJE)
+        if m_pct is not None:
+            parts.append(m_pct * W_MARGIN); weights.append(W_MARGIN)
+        if l_pct is not None:
+            parts.append(l_pct * W_LIMITUP); weights.append(W_LIMITUP)
+        if ret_pct is not None:
+            parts.append(ret_pct * W_RETURN); weights.append(W_RETURN)
+        if not weights:
             continue
-        eindex = sum(pcts) / len(pcts)
+        eindex = sum(parts) / sum(weights)
 
         # 动态阈值：基于滚动窗口内已有 eIndex 的分位数
         eindex_hist = [r['eindex'] for r in results]
@@ -922,11 +936,19 @@ def generate_data_recent(n_days=2):
         cje_pct = compute_percentile(cje_hist, cje_val) if (cje_val is not None and cje_val > 0) else None
         ret_pct = compute_percentile(ret_hist, ret_val) if ret_val is not None else None
 
-        # 四大核心指标：成交额分位、融资分位、涨停分位、市场方向分位
-        pcts = [p for p in [cje_pct, m_pct, l_pct, ret_pct] if p is not None]
-        if not pcts:
+        # 四大核心指标加权平均
+        parts, weights = [], []
+        if cje_pct is not None:
+            parts.append(cje_pct * W_CJE); weights.append(W_CJE)
+        if m_pct is not None:
+            parts.append(m_pct * W_MARGIN); weights.append(W_MARGIN)
+        if l_pct is not None:
+            parts.append(l_pct * W_LIMITUP); weights.append(W_LIMITUP)
+        if ret_pct is not None:
+            parts.append(ret_pct * W_RETURN); weights.append(W_RETURN)
+        if not weights:
             continue
-        eindex = sum(pcts) / len(pcts)
+        eindex = sum(parts) / sum(weights)
 
         # 动态阈值：使用 existing_by_date（含本次已更新的记录）
         eindex_hist_for_th = [existing_by_date[d]['eindex'] for d in sorted(existing_by_date) if d < dt and existing_by_date[d]['eindex'] > 0]

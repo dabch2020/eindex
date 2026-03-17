@@ -106,6 +106,18 @@
         "/^python3 -c \"\nimport akshare as ak\nfuncs = \\[f for f in dir\\(ak\\) if 'ths' in f\\.lower\\(\\) or 'index' in f\\.lower\\(\\)\\]\nfor f in sorted\\(funcs\\):\n    print\\(f\\)\n\" \\| grep -i 'ths\\\\\\|tonghua'\n$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\nwith open\\('data/eindex_data\\.json'\\) as f:\n    data = json\\.load\\(f\\)\\['data'\\]\n\n# 分析 MISS 的恐惧日期附近的数据\nfear_miss = \\['2022-04-27', '2022-10-31', '2023-06-26', '2023-10-23', '2024-02-05', '2025-04-09'\\]\ngreed_miss = \\['2022-01-04', '2022-07-04', '2024-05-10', '2025-05-14'\\]\n\nby_date = \\{d\\['date'\\]: d for d in data\\}\ndates = \\[d\\['date'\\] for d in data\\]\n\nprint\\('=== FEAR MISS 分析 \\(恐惧日期未命中\\) ==='\\)\nfor target in fear_miss:\n    idx = dates\\.index\\(target\\) if target in dates else -1\n    if idx < 0:\n        print\\(f'\\{target\\}: 数据不存在'\\)\n        continue\n    d = by_date\\[target\\]\n    print\\(f'\\\\n\\{target\\}: eI=\\{d\\[\\\\\"eindex\\\\\"\\]\\}, fear_th=\\{d\\.get\\(\\\\\"fear_threshold\\\\\",\\\\\"\\?\\\\\"\\)\\}, greed_th=\\{d\\.get\\(\\\\\"greed_threshold\\\\\",\\\\\"\\?\\\\\"\\)\\}'\\)\n    print\\(f'  成交额分位=\\{d\\[\\\\\"cje_pct\\\\\"\\]\\}, 融资分位=\\{d\\[\\\\\"margin_pct\\\\\"\\]\\}, 涨停分位=\\{d\\[\\\\\"limitup_pct\\\\\"\\]\\}, 换手分位=\\{d\\[\\\\\"turnover_pct\\\\\"\\]\\}'\\)\n    # 看前后几天\n    for offset in \\[-3, -2, -1, 0, 1, 2, 3\\]:\n        i = idx \\+ offset\n        if 0 <= i < len\\(data\\):\n            dd = data\\[i\\]\n            print\\(f'  \\{dd\\[\\\\\"date\\\\\"\\]\\}: eI=\\{dd\\[\\\\\"eindex\\\\\"\\]:5\\.1f\\}  cje=\\{dd\\[\\\\\"cje_pct\\\\\"\\]:5\\.1f\\} margin=\\{dd\\[\\\\\"margin_pct\\\\\"\\]:5\\.1f\\} limitup=\\{dd\\[\\\\\"limitup_pct\\\\\"\\]:5\\.1f\\} turnover=\\{dd\\[\\\\\"turnover_pct\\\\\"\\]:5\\.1f\\}'\\)\n\nprint\\('\\\\n=== GREED MISS 分析 ==='\\)\nfor target in greed_miss:\n    idx = dates\\.index\\(target\\) if target in dates else -1\n    if idx < 0:\n        print\\(f'\\{target\\}: 数据不存在'\\)\n        continue\n    d = by_date\\[target\\]\n    print\\(f'\\\\n\\{target\\}: eI=\\{d\\[\\\\\"eindex\\\\\"\\]\\}, fear_th=\\{d\\.get\\(\\\\\"fear_threshold\\\\\",\\\\\"\\?\\\\\"\\)\\}, greed_th=\\{d\\.get\\(\\\\\"greed_threshold\\\\\",\\\\\"\\?\\\\\"\\)\\}'\\)\n    print\\(f'  成交额分位=\\{d\\[\\\\\"cje_pct\\\\\"\\]\\}, 融资分位=\\{d\\[\\\\\"margin_pct\\\\\"\\]\\}, 涨停分位=\\{d\\[\\\\\"limitup_pct\\\\\"\\]\\}, 换手分位=\\{d\\[\\\\\"turnover_pct\\\\\"\\]\\}'\\)\n    for offset in \\[-3, -2, -1, 0, 1, 2, 3\\]:\n        i = idx \\+ offset\n        if 0 <= i < len\\(data\\):\n            dd = data\\[i\\]\n            print\\(f'  \\{dd\\[\\\\\"date\\\\\"\\]\\}: eI=\\{dd\\[\\\\\"eindex\\\\\"\\]:5\\.1f\\}  cje=\\{dd\\[\\\\\"cje_pct\\\\\"\\]:5\\.1f\\} margin=\\{dd\\[\\\\\"margin_pct\\\\\"\\]:5\\.1f\\} limitup=\\{dd\\[\\\\\"limitup_pct\\\\\"\\]:5\\.1f\\} turnover=\\{dd\\[\\\\\"turnover_pct\\\\\"\\]:5\\.1f\\}'\\)\n\" 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 scripts/_analyze_miss\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 /Users/gachen2/MyProject/eindex/scripts/_analyze_miss\\.py 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
     }
 }
