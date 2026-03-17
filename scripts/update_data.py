@@ -7,6 +7,7 @@ eIndex 数据更新脚本
   - 换手率：新浪财经（沪深指数每日成交额）
   - 融资余额：上交所 + 深交所
   - 涨停家数：通达信 880006 停板家数 (via mootdx)
+  - 市场方向：通达信 880008 全A等权指数 N 日收益率
 
 用法：
   python update_data.py          # 增量更新（只获取新数据）
@@ -27,13 +28,17 @@ LOG_FILE = Path(__file__).parent.parent / "log.md"
 LTSZ_CACHE_FILE = DATA_DIR / "ltsz_cache.json"
 TURNOVER_CACHE = DATA_DIR / "turn_rate_cache.json"
 CJE_CACHE = DATA_DIR / "cje_cache.json"
+RETURN_CACHE = DATA_DIR / "return_cache.json"  # 880008 收益率缓存
+
+# 市场方向因子使用的收益率回望天数
+RETURN_LOOKBACK = 3
 
 # 分位数计算滚动窗口（交易日数）
-PERCENTILE_WINDOW = 120
+PERCENTILE_WINDOW = 200
 
 # 恐惧/贪婪信号的分位数阈值（基于滚动窗口内 eIndex 的百分位）
-FEAR_PERCENTILE = 20
-GREED_PERCENTILE = 80
+FEAR_PERCENTILE = 10
+GREED_PERCENTILE = 85
 
 # 各年份全市场股票总数（近似）
 TOTAL_STOCKS = {
@@ -176,6 +181,81 @@ def _save_cje_cache(cache):
     DATA_DIR.mkdir(exist_ok=True)
     with open(CJE_CACHE, 'w', encoding='utf-8') as f:
         json.dump(cache, f, ensure_ascii=False, indent=2)
+
+
+def _load_return_cache():
+    """加载 880008 收益率缓存"""
+    if RETURN_CACHE.exists():
+        with open(RETURN_CACHE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+
+def _save_return_cache(cache):
+    """保存 880008 收益率缓存"""
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(RETURN_CACHE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+
+def get_market_return(trade_dates, lookback=RETURN_LOOKBACK):
+    """获取 880008 全A等权指数 N 日收益率作为市场方向因子。
+    返回 {date: return_rate}，正值=上涨，负值=下跌。"""
+    import socket
+    socket.setdefaulttimeout(10)
+
+    cache = _load_return_cache()
+    cached_dates = set(cache.keys())
+    missing = [dt for dt in trade_dates if dt not in cached_dates]
+
+    print(f"市场方向（880008 {lookback}日收益率）: 缓存 {len(cached_dates)} 天, 缺失 {len(missing)} 天")
+
+    if missing:
+        try:
+            Quotes = ensure_mootdx()
+            client = Quotes.factory(market='std')
+            import pandas as pd
+
+            all_data = []
+            for start in range(0, 5000, 800):
+                data = client.index(symbol='880008', frequency=9, start=start, offset=800) # type: ignore
+                if data is None or len(data) == 0:
+                    break
+                all_data.append(data)
+                if len(data) < 800:
+                    break
+                time.sleep(0.5)
+
+            if all_data:
+                combined = pd.concat(all_data)
+                combined = combined[~combined.index.duplicated(keep='first')]
+                combined = combined.sort_index()
+                closes = {idx.strftime('%Y-%m-%d'): float(row['close'])
+                          for idx, row in combined.iterrows()}
+                sorted_dates = sorted(closes.keys())
+
+                new_count = 0
+                for i, dt in enumerate(sorted_dates):
+                    if dt in cached_dates:
+                        continue
+                    if i < lookback:
+                        continue
+                    prev_dt = sorted_dates[i - lookback]
+                    prev_close = closes[prev_dt]
+                    cur_close = closes[dt]
+                    if prev_close > 0:
+                        ret = (cur_close - prev_close) / prev_close
+                        cache[dt] = round(ret, 6)
+                        new_count += 1
+
+                _save_return_cache(cache)
+                print(f"  880008 收益率新增 {new_count} 天, 缓存共 {len(cache)} 天")
+        except Exception as e:
+            print(f"  880008 收益率获取失败: {e}")
+
+    results = {dt: cache[dt] for dt in trade_dates if dt in cache}
+    print(f"  市场方向数据: {len(results)} 天")
+    return results
 
 
 def get_turnover_data(ak, trade_dates):
@@ -393,11 +473,35 @@ def _append_margin_gaps_to_log(gaps):
 
 
 def _invalidate_recent_caches(dates):
-    """清除指定日期的所有缓存，强制重新获取
-    注意：不清除换手率缓存，因为已完成交易日的指数成交额不会变，
-    且重新计算需要 ltsz_cache（流通市值）支持，清除后可能无法恢复。"""
+    """清除指定日期的所有缓存，强制重新获取。
+    换手率/成交额缓存：仅清除 0 值条目（正常数据不会变，且重算需要 ltsz_cache）。
+    融资余额/涨停缓存：全部清除（强制重新获取）。"""
 
-    # 融资余额缓存
+    # 换手率缓存：仅清除 0 值条目
+    tc = _load_turnover_cache()
+    tc_changed = False
+    for dt in dates:
+        if dt in tc:
+            entry = tc[dt]
+            if isinstance(entry, dict) and entry.get('turnover_rate', 0) == 0:
+                del tc[dt]
+                tc_changed = True
+    if tc_changed:
+        _save_turnover_cache(tc)
+
+    # 成交额缓存：仅清除 0 值条目
+    cje = _load_cje_cache()
+    cje_changed = False
+    for dt in dates:
+        if dt in cje:
+            entry = cje[dt]
+            if isinstance(entry, dict) and entry.get('sh', 0) == 0 and entry.get('sz', 0) == 0:
+                del cje[dt]
+                cje_changed = True
+    if cje_changed:
+        _save_cje_cache(cje)
+
+    # 融资余额缓存：清除全部（或 0 值条目）
     if MARGIN_CACHE.exists():
         with open(MARGIN_CACHE, 'r', encoding='utf-8') as f:
             mc = json.load(f)
@@ -602,12 +706,15 @@ def generate_data():
             return
         print(f"需要更新: {len(new_dates)} 天 ({new_dates[0]} ~ {new_dates[-1]})")
 
-    # ── 获取三大指标 ──
+    # ── 获取四大指标 ──
     turnover_data = get_turnover_data(ak, trade_dates)
     margin_data = get_margin_data(ak, trade_dates)
 
     # 涨停数据使用通达信 880006 + 持久化缓存
     limitup_data = get_limitup_data(ak, trade_dates)
+
+    # 市场方向因子（880008 N日收益率）
+    return_data = get_market_return(trade_dates)
 
     # 成交额数据（亿元）
     cje_cache = _load_cje_cache()
@@ -615,7 +722,7 @@ def generate_data():
     # ── 计算情绪指数 ──
     print("计算情绪指数...")
     results = []
-    t_hist, m_hist, l_hist, cje_hist = [], [], [], []
+    t_hist, m_hist, l_hist, cje_hist, ret_hist = [], [], [], [], []
 
     for dt in trade_dates:
         t_val = turnover_data.get(dt)
@@ -626,6 +733,7 @@ def generate_data():
         l_entry = limitup_data.get(dt)
         l_val = l_entry[0] if l_entry is not None else None
         l_count = l_entry[1] if l_entry is not None else 0
+        ret_val = return_data.get(dt)
 
         cje_entry = cje_cache.get(dt)
         cje_val = round(cje_entry['sh'] + cje_entry['sz'], 4) if cje_entry else None
@@ -638,6 +746,8 @@ def generate_data():
             l_hist.append(l_val)
         if cje_val is not None and cje_val > 0:
             cje_hist.append(cje_val)
+        if ret_val is not None:
+            ret_hist.append(ret_val)
 
         # 至少需要一个指标有数据
         if cje_val is None and m_val is None and l_val is None:
@@ -647,9 +757,10 @@ def generate_data():
         m_pct = compute_percentile(m_hist, m_val) if m_val is not None else None
         l_pct = compute_percentile(l_hist, l_val) if l_val is not None else None
         cje_pct = compute_percentile(cje_hist, cje_val) if (cje_val is not None and cje_val > 0) else None
+        ret_pct = compute_percentile(ret_hist, ret_val) if ret_val is not None else None
 
-        # 三大核心指标：成交额分位、融资分位、涨停分位
-        pcts = [p for p in [cje_pct, m_pct, l_pct] if p is not None]
+        # 四大核心指标：成交额分位、融资分位、涨停分位、市场方向分位
+        pcts = [p for p in [cje_pct, m_pct, l_pct, ret_pct] if p is not None]
         if not pcts:
             continue
         eindex = sum(pcts) / len(pcts)
@@ -696,32 +807,22 @@ def generate_data():
 
 
 def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
-    """刷新模式下，获取不到的数据按 0 存入缓存和结果字典，返回警告列表"""
+    """刷新模式下，获取不到的数据仅在内存中补 0（用于本次计算），
+    不写入缓存文件，以便下次运行时自动重新获取。返回警告列表。"""
     warnings = []
 
-    # 换手率
-    tc = _load_turnover_cache()
-    cje = _load_cje_cache()
-    tc_changed = False
+    # 换手率（仅内存补 0，不写缓存）
     for dt in dates:
         if dt not in turnover_data:
             turnover_data[dt] = 0
-            tc[dt] = {"sh_amount": 0, "sz_amount": 0, "turnover_rate": 0}
-            cje[dt] = {"sh": 0, "sz": 0}
-            tc_changed = True
             warnings.append(f"{dt} 换手率数据缺失")
-            print(f"  ⚠ {dt} 换手率获取失败，存入 0")
-    if tc_changed:
-        _save_turnover_cache(tc)
-        _save_cje_cache(cje)
+            print(f"  ⚠ {dt} 换手率获取失败，本次按 0 计算（不写入缓存，下次将重试）")
 
-    # 融资余额
+    # 融资余额（仅内存补 0，不写缓存）
     mc = _load_margin_cache()
-    mc_changed = False
     for dt in dates:
         if dt not in margin_data:
             margin_data[dt] = (0, 0, 0)
-            # 判断具体缺失哪个交易所
             entry = mc.get(dt, {})
             has_sh = entry.get('sh', 0) > 0
             has_sz = entry.get('sz', 0) > 0
@@ -731,26 +832,15 @@ def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
                 missing_side = "上交所"
             else:
                 missing_side = "深交所"
-            mc[dt] = {"sh": entry.get('sh', 0), "sz": entry.get('sz', 0)}
-            mc_changed = True
             warnings.append(f"{dt} 融资余额数据缺失（{missing_side}）")
-            print(f"  ⚠ {dt} 融资余额获取失败（{missing_side}），存入 0")
-    if mc_changed:
-        with open(MARGIN_CACHE, 'w', encoding='utf-8') as f:
-            json.dump(mc, f, ensure_ascii=False, indent=2)
+            print(f"  ⚠ {dt} 融资余额获取失败（{missing_side}），本次按 0 计算（不写入缓存，下次将重试）")
 
-    # 涨停
-    lc = _load_limitup_cache()
-    lc_changed = False
+    # 涨停（仅内存补 0，不写缓存）
     for dt in dates:
         if dt not in limitup_data:
             limitup_data[dt] = (0, 0)
-            lc[dt] = {"count": 0, "ratio": 0}
-            lc_changed = True
             warnings.append(f"{dt} 涨停数据缺失")
-            print(f"  ⚠ {dt} 涨停数据获取失败，存入 0")
-    if lc_changed:
-        _save_limitup_cache(lc)
+            print(f"  ⚠ {dt} 涨停数据获取失败，本次按 0 计算（不写入缓存，下次将重试）")
 
     return warnings
 
@@ -775,10 +865,13 @@ def generate_data_recent(n_days=2):
     # 强制清除最近几天的缓存，确保重新获取
     _invalidate_recent_caches(recent_dates)
 
-    # 获取三大指标（仅重新获取 recent_dates）
+    # 获取四大指标（仅重新获取 recent_dates）
     turnover_data = get_turnover_data(ak, recent_dates)
     margin_data = get_margin_data(ak, recent_dates)
     limitup_data = get_limitup_data(ak, recent_dates)
+
+    # 市场方向因子（880008 N日收益率）— 需要全部交易日来计算
+    return_data = get_market_return(trade_dates)
 
     # 刷新模式：获取不到的数据按 0 存入缓存
     warnings = _fill_missing_with_zero(recent_dates, turnover_data, margin_data, limitup_data)
@@ -791,6 +884,8 @@ def generate_data_recent(n_days=2):
     m_hist = [d['margin_ratio'] for d in existing if d['margin_ratio'] > 0 and d['date'] < recent_dates[0]]
     l_hist = [d['limitup_ratio'] for d in existing if d['limitup_ratio'] > 0 and d['date'] < recent_dates[0]]
     cje_hist = [d.get('cje_amount', 0) for d in existing if d.get('cje_amount', 0) > 0 and d['date'] < recent_dates[0]]
+    # 880008 收益率历史：从 return_data 中取 recent_dates 之前的数据
+    ret_hist = [return_data[dt] for dt in sorted(return_data.keys()) if dt < recent_dates[0]]
 
     updated = 0
     for dt in recent_dates:
@@ -802,6 +897,7 @@ def generate_data_recent(n_days=2):
         l_entry = limitup_data.get(dt)
         l_val = l_entry[0] if l_entry is not None else None
         l_count = l_entry[1] if l_entry is not None else 0
+        ret_val = return_data.get(dt)
 
         cje_entry = cje_cache.get(dt)
         cje_val = round(cje_entry['sh'] + cje_entry['sz'], 4) if cje_entry else None
@@ -814,6 +910,8 @@ def generate_data_recent(n_days=2):
             l_hist.append(l_val)
         if cje_val is not None and cje_val > 0:
             cje_hist.append(cje_val)
+        if ret_val is not None:
+            ret_hist.append(ret_val)
 
         if cje_val is None and m_val is None and l_val is None:
             continue
@@ -822,9 +920,10 @@ def generate_data_recent(n_days=2):
         m_pct = compute_percentile(m_hist, m_val) if m_val is not None else None
         l_pct = compute_percentile(l_hist, l_val) if l_val is not None else None
         cje_pct = compute_percentile(cje_hist, cje_val) if (cje_val is not None and cje_val > 0) else None
+        ret_pct = compute_percentile(ret_hist, ret_val) if ret_val is not None else None
 
-        # 三大核心指标：成交额分位、融资分位、涨停分位
-        pcts = [p for p in [cje_pct, m_pct, l_pct] if p is not None]
+        # 四大核心指标：成交额分位、融资分位、涨停分位、市场方向分位
+        pcts = [p for p in [cje_pct, m_pct, l_pct, ret_pct] if p is not None]
         if not pcts:
             continue
         eindex = sum(pcts) / len(pcts)

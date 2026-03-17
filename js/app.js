@@ -15,17 +15,17 @@ function getIndexColor(value) {
 }
 
 function getSignal(d) {
-    const fear = d.fear_threshold || 20;
-    const greed = d.greed_threshold || 80;
+    const fear = d.fear_threshold || 10;
+    const greed = d.greed_threshold || 85;
     if (d.eindex <= fear) return { text: '恐惧', icon: '🟢', cls: 'buy' };
     if (d.eindex >= greed) return { text: '贪婪', icon: '🔴', cls: 'sell' };
     return { text: '中性', icon: '🟡', cls: 'hold' };
 }
 
 // 客户端动态阈值补算（当数据缺少 fear_threshold/greed_threshold 时）
-const PERCENTILE_WINDOW = 120;
-const FEAR_PERCENTILE = 20;
-const GREED_PERCENTILE = 80;
+const PERCENTILE_WINDOW = 200;
+const FEAR_PERCENTILE = 10;
+const GREED_PERCENTILE = 85;
 
 function backfillThresholds(data) {
     const hist = [];
@@ -218,8 +218,8 @@ function renderMainChart() {
     const fearPoints = [];
     const greedPoints = [];
     allData.forEach((d, i) => {
-        const fear = d.fear_threshold || 20;
-        const greed = d.greed_threshold || 80;
+        const fear = d.fear_threshold || 10;
+        const greed = d.greed_threshold || 85;
         if (d.eindex <= fear) fearPoints.push({ value: [d.date, d.eindex], itemStyle: { color: '#00d4aa' } });
         if (d.eindex >= greed) greedPoints.push({ value: [d.date, d.eindex], itemStyle: { color: '#ff5252' } });
     });
@@ -242,7 +242,7 @@ function renderMainChart() {
                 return `<b>${d.date}</b><br/>` +
                     `情绪指数: <b style="color:${getIndexColor(d.eindex)}">${d.eindex.toFixed(1)}</b><br/>` +
                     `信号: ${sig.icon} ${sig.text}<br/>` +
-                    `恐惧线: ${(d.fear_threshold != null ? d.fear_threshold : 20).toFixed(1)} / 贪婪线: ${(d.greed_threshold != null ? d.greed_threshold : 80).toFixed(1)}<br/>` +
+                    `恐惧线: ${(d.fear_threshold != null ? d.fear_threshold : 10).toFixed(1)} / 贪婪线: ${(d.greed_threshold != null ? d.greed_threshold : 85).toFixed(1)}<br/>` +
                     `成交额分位: ${(d.cje_pct || 0).toFixed(1)}<br/>` +
                     `融资分位: ${d.margin_pct.toFixed(1)}<br/>` +
                     `涨停分位: ${d.limitup_pct.toFixed(1)}`;
@@ -415,8 +415,8 @@ function renderTable() {
             va = new Date(va); vb = new Date(vb);
         }
         if (sortField === 'signal') {
-            va = a.eindex <= (a.fear_threshold || 20) ? 0 : a.eindex >= (a.greed_threshold || 80) ? 2 : 1;
-            vb = b.eindex <= (b.fear_threshold || 20) ? 0 : b.eindex >= (b.greed_threshold || 80) ? 2 : 1;
+            va = a.eindex <= (a.fear_threshold || 10) ? 0 : a.eindex >= (a.greed_threshold || 85) ? 2 : 1;
+            vb = b.eindex <= (b.fear_threshold || 10) ? 0 : b.eindex >= (b.greed_threshold || 85) ? 2 : 1;
         }
         return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
     });

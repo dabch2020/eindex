@@ -74,6 +74,38 @@
         "/^cd /Users/gachen2/MyProject/eindex/scripts && python3 -c \"\n# Verify the half-value theory: check if half values match roughly SH-only or SZ-only\n# Normal ratio ~0\\.025, half ratio ~0\\.014-0\\.016\n# SH/\\(SH\\+SZ\\) ratio was historically about 0\\.58-0\\.62\n# So SH-only would give ~0\\.025 \\* 0\\.6 = 0\\.015 -- matches!\n# SZ-only would give ~0\\.025 \\* 0\\.4 = 0\\.010 -- matches 2017-09-14 \\(0\\.010009\\)!\nprint\\('Half-value analysis:'\\)\nprint\\('Normal ratio: ~0\\.025'\\)\nprint\\('SH-only:      ~0\\.014-0\\.016 \\(SH is about 58-62% of total\\)'\\)\nprint\\('SZ-only:      ~0\\.010       \\(SZ is about 38-42% of total\\)'\\)\nprint\\(\\)\nprint\\('2017-03-10 = 0\\.01446 -> likely SH-only'\\)\nprint\\('2017-09-14 = 0\\.01001 -> likely SZ-only'\\)\nprint\\('2018-08-01 = 0\\.01596 -> likely SH-only for consecutive week'\\)\n\"\n$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\n# Check if fear_threshold exists\nhas_ft = sum\\(1 for d in data if 'fear_threshold' in d\\)\nprint\\(f'Total records: \\{len\\(data\\)\\}'\\)\nprint\\(f'Records with fear_threshold: \\{has_ft\\}'\\)\nif has_ft:\n    print\\(f'Last 3 records:'\\)\n    for d in data\\[-3:\\]:\n        print\\(f'  \\{d\\[\\\\\"date\\\\\"\\]\\} eindex=\\{d\\[\\\\\"eindex\\\\\"\\]\\} fear=\\{d\\.get\\(\\\\\"fear_threshold\\\\\"\\)\\} greed=\\{d\\.get\\(\\\\\"greed_threshold\\\\\"\\)\\}'\\)\n\"\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 scripts/update_data\\.py --full$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 -c \"\nimport json\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\nhas_ft = sum\\(1 for d in data if 'fear_threshold' in d\\)\nprint\\(f'Total: \\{len\\(data\\)\\}, with thresholds: \\{has_ft\\}'\\)\nfor d in data\\[-3:\\]:\n    print\\(f'  \\{d\\[\\\\\"date\\\\\"\\]\\} eindex=\\{d\\[\\\\\"eindex\\\\\"\\]\\} fear=\\{d\\[\\\\\"fear_threshold\\\\\"\\]\\} greed=\\{d\\[\\\\\"greed_threshold\\\\\"\\]\\}'\\)\n\"\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && head -c 200 data/eindex_data\\.js && echo && python3 -c \"\nimport json\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\n# check first few and last few have fear_threshold\nprint\\(f'First: fear=\\{data\\[0\\]\\.get\\(\\\\\"fear_threshold\\\\\"\\)\\}, greed=\\{data\\[0\\]\\.get\\(\\\\\"greed_threshold\\\\\"\\)\\}'\\)\nprint\\(f'Last:  fear=\\{data\\[-1\\]\\.get\\(\\\\\"fear_threshold\\\\\"\\)\\}, greed=\\{data\\[-1\\]\\.get\\(\\\\\"greed_threshold\\\\\"\\)\\}'\\)\nprint\\(f'JS file size: \\{len\\(open\\(\\\\\"data/eindex_data\\.js\\\\\"\\)\\.read\\(\\)\\)\\} bytes'\\)\n# Check if JS file has fear_threshold\nimport re\njs = open\\('data/eindex_data\\.js'\\)\\.read\\(\\)\ncount = js\\.count\\('fear_threshold'\\)\nprint\\(f'fear_threshold in JS: \\{count\\} occurrences'\\)\n\"\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 << 'PYEOF'\nimport json\nfrom scripts\\.update_data import compute_dynamic_thresholds\n\ndata = json\\.load\\(open\\('data/eindex_data\\.json'\\)\\)\\['data'\\]\nprint\\(f'Total records: \\{len\\(data\\)\\}'\\)\n\n# Simulate: strip thresholds from all but last 2 \\(as if old code generated them\\)\nstripped = \\[\\]\nfor i, d in enumerate\\(data\\):\n    rec = dict\\(d\\)\n    if i < len\\(data\\) - 2:\n        rec\\.pop\\('fear_threshold', None\\)\n        rec\\.pop\\('greed_threshold', None\\)\n    stripped\\.append\\(rec\\)\n\nno_th = sum\\(1 for d in stripped if 'fear_threshold' not in d\\)\nprint\\(f'Records without threshold: \\{no_th\\}'\\)\n\n# Backfill logic\neindex_hist = \\[\\]\nfilled = 0\nfor d in stripped:\n    if 'fear_threshold' not in d or 'greed_threshold' not in d:\n        fear_th, greed_th = compute_dynamic_thresholds\\(eindex_hist\\)\n        d\\['fear_threshold'\\] = fear_th\n        d\\['greed_threshold'\\] = greed_th\n        filled \\+= 1\n    eindex_hist\\.append\\(d\\['eindex'\\]\\)\n\nprint\\(f'Backfilled: \\{filled\\} records'\\)\nall_have = all\\('fear_threshold' in d and 'greed_threshold' in d for d in stripped\\)\nprint\\(f'All have thresholds: \\{all_have\\}'\\)\nprint\\(f'First: fear=\\{stripped\\[0\\]\\[\"fear_threshold\"\\]\\}, greed=\\{stripped\\[0\\]\\[\"greed_threshold\"\\]\\}'\\)\nprint\\(f'Mid:   fear=\\{stripped\\[1000\\]\\[\"fear_threshold\"\\]\\}, greed=\\{stripped\\[1000\\]\\[\"greed_threshold\"\\]\\}'\\)\nprint\\(f'Last:  fear=\\{stripped\\[-1\\]\\[\"fear_threshold\"\\]\\}, greed=\\{stripped\\[-1\\]\\[\"greed_threshold\"\\]\\}'\\)\nPYEOF\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 scripts/_verify_backfill\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nfrom mootdx\\.quotes import Quotes\nclient = Quotes\\.factory\\(market='std'\\)\n# 尝试用 mootdx 获取 883421 同花顺沪深全A指数\ndata = client\\.index\\(symbol='883421', frequency=9, start=0, offset=10\\)\nif data is not None and len\\(data\\) > 0:\n    print\\('mootdx 获取成功！'\\)\n    print\\(data\\.tail\\(\\)\\)\n    print\\(f'列名: \\{list\\(data\\.columns\\)\\}'\\)\nelse:\n    print\\('mootdx 未获取到数据'\\)\n\"\n$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 -c \"\nimport akshare as ak\nfuncs = \\[f for f in dir\\(ak\\) if 'ths' in f\\.lower\\(\\) or 'index' in f\\.lower\\(\\)\\]\nfor f in sorted\\(funcs\\):\n    print\\(f\\)\n\" \\| grep -i 'ths\\\\\\|tonghua'\n$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
     }
 }
