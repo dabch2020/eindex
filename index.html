@@ -13,7 +13,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="header-row">
-                    <h1><span class="logo-icon">📊</span> eIndex <span class="subtitle">A股情绪指数</span> <span class="version">v2026-03-14-006</span></h1>
+                    <h1><span class="logo-icon">📊</span> eIndex <span class="subtitle">A股情绪指数</span> <span class="version">v2026-03-17-010</span></h1>
                     <button class="btn-refresh" id="btnRefresh">
                         <span class="icon">&#x21bb;</span> 刷新
                     </button>
@@ -123,20 +123,20 @@
             <div class="strategy-grid">
                 <div class="strategy-card buy">
                     <div class="strategy-icon">🟢</div>
-                    <h3>买入信号</h3>
-                    <p>情绪指数 ≤ 20</p>
+                    <h3>恐惧</h3>
+                    <p>情绪指数 ≤ 恐惧线（动态）</p>
                     <p class="strategy-desc">市场极度恐慌，往往是底部区域，适合逢低布局</p>
                 </div>
                 <div class="strategy-card hold">
                     <div class="strategy-icon">🟡</div>
-                    <h3>持有信号</h3>
-                    <p>20 &lt; 情绪指数 &lt; 80</p>
+                    <h3>中性</h3>
+                    <p>恐惧线 &lt; 情绪指数 &lt; 贪婪线</p>
                     <p class="strategy-desc">市场情绪正常，维持现有仓位，等待极端信号</p>
                 </div>
                 <div class="strategy-card sell">
                     <div class="strategy-icon">🔴</div>
-                    <h3>卖出信号</h3>
-                    <p>情绪指数 ≥ 80</p>
+                    <h3>贪婪</h3>
+                    <p>情绪指数 ≥ 贪婪线（动态）</p>
                     <p class="strategy-desc">市场极度狂热，往往是顶部区域，适合逐步减仓</p>
                 </div>
             </div>

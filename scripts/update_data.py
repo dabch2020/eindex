@@ -22,10 +22,18 @@ from pathlib import Path
 DATA_DIR = Path(__file__).parent.parent / "data"
 DATA_FILE = DATA_DIR / "eindex_data.json"
 DATA_JS_FILE = DATA_DIR / "eindex_data.js"
+INDEX_HTML = Path(__file__).parent.parent / "index.html"
 LOG_FILE = Path(__file__).parent.parent / "log.md"
 LTSZ_CACHE_FILE = DATA_DIR / "ltsz_cache.json"
 TURNOVER_CACHE = DATA_DIR / "turn_rate_cache.json"
 CJE_CACHE = DATA_DIR / "cje_cache.json"
+
+# 分位数计算滚动窗口（交易日数）
+PERCENTILE_WINDOW = 120
+
+# 恐惧/贪婪信号的分位数阈值（基于滚动窗口内 eIndex 的百分位）
+FEAR_PERCENTILE = 20
+GREED_PERCENTILE = 80
 
 # 各年份全市场股票总数（近似）
 TOTAL_STOCKS = {
@@ -535,13 +543,26 @@ def get_limitup_data(ak, trade_dates, max_days=60):
     return results
 
 
-def compute_percentile(history, current, window=250):
+def compute_percentile(history, current, window=PERCENTILE_WINDOW):
     """计算当前值在最近 window 个值中的分位数（0-100）"""
     if len(history) < 2:
         return 50.0
     recent = history[-window:] if len(history) >= window else history
     rank = sum(1 for v in recent if v <= current)
     return (rank / len(recent)) * 100
+
+
+def compute_dynamic_thresholds(eindex_hist, window=PERCENTILE_WINDOW):
+    """基于滚动窗口内 eIndex 历史值，计算恐惧/贪婪动态阈值。
+    返回 (fear_threshold, greed_threshold)。"""
+    if len(eindex_hist) < 2:
+        return (FEAR_PERCENTILE, GREED_PERCENTILE)
+    recent = eindex_hist[-window:] if len(eindex_hist) >= window else eindex_hist
+    s = sorted(recent)
+    n = len(s)
+    fear_idx = max(0, int(n * FEAR_PERCENTILE / 100) - 1)
+    greed_idx = min(n - 1, int(n * GREED_PERCENTILE / 100))
+    return (round(s[fear_idx], 2), round(s[greed_idx], 2))
 
 
 def load_existing():
@@ -633,9 +654,15 @@ def generate_data():
             continue
         eindex = sum(pcts) / len(pcts)
 
+        # 动态阈值：基于滚动窗口内已有 eIndex 的分位数
+        eindex_hist = [r['eindex'] for r in results]
+        fear_th, greed_th = compute_dynamic_thresholds(eindex_hist)
+
         results.append({
             "date": dt,
             "eindex": round(eindex, 2),
+            "fear_threshold": fear_th,
+            "greed_threshold": greed_th,
             "turnover_rate": round(t_val, 6) if t_val is not None else 0,
             "turnover_pct": round(t_pct, 2) if t_pct is not None else 0,
             "margin_ratio": round(m_val, 6) if m_val is not None else 0,
@@ -664,8 +691,8 @@ def generate_data():
     print(f"共 {len(results)} 条记录")
     if results:
         latest = results[-1]
-        sig = "买入" if latest['eindex'] <= 30 else "卖出" if latest['eindex'] >= 80 else "持有"
-        print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}")
+        sig = "恐惧" if latest['eindex'] <= latest.get('fear_threshold', FEAR_PERCENTILE) else "贪婪" if latest['eindex'] >= latest.get('greed_threshold', GREED_PERCENTILE) else "中性"
+        print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}  恐惧线={latest.get('fear_threshold', '?')}  贪婪线={latest.get('greed_threshold', '?')}")
 
 
 def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
@@ -802,9 +829,15 @@ def generate_data_recent(n_days=2):
             continue
         eindex = sum(pcts) / len(pcts)
 
+        # 动态阈值：使用 existing_by_date（含本次已更新的记录）
+        eindex_hist_for_th = [existing_by_date[d]['eindex'] for d in sorted(existing_by_date) if d < dt and existing_by_date[d]['eindex'] > 0]
+        fear_th, greed_th = compute_dynamic_thresholds(eindex_hist_for_th)
+
         existing_by_date[dt] = {
             "date": dt,
             "eindex": round(eindex, 2),
+            "fear_threshold": fear_th,
+            "greed_threshold": greed_th,
             "turnover_rate": round(t_val, 6) if t_val is not None else 0,
             "turnover_pct": round(t_pct, 2) if t_pct is not None else 0,
             "margin_ratio": round(m_val, 6) if m_val is not None else 0,
@@ -820,6 +853,16 @@ def generate_data_recent(n_days=2):
         updated += 1
 
     merged = sorted(existing_by_date.values(), key=lambda x: x['date'])
+
+    # 补填旧记录中可能缺失的 fear_threshold / greed_threshold
+    eindex_hist_backfill = []
+    for d in merged:
+        if 'fear_threshold' not in d or 'greed_threshold' not in d:
+            fear_th, greed_th = compute_dynamic_thresholds(eindex_hist_backfill)
+            d['fear_threshold'] = fear_th
+            d['greed_threshold'] = greed_th
+        eindex_hist_backfill.append(d['eindex'])
+
     output = {
         "updated_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         "warnings": warnings,
@@ -834,8 +877,8 @@ def generate_data_recent(n_days=2):
     print(f"\n增量更新完成: 更新/新增 {updated} 天，总计 {len(merged)} 条")
     if merged:
         latest = merged[-1]
-        sig = "买入" if latest['eindex'] <= 30 else "卖出" if latest['eindex'] >= 80 else "持有"
-        print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}")
+        sig = "恐惧" if latest['eindex'] <= latest.get('fear_threshold', FEAR_PERCENTILE) else "贪婪" if latest['eindex'] >= latest.get('greed_threshold', GREED_PERCENTILE) else "中性"
+        print(f"最新: {latest['date']}  eIndex={latest['eindex']}  信号={sig}  恐惧线={latest.get('fear_threshold', '?')}  贪婪线={latest.get('greed_threshold', '?')}")
 
 
 def _save_js_version(output):
@@ -845,8 +888,28 @@ def _save_js_version(output):
         f.write(js_content)
 
 
+def _bump_version():
+    """自动更新 index.html 中的版本号（格式 vYYYY-MM-DD-NNN）"""
+    import re
+    if not INDEX_HTML.exists():
+        return
+    html = INDEX_HTML.read_text(encoding='utf-8')
+    today = datetime.now().strftime('%Y-%m-%d')
+    m = re.search(r'v(\d{4}-\d{2}-\d{2})-(\d{3})', html)
+    if m and m.group(1) == today:
+        seq = int(m.group(2)) + 1
+    else:
+        seq = 1
+    new_ver = f'v{today}-{seq:03d}'
+    html_new = re.sub(r'v\d{4}-\d{2}-\d{2}-\d{3}', new_ver, html)
+    INDEX_HTML.write_text(html_new, encoding='utf-8')
+    print(f"版本号已更新: {new_ver}")
+
+
 if __name__ == '__main__':
-    if '--recent' in sys.argv:
+    if '--bump-version' in sys.argv:
+        _bump_version()
+    elif '--recent' in sys.argv:
         generate_data_recent()
     else:
         generate_data()

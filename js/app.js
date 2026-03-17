@@ -14,10 +14,38 @@ function getIndexColor(value) {
     return '#ff5252';
 }
 
-function getSignal(value) {
-    if (value <= 30) return { text: '买入信号', icon: '🟢', cls: 'buy' };
-    if (value >= 80) return { text: '卖出信号', icon: '🔴', cls: 'sell' };
-    return { text: '持有信号', icon: '🟡', cls: 'hold' };
+function getSignal(d) {
+    const fear = d.fear_threshold || 20;
+    const greed = d.greed_threshold || 80;
+    if (d.eindex <= fear) return { text: '恐惧', icon: '🟢', cls: 'buy' };
+    if (d.eindex >= greed) return { text: '贪婪', icon: '🔴', cls: 'sell' };
+    return { text: '中性', icon: '🟡', cls: 'hold' };
+}
+
+// 客户端动态阈值补算（当数据缺少 fear_threshold/greed_threshold 时）
+const PERCENTILE_WINDOW = 120;
+const FEAR_PERCENTILE = 20;
+const GREED_PERCENTILE = 80;
+
+function backfillThresholds(data) {
+    const hist = [];
+    for (const d of data) {
+        if (d.fear_threshold == null || d.greed_threshold == null) {
+            if (hist.length < 2) {
+                d.fear_threshold = FEAR_PERCENTILE;
+                d.greed_threshold = GREED_PERCENTILE;
+            } else {
+                const recent = hist.length > PERCENTILE_WINDOW ? hist.slice(-PERCENTILE_WINDOW) : hist.slice();
+                const s = recent.slice().sort((a, b) => a - b);
+                const n = s.length;
+                const fi = Math.max(0, Math.floor(n * FEAR_PERCENTILE / 100) - 1);
+                const gi = Math.min(n - 1, Math.floor(n * GREED_PERCENTILE / 100));
+                d.fear_threshold = Math.round(s[fi] * 100) / 100;
+                d.greed_threshold = Math.round(s[gi] * 100) / 100;
+            }
+        }
+        hist.push(d.eindex);
+    }
 }
 
 // 加载数据
@@ -27,6 +55,7 @@ async function loadData() {
         if (window.__EINDEX_DATA__) {
             allData = window.__EINDEX_DATA__.data;
             dataWarnings = window.__EINDEX_DATA__.warnings || [];
+            backfillThresholds(allData);
             renderAll();
             return;
         }
@@ -35,6 +64,7 @@ async function loadData() {
         const json = await resp.json();
         allData = json.data;
         dataWarnings = json.warnings || [];
+        backfillThresholds(allData);
         renderAll();
     } catch (e) {
         console.error('加载数据失败:', e);
@@ -80,7 +110,7 @@ function renderMainIndex(recent3) {
     el.style.webkitTextFillColor = 'transparent';
     el.style.backgroundClip = 'text';
 
-    const sig = getSignal(val);
+    const sig = getSignal(d);
     const badge = document.getElementById('signalBadge');
     badge.className = `signal-badge ${sig.cls}`;
     document.getElementById('signalIcon').textContent = sig.icon;
@@ -97,7 +127,7 @@ function renderMainIndex(recent3) {
         '<th>日期</th><th>情绪指数</th><th>信号</th>' +
         '</tr></thead><tbody>' +
         recent3.map(r => {
-            const s = getSignal(r.eindex);
+            const s = getSignal(r);
             return `<tr><td>${r.date}</td>` +
                 `<td style="color:${getIndexColor(r.eindex)};font-weight:700">${r.eindex.toFixed(1)}</td>` +
                 `<td class="signal-cell ${s.cls}">${s.icon} ${s.text}</td></tr>`;
@@ -184,13 +214,19 @@ function renderMainChart() {
     const dates = allData.map(d => d.date);
     const values = allData.map(d => d.eindex);
 
-    // 找出买卖信号点
-    const buyPoints = [];
-    const sellPoints = [];
+    // 找出恐惧/贪婪信号点
+    const fearPoints = [];
+    const greedPoints = [];
     allData.forEach((d, i) => {
-        if (d.eindex <= 30) buyPoints.push({ value: [d.date, d.eindex], itemStyle: { color: '#00d4aa' } });
-        if (d.eindex >= 80) sellPoints.push({ value: [d.date, d.eindex], itemStyle: { color: '#ff5252' } });
+        const fear = d.fear_threshold || 20;
+        const greed = d.greed_threshold || 80;
+        if (d.eindex <= fear) fearPoints.push({ value: [d.date, d.eindex], itemStyle: { color: '#00d4aa' } });
+        if (d.eindex >= greed) greedPoints.push({ value: [d.date, d.eindex], itemStyle: { color: '#ff5252' } });
     });
+
+    // 动态阈值曲线数据
+    const fearLine = allData.map(d => d.fear_threshold);
+    const greedLine = allData.map(d => d.greed_threshold);
 
     const option = {
         backgroundColor: 'transparent',
@@ -202,16 +238,22 @@ function renderMainChart() {
             formatter: function(params) {
                 const d = allData.find(item => item.date === params[0].axisValue);
                 if (!d) return '';
-                const sig = getSignal(d.eindex);
+                const sig = getSignal(d);
                 return `<b>${d.date}</b><br/>` +
                     `情绪指数: <b style="color:${getIndexColor(d.eindex)}">${d.eindex.toFixed(1)}</b><br/>` +
                     `信号: ${sig.icon} ${sig.text}<br/>` +
+                    `恐惧线: ${(d.fear_threshold != null ? d.fear_threshold : 20).toFixed(1)} / 贪婪线: ${(d.greed_threshold != null ? d.greed_threshold : 80).toFixed(1)}<br/>` +
                     `成交额分位: ${(d.cje_pct || 0).toFixed(1)}<br/>` +
                     `融资分位: ${d.margin_pct.toFixed(1)}<br/>` +
                     `涨停分位: ${d.limitup_pct.toFixed(1)}`;
             }
         },
-        grid: { left: 60, right: 30, top: 40, bottom: 80 },
+        legend: {
+            data: ['情绪指数', '恐惧线', '贪婪线'],
+            textStyle: { color: '#9aa0b0' },
+            top: 5
+        },
+        grid: { left: 60, right: 20, top: 45, bottom: 80 },
         dataZoom: [
             { type: 'inside', start: 90, end: 100 },
             { type: 'slider', start: 90, end: 100, height: 30, bottom: 10,
@@ -231,17 +273,10 @@ function renderMainChart() {
             type: 'value',
             min: 0,
             max: 100,
+            interval: 20,
             axisLine: { show: false },
             axisLabel: { color: '#9aa0b0' },
             splitLine: { lineStyle: { color: '#2a2f45' } }
-        },
-        visualMap: {
-            show: false,
-            pieces: [
-                { lte: 30, color: '#00d4aa' },
-                { gt: 30, lte: 80, color: '#4f8ff7' },
-                { gt: 80, color: '#ff5252' }
-            ]
         },
         series: [
             {
@@ -249,34 +284,43 @@ function renderMainChart() {
                 type: 'line',
                 data: values,
                 smooth: true,
-                lineStyle: { width: 2 },
+                lineStyle: { width: 2, color: '#4f8ff7' },
+                itemStyle: { color: '#4f8ff7' },
                 areaStyle: {
                     color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
                         { offset: 0, color: 'rgba(79,143,247,0.25)' },
                         { offset: 1, color: 'rgba(79,143,247,0.02)' }
                     ])
-                },
-                markLine: {
-                    silent: true,
-                    lineStyle: { type: 'dashed' },
-                    data: [
-                        { yAxis: 30, lineStyle: { color: '#00d4aa' }, label: { formatter: '买入线 (30)', color: '#00d4aa', fontSize: 11 } },
-                        { yAxis: 80, lineStyle: { color: '#ff5252' }, label: { formatter: '卖出线 (80)', color: '#ff5252', fontSize: 11 } }
-                    ]
                 }
             },
             {
-                name: '买入信号',
+                name: '恐惧线',
+                type: 'line',
+                data: fearLine,
+                lineStyle: { width: 1, type: 'dashed', color: '#00d4aa' },
+                itemStyle: { color: '#00d4aa' },
+                symbol: 'none'
+            },
+            {
+                name: '贪婪线',
+                type: 'line',
+                data: greedLine,
+                lineStyle: { width: 1, type: 'dashed', color: '#ff5252' },
+                itemStyle: { color: '#ff5252' },
+                symbol: 'none'
+            },
+            {
+                name: '恐惧',
                 type: 'scatter',
-                data: buyPoints,
+                data: fearPoints,
                 symbol: 'triangle',
                 symbolSize: 12,
                 z: 10
             },
             {
-                name: '卖出信号',
+                name: '贪婪',
                 type: 'scatter',
-                data: sellPoints,
+                data: greedPoints,
                 symbol: 'pin',
                 symbolSize: 14,
                 z: 10
@@ -284,6 +328,7 @@ function renderMainChart() {
         ]
     };
     chart.setOption(option);
+
     window.addEventListener('resize', () => chart.resize());
 }
 
@@ -323,8 +368,6 @@ function renderIndicatorsChart() {
         },
         yAxis: {
             type: 'value',
-            min: 0,
-            max: 100,
             axisLine: { show: false },
             axisLabel: { color: '#9aa0b0' },
             splitLine: { lineStyle: { color: '#2a2f45' } }
@@ -372,8 +415,8 @@ function renderTable() {
             va = new Date(va); vb = new Date(vb);
         }
         if (sortField === 'signal') {
-            va = a.eindex <= 30 ? 0 : a.eindex >= 80 ? 2 : 1;
-            vb = b.eindex <= 30 ? 0 : b.eindex >= 80 ? 2 : 1;
+            va = a.eindex <= (a.fear_threshold || 20) ? 0 : a.eindex >= (a.greed_threshold || 80) ? 2 : 1;
+            vb = b.eindex <= (b.fear_threshold || 20) ? 0 : b.eindex >= (b.greed_threshold || 80) ? 2 : 1;
         }
         return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
     });
@@ -382,7 +425,7 @@ function renderTable() {
     const recent = sorted.slice(0, 30);
 
     tbody.innerHTML = recent.map(d => {
-        const sig = getSignal(d.eindex);
+        const sig = getSignal(d);
         return `<tr>
             <td>${d.date}</td>
             <td style="color:${getIndexColor(d.eindex)};font-weight:700">${d.eindex.toFixed(1)}</td>
@@ -424,7 +467,7 @@ function exportCSV() {
     if (!allData.length) return;
     const headers = ['日期', '情绪指数', '信号', '成交额分位', '融资分位', '涨停分位', '换手率', '融资占比', '沪融资余额', '深融资余额', '涨停家数', '涨停占比'];
     const rows = allData.map(d => {
-        const sig = getSignal(d.eindex);
+        const sig = getSignal(d);
         return [
             d.date,
             d.eindex.toFixed(1),
@@ -510,6 +553,7 @@ loadData();
                         clearInterval(timer);
                         allData = json.data;
                         dataWarnings = json.warnings || [];
+                        backfillThresholds(allData);
                         renderAll();
                         descEl.textContent = '✅ 数据已更新（' + json.updated_at + '）';
                         btn.classList.remove('loading');
