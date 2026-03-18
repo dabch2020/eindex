@@ -13,7 +13,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="header-row">
-                    <h1><span class="logo-icon">📊</span> eIndex <span class="subtitle">A股情绪指数</span> <span class="version">v2026-03-18-002</span></h1>
+                    <h1><span class="logo-icon">📊</span> eIndex <span class="subtitle">A股情绪指数</span> <span class="version">v2026-03-18-004</span></h1>
                     <button class="btn-refresh" id="btnRefresh">
                         <span class="icon">&#x21bb;</span> 刷新
                     </button>
@@ -49,10 +49,10 @@
                 <div class="indicator-card">
                     <div class="indicator-header">
                         <span class="indicator-icon">🔄</span>
-                        <span class="indicator-name">全市场换手率</span>
+                        <span class="indicator-name">全市场成交额</span>
                     </div>
                     <div class="indicator-days" id="turnoverDays"></div>
-                    <div class="indicator-formula">= 总成交额 / 总流通市值</div>
+                    <div class="indicator-formula">= 沪深两市日成交额（亿元）</div>
                 </div>
                 <div class="indicator-card">
                     <div class="indicator-header">
@@ -154,7 +154,7 @@
     <footer>
         <div class="container">
             <p>eIndex - A股情绪指数 | 数据仅供参考，不构成投资建议</p>
-            <p class="footer-sub">基于全市场换手率、融资余额占比、涨停家数占比三大指标的250日分位数综合计算</p>
+            <p class="footer-sub">基于成交额、融资余额占比、涨停家数占比、市场方向四大指标的滚动分位数综合计算</p>
         </div>
     </footer>
 

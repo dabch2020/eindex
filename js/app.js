@@ -198,8 +198,8 @@ function renderIndicators(recent3) {
     }
 
     renderDays('turnoverDays',
-        d => (d.turnover_rate * 100).toFixed(3) + '%',
-        d => d.turnover_pct);
+        d => d.cje_amount > 0 ? Math.round(d.cje_amount) + '亿' : '--',
+        d => d.cje_pct);
     renderDays('marginDays',
         d => (d.margin_ratio * 100).toFixed(3) + '%',
         d => d.margin_pct);
