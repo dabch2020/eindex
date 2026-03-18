@@ -206,6 +206,9 @@ function renderIndicators(recent3) {
     renderDays('limitUpDays',
         d => (d.limitup_ratio * 100).toFixed(3) + '%',
         d => d.limitup_pct);
+    renderDays('returnDays',
+        d => (d.return_rate * 100).toFixed(3) + '%',
+        d => d.return_pct);
 }
 
 // 主走势图

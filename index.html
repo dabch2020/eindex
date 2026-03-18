@@ -13,12 +13,12 @@
         <div class="container">
             <div class="header-content">
                 <div class="header-row">
-                    <h1><span class="logo-icon">📊</span> eIndex <span class="subtitle">A股情绪指数</span> <span class="version">v2026-03-17-012</span></h1>
+                    <h1><span class="logo-icon">📊</span> eIndex <span class="subtitle">A股情绪指数</span> <span class="version">v2026-03-18-002</span></h1>
                     <button class="btn-refresh" id="btnRefresh">
                         <span class="icon">&#x21bb;</span> 刷新
                     </button>
                 </div>
-                <p class="header-desc">基于换手率、融资余额占比、涨停家数占比三大核心指标的市场情绪量化分析工具</p>
+                <p class="header-desc">基于成交额、融资余额、涨停家数、市场方向四大核心指标的市场情绪量化分析工具</p>
                 <div class="header-warnings" id="warningsSection" style="display:none">
                     <div id="warningsContent"></div>
                 </div>
@@ -42,9 +42,9 @@
             </div>
         </section>
 
-        <!-- 三大指标 -->
+        <!-- 四大指标 -->
         <section class="indicators-section">
-            <h2 class="section-title">三大核心指标</h2>
+            <h2 class="section-title">四大核心指标</h2>
             <div class="indicators-grid">
                 <div class="indicator-card">
                     <div class="indicator-header">
@@ -70,6 +70,14 @@
                     <div class="indicator-days" id="limitUpDays"></div>
                     <div class="indicator-formula">= 涨停股票数 / 全市场股票总数</div>
                 </div>
+                <div class="indicator-card">
+                    <div class="indicator-header">
+                        <span class="indicator-icon">📈</span>
+                        <span class="indicator-name">市场方向</span>
+                    </div>
+                    <div class="indicator-days" id="returnDays"></div>
+                    <div class="indicator-formula">= 全A等权指数(880008) 3日收益率</div>
+                </div>
             </div>
         </section>
 
@@ -81,7 +89,7 @@
 
         <!-- 三大指标分位数对比 -->
         <section class="chart-section">
-            <h2 class="section-title">三大指标分位数走势对比</h2>
+            <h2 class="section-title">四大指标分位数走势对比</h2>
             <div class="chart-container" id="indicatorsChart"></div>
         </section>
 

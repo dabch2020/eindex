@@ -799,6 +799,8 @@ def generate_data():
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
             "cje_amount": round(cje_val, 2) if cje_val is not None else 0,
             "cje_pct": round(cje_pct, 2) if cje_pct is not None else 0,
+            "return_rate": round(ret_val, 6) if ret_val is not None else 0,
+            "return_pct": round(ret_pct, 2) if ret_pct is not None else 0,
         })
 
     # ── 保存 ──
@@ -970,6 +972,8 @@ def generate_data_recent(n_days=2):
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
             "cje_amount": round(cje_val, 2) if cje_val is not None else 0,
             "cje_pct": round(cje_pct, 2) if cje_pct is not None else 0,
+            "return_rate": round(ret_val, 6) if ret_val is not None else 0,
+            "return_pct": round(ret_pct, 2) if ret_pct is not None else 0,
         }
         updated += 1
 
