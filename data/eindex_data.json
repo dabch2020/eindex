@@ -1,11 +1,5 @@
 {
-  "updated_at": "2026-03-19 01:58:30",
-  "warnings": [
-    "2026-03-18 换手率数据缺失",
-    "2026-03-19 换手率数据缺失",
-    "2026-03-18 融资余额数据缺失（深交所）",
-    "2026-03-19 融资余额数据缺失（上交所+深交所）"
-  ],
+  "updated_at": "2026-03-19 09:59:26",
   "data": [
     {
       "date": "2016-01-26",
@@ -46749,32 +46743,32 @@
     },
     {
       "date": "2026-03-18",
-      "eindex": 26.55,
+      "eindex": 32.36,
       "fear_threshold": 35.05,
       "greed_threshold": 72.82,
-      "turnover_rate": 0,
-      "turnover_pct": 0.83,
-      "margin_ratio": 0,
-      "margin_pct": 0.83,
-      "margin_sh": 0,
-      "margin_sz": 0,
+      "turnover_rate": 0.019987,
+      "turnover_pct": 30.0,
+      "margin_ratio": 0.025623,
+      "margin_pct": 58.33,
+      "margin_sh": 13326.9,
+      "margin_sz": 12902.74,
       "limitup_count": 70,
       "limitup_ratio": 0.012727,
       "limitup_pct": 43.33,
-      "cje_amount": 0,
-      "cje_pct": 0,
+      "cje_amount": 20460.63,
+      "cje_pct": 38.33,
       "return_rate": -0.01598,
       "return_pct": 15.83
     },
     {
       "date": "2026-03-19",
-      "eindex": 5.48,
-      "fear_threshold": 31.53,
+      "eindex": 5.77,
+      "fear_threshold": 32.36,
       "greed_threshold": 72.82,
       "turnover_rate": 0,
-      "turnover_pct": 1.67,
+      "turnover_pct": 0,
       "margin_ratio": 0,
-      "margin_pct": 1.67,
+      "margin_pct": 0,
       "margin_sh": 0,
       "margin_sz": 0,
       "limitup_count": 24,
@@ -46782,7 +46776,7 @@
       "limitup_pct": 0.83,
       "cje_amount": 0,
       "cje_pct": 0,
-      "return_rate": -0.020644,
+      "return_rate": -0.020657,
       "return_pct": 10.0
     }
   ]
