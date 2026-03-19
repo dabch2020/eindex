@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-19 02:55:41",
+  "updated_at": "2026-03-19 04:53:49",
   "warnings": [
     "2026-03-19 换手率数据缺失",
     "2026-03-19 融资余额数据缺失（上交所+深交所）"
@@ -46775,8 +46775,8 @@
       "margin_pct": 0.83,
       "margin_sh": 0,
       "margin_sz": 0,
-      "limitup_count": 30,
-      "limitup_ratio": 0.005455,
+      "limitup_count": 32,
+      "limitup_ratio": 0.005818,
       "limitup_pct": 0.83,
       "cje_amount": 0,
       "cje_pct": 0,
