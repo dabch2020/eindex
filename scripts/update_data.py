@@ -94,6 +94,101 @@ def _get_sh_sz_ratio():
     return _sh_sz_ratio
 
 
+def _save_ltsz_cache(cache):
+    """保存 ltsz_cache.json"""
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(LTSZ_CACHE_FILE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2, sort_keys=True)
+
+
+def _fetch_ltsz_for_dates(dates):
+    """从交易所网站获取指定日期的流通市值，更新 ltsz_cache。
+    SSE: https://query.sse.com.cn  SZSE: https://www.szse.cn"""
+    import requests
+
+    cache = _load_ltsz_cache()
+    missing = [dt for dt in dates if dt not in cache or
+               (cache[dt].get('sh', 0) == 0 and cache[dt].get('sz', 0) == 0)]
+    if not missing:
+        return
+
+    print(f"  自动补全流通市值: {len(missing)} 天缺失")
+
+    sse_headers = {
+        "Referer": "https://www.sse.com.cn/",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    }
+    szse_headers = {
+        "Referer": "https://www.szse.cn/market/overview/index.html",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    }
+
+    fetched = 0
+    for dt in missing:
+        trade_date = dt.replace("-", "")
+
+        # SZSE
+        sz = None
+        try:
+            r = requests.get("https://www.szse.cn/api/report/ShowReport/data",
+                             params={"SHOWTYPE": "JSON", "CATALOGID": "1803",
+                                     "TABKEY": "tab1", "txtQueryDate": dt},
+                             headers=szse_headers, timeout=15)
+            r.raise_for_status()
+            data = r.json()
+            if data and data[0].get("data"):
+                for row in data[0]["data"]:
+                    if "流通市值" in row.get("zbmc", ""):
+                        val = row.get("brsz", "").replace(",", "")
+                        if val and val != "-":
+                            sz = float(val)
+        except Exception:
+            pass
+
+        time.sleep(0.5)
+
+        # SSE (2018+)
+        sh = None
+        if dt >= "2018-01-01":
+            try:
+                r = requests.get("https://query.sse.com.cn/commonQuery.do",
+                                 params={"sqlId": "COMMON_SSE_SJ_SCGM_C",
+                                         "isPagination": "false",
+                                         "TRADE_DATE": trade_date},
+                                 headers=sse_headers, timeout=15)
+                r.raise_for_status()
+                data = r.json()
+                results = data.get("result", [])
+                if results:
+                    nego = results[0].get("NEGO_VALUE", "").replace(",", "")
+                    if nego and nego != "-":
+                        sh = float(nego)
+            except Exception:
+                pass
+
+        if sh is not None or sz is not None:
+            if dt not in cache:
+                cache[dt] = {}
+            if sh is not None:
+                cache[dt]["sh"] = round(sh, 2)
+            if sz is not None:
+                cache[dt]["sz"] = round(sz, 2)
+            fetched += 1
+
+        time.sleep(0.5)
+
+    if fetched:
+        _save_ltsz_cache(cache)
+        # 重置内存缓存以便 get_float_mcap 能读到新数据
+        global _ltsz_cache
+        _ltsz_cache = cache
+        print(f"  流通市值补全完成: {fetched} 天")
+    else:
+        print(f"  流通市值补全: 未获取到新数据")
+
+
 def get_float_mcap(date_str):
     """获取某日全市场流通市值（亿元）。
     优先使用 ltsz_cache.json 真实数据；
@@ -267,6 +362,9 @@ def get_market_return(trade_dates, lookback=RETURN_LOOKBACK):
 def get_turnover_data(ak, trade_dates):
     """全市场换手率 = (沪市成交额 + 深市成交额) / 流通市值"""
     print("获取全市场成交额（东方财富）...")
+
+    # 自动补全缺失的流通市值数据
+    _fetch_ltsz_for_dates(trade_dates)
 
     cache = _load_turnover_cache()
     cje = _load_cje_cache()
