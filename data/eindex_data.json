@@ -1,8 +1,10 @@
 {
-  "updated_at": "2026-03-20 01:38:17",
+  "updated_at": "2026-03-20 01:39:55",
   "warnings": [
     "2026-03-19 换手率数据缺失",
-    "2026-03-19 融资余额数据缺失（深交所）"
+    "2026-03-20 换手率数据缺失",
+    "2026-03-19 融资余额数据缺失（深交所）",
+    "2026-03-20 融资余额数据缺失（上交所+深交所）"
   ],
   "data": [
     {
@@ -46782,6 +46784,25 @@
       "cje_pct": 0,
       "return_rate": -0.020657,
       "return_pct": 10.0
+    },
+    {
+      "date": "2026-03-20",
+      "eindex": 13.81,
+      "fear_threshold": 31.53,
+      "greed_threshold": 72.82,
+      "turnover_rate": 0,
+      "turnover_pct": 1.67,
+      "margin_ratio": 0,
+      "margin_pct": 1.67,
+      "margin_sh": 0,
+      "margin_sz": 0,
+      "limitup_count": 27,
+      "limitup_ratio": 0.004909,
+      "limitup_pct": 0.83,
+      "cje_amount": 0,
+      "cje_pct": 0,
+      "return_rate": -0.008736,
+      "return_pct": 26.67
     }
   ]
 }
