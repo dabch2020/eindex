@@ -542,44 +542,24 @@ def get_margin_data(ak, trade_dates):
         _save_margin_cache(cache)
         print(f"  补漏完成: 沪市+{filled_sh}, 深市+{filled_sz}, 缓存共 {len(cache)} 天")
 
-    # ── 合并计算 ratio（缺失一侧时用前值填充） ──
+    # ── 合并计算 ratio（仅使用当天有完整沪深数据的日期） ──
     results = {}
     margin_gaps = []
     all_dates = sorted(set(list(sh_margin.keys()) + list(sz_margin.keys())))
 
-    last_sh = None
-    last_sz = None
     for dt in all_dates:
         sh = sh_margin.get(dt)
         sz = sz_margin.get(dt)
 
-        # 用前值填充缺失侧
         if sh is None and sz is None:
-            if last_sh is not None and last_sz is not None:
-                sh, sz = last_sh, last_sz
-                margin_gaps.append((dt, "沪市+深市(前值填充)"))
-            else:
-                margin_gaps.append((dt, "沪市+深市"))
-                continue
-        elif sh is None:
-            if last_sh is not None:
-                sh = last_sh
-                margin_gaps.append((dt, "沪市(前值填充)"))
-            else:
-                margin_gaps.append((dt, "沪市"))
-                continue
-        elif sz is None:
-            if last_sz is not None:
-                sz = last_sz
-                margin_gaps.append((dt, "深市(前值填充)"))
-            else:
-                margin_gaps.append((dt, "深市"))
-                continue
-
-        if sh is not None:
-            last_sh = sh
-        if sz is not None:
-            last_sz = sz
+            margin_gaps.append((dt, "沪市+深市"))
+            continue
+        if sh is None:
+            margin_gaps.append((dt, "沪市"))
+            continue
+        if sz is None:
+            margin_gaps.append((dt, "深市"))
+            continue
 
         total_yi = sh + sz  # 亿元
         if total_yi > 0:
