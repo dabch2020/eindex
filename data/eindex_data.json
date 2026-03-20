@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-20 06:12:03",
+  "updated_at": "2026-03-20 06:17:16",
   "warnings": [
     "2026-03-19 换手率数据缺失",
     "2026-03-20 换手率数据缺失",
@@ -46787,7 +46787,7 @@
     },
     {
       "date": "2026-03-20",
-      "eindex": 4.82,
+      "eindex": 4.46,
       "fear_threshold": 31.53,
       "greed_threshold": 72.82,
       "turnover_rate": 0,
@@ -46796,12 +46796,12 @@
       "margin_pct": 1.67,
       "margin_sh": 0,
       "margin_sz": 0,
-      "limitup_count": 40,
-      "limitup_ratio": 0.007273,
-      "limitup_pct": 4.17,
+      "limitup_count": 39,
+      "limitup_ratio": 0.007091,
+      "limitup_pct": 3.33,
       "cje_amount": 0,
       "cje_pct": 0,
-      "return_rate": -0.028168,
+      "return_rate": -0.029065,
       "return_pct": 5.83
     }
   ]
