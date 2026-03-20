@@ -192,20 +192,33 @@ def _fetch_ltsz_for_dates(dates):
 def get_float_mcap(date_str):
     """获取某日全市场流通市值（亿元）。
     优先使用 ltsz_cache.json 真实数据；
-    若仅有 SZ 数据（2018 前 SSE 无数据），按 SH/SZ 比值估算 SH。"""
+    若仅有 SZ 数据（2018 前 SSE 无数据），按 SH/SZ 比值估算 SH；
+    若当天无数据，回退到最近一个有数据的交易日（流通市值日间变动 <0.5%）。"""
     cache = _load_ltsz_cache()
-    entry = cache.get(date_str)
-    if not entry:
+
+    def _calc_mcap(entry):
+        if not entry:
+            return None
+        sh = entry.get('sh', 0)
+        sz = entry.get('sz', 0)
+        if sh > 0 and sz > 0:
+            return sh + sz
+        if sz > 0 and sh == 0:
+            ratio = _get_sh_sz_ratio()
+            return sz * (1 + ratio)
         return None
-    sh = entry.get('sh', 0)
-    sz = entry.get('sz', 0)
-    if sh > 0 and sz > 0:
-        return sh + sz
-    if sz > 0 and sh == 0:
-        ratio = _get_sh_sz_ratio()
-        return sz * (1 + ratio)  # total = sz + sz * ratio
-    if sh > 0 and sz == 0:
-        return None  # 不应该出现此情况
+
+    # 精确匹配
+    result = _calc_mcap(cache.get(date_str))
+    if result is not None:
+        return result
+
+    # 回退：找最近的前一个有数据的日期
+    prev_dates = sorted(d for d in cache.keys() if d < date_str)
+    for d in reversed(prev_dates):
+        result = _calc_mcap(cache[d])
+        if result is not None:
+            return result
     return None
 
 
@@ -529,24 +542,44 @@ def get_margin_data(ak, trade_dates):
         _save_margin_cache(cache)
         print(f"  补漏完成: 沪市+{filled_sh}, 深市+{filled_sz}, 缓存共 {len(cache)} 天")
 
-    # ── 合并计算 ratio（仅使用当天有完整沪深数据的日期） ──
+    # ── 合并计算 ratio（缺失一侧时用前值填充） ──
     results = {}
     margin_gaps = []
     all_dates = sorted(set(list(sh_margin.keys()) + list(sz_margin.keys())))
 
+    last_sh = None
+    last_sz = None
     for dt in all_dates:
         sh = sh_margin.get(dt)
         sz = sz_margin.get(dt)
 
+        # 用前值填充缺失侧
         if sh is None and sz is None:
-            margin_gaps.append((dt, "沪市+深市"))
-            continue
-        if sh is None:
-            margin_gaps.append((dt, "沪市"))
-            continue
-        if sz is None:
-            margin_gaps.append((dt, "深市"))
-            continue
+            if last_sh is not None and last_sz is not None:
+                sh, sz = last_sh, last_sz
+                margin_gaps.append((dt, "沪市+深市(前值填充)"))
+            else:
+                margin_gaps.append((dt, "沪市+深市"))
+                continue
+        elif sh is None:
+            if last_sh is not None:
+                sh = last_sh
+                margin_gaps.append((dt, "沪市(前值填充)"))
+            else:
+                margin_gaps.append((dt, "沪市"))
+                continue
+        elif sz is None:
+            if last_sz is not None:
+                sz = last_sz
+                margin_gaps.append((dt, "深市(前值填充)"))
+            else:
+                margin_gaps.append((dt, "深市"))
+                continue
+
+        if sh is not None:
+            last_sh = sh
+        if sz is not None:
+            last_sz = sz
 
         total_yi = sh + sz  # 亿元
         if total_yi > 0:
