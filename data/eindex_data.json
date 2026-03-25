@@ -1,5 +1,9 @@
 {
-  "updated_at": "2026-03-24 11:15:13",
+  "updated_at": "2026-03-25 03:45:23",
+  "warnings": [
+    "2026-03-23 换手率数据缺失",
+    "2026-03-24 换手率数据缺失"
+  ],
   "data": [
     {
       "date": "2016-01-26",
@@ -46804,7 +46808,7 @@
       "fear_threshold": 31.16,
       "greed_threshold": 72.82,
       "turnover_rate": 0,
-      "turnover_pct": 0,
+      "turnover_pct": 0.83,
       "margin_ratio": 0.025301,
       "margin_pct": 23.33,
       "margin_sh": 13186.65,
@@ -46819,18 +46823,18 @@
     },
     {
       "date": "2026-03-24",
-      "eindex": 3.33,
+      "eindex": 46.96,
       "fear_threshold": 30.37,
       "greed_threshold": 72.82,
       "turnover_rate": 0,
-      "turnover_pct": 0,
-      "margin_ratio": 0,
-      "margin_pct": 0,
-      "margin_sh": 0,
-      "margin_sz": 0,
-      "limitup_count": 38,
-      "limitup_ratio": 0.006909,
-      "limitup_pct": 3.33,
+      "turnover_pct": 1.67,
+      "margin_ratio": 0.026489,
+      "margin_pct": 99.17,
+      "margin_sh": 13166.21,
+      "margin_sz": 12664.0,
+      "limitup_count": 100,
+      "limitup_ratio": 0.018182,
+      "limitup_pct": 89.17,
       "cje_amount": 0,
       "cje_pct": 0,
       "return_rate": -0.041175,
