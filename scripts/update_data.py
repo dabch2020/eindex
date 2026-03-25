@@ -107,8 +107,14 @@ def _fetch_ltsz_for_dates(dates):
     import requests
 
     cache = _load_ltsz_cache()
-    missing = [dt for dt in dates if dt not in cache or
-               (cache[dt].get('sh', 0) == 0 and cache[dt].get('sz', 0) == 0)]
+    # 补全缺失或不完整的条目（仅有一侧数据的也需要重新获取另一侧）
+    missing = []
+    for dt in dates:
+        entry = cache.get(dt)
+        if not entry:
+            missing.append(dt)
+        elif entry.get('sh', 0) == 0 or entry.get('sz', 0) == 0:
+            missing.append(dt)
     if not missing:
         return
 
@@ -206,6 +212,9 @@ def get_float_mcap(date_str):
         if sz > 0 and sh == 0:
             ratio = _get_sh_sz_ratio()
             return sz * (1 + ratio)
+        if sh > 0 and sz == 0:
+            ratio = _get_sh_sz_ratio()
+            return sh * (1 + 1.0 / ratio)  # total = sh + sh / ratio
         return None
 
     # 精确匹配
@@ -372,6 +381,64 @@ def get_market_return(trade_dates, lookback=RETURN_LOOKBACK):
     return results
 
 
+def _fetch_index_amount_em(ak, symbol, max_retries=3):
+    """获取指数每日成交额，带重试。
+    优先用轻量级日期范围查询，失败时回退到全量查询。"""
+    import requests as _req
+
+    # 方法1：直接调用东方财富 API（带日期范围，数据量小）
+    code_map = {"sh000001": "1.000001", "sz399001": "0.399001"}
+    secid = code_map.get(symbol)
+    if secid:
+        for attempt in range(max_retries):
+            try:
+                url = "https://push2his.eastmoney.com/api/qt/stock/kline/get"
+                params = {
+                    "secid": secid,
+                    "fields1": "f1,f2,f3,f4,f5,f6",
+                    "fields2": "f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61",
+                    "klt": "101",  # 日K
+                    "fqt": "1",
+                    "beg": (datetime.now().replace(day=1) - __import__('datetime').timedelta(days=60)).strftime("%Y%m%d"),
+                    "end": "20500101",
+                }
+                r = _req.get(url, params=params, timeout=30)
+                r.raise_for_status()
+                data = r.json()
+                klines = data.get("data", {}).get("klines", [])
+                if klines:
+                    result = {}
+                    for line in klines:
+                        parts = line.split(",")
+                        # date, open, close, high, low, volume, amount, ...
+                        dt = parts[0]
+                        amt = float(parts[6])  # 成交额（元）
+                        result[dt] = amt
+                    print(f"    {symbol} 直连东方财富API成功: {len(result)} 天")
+                    return result
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    print(f"    {symbol} 直连尝试 {attempt+1} 失败: {e}，重试...")
+                    time.sleep(3 * (attempt + 1))
+
+    # 方法2：回退到 akshare（获取全量数据，较慢）
+    for attempt in range(max_retries):
+        try:
+            df = ak.stock_zh_index_daily_em(symbol=symbol)
+            df['date'] = df['date'].astype(str)
+            result = dict(zip(df['date'], df['amount']))
+            print(f"    {symbol} akshare回退成功: {len(result)} 天")
+            return result
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"    {symbol} akshare尝试 {attempt+1} 失败: {e}，重试...")
+                time.sleep(5 * (attempt + 1))
+            else:
+                print(f"    {symbol} 所有尝试均失败: {e}")
+
+    return {}
+
+
 def get_turnover_data(ak, trade_dates):
     """全市场换手率 = (沪市成交额 + 深市成交额) / 流通市值"""
     print("获取全市场成交额（东方财富）...")
@@ -388,15 +455,9 @@ def get_turnover_data(ak, trade_dates):
     if missing:
         missing_mcap = 0
         try:
-            df_sh = ak.stock_zh_index_daily_em(symbol="sh000001")
-            df_sh['date'] = df_sh['date'].astype(str)
-            sh_amt = dict(zip(df_sh['date'], df_sh['amount']))
-
+            sh_amt = _fetch_index_amount_em(ak, "sh000001")
             time.sleep(1)
-
-            df_sz = ak.stock_zh_index_daily_em(symbol="sz399001")
-            df_sz['date'] = df_sz['date'].astype(str)
-            sz_amt = dict(zip(df_sz['date'], df_sz['amount']))
+            sz_amt = _fetch_index_amount_em(ak, "sz399001")
 
             new_count = 0
             for dt in missing:
@@ -421,7 +482,7 @@ def get_turnover_data(ak, trade_dates):
             _save_cje_cache(cje)
             print(f"  新增 {new_count} 天, 缓存共 {len(cache)} 天")
             if missing_mcap:
-                print(f"  ⚠ {missing_mcap} 天缺少流通市值数据，请运行 fetch_ltsz.py 补齐")
+                print(f"  ⚠ {missing_mcap} 天缺少流通市值数据")
         except Exception as e:
             print(f"  换手率获取失败: {e}")
 
@@ -973,7 +1034,8 @@ def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
 
 
 def generate_data_recent(n_days=2):
-    """增量更新最近 n_days 个交易日的数据（由刷新按钮触发）"""
+    """增量更新最近 n_days 个交易日的数据（由刷新按钮触发）。
+    同时自动补齐之前缺失的数据（换手率/成交额为 0 的日期）。"""
     ak = ensure_akshare()
 
     old_data = load_existing()
@@ -987,35 +1049,48 @@ def generate_data_recent(n_days=2):
     # 获取交易日历
     trade_dates = get_trade_dates(ak)
     recent_dates = trade_dates[-n_days:]
-    print(f"增量更新最近 {n_days} 个交易日: {recent_dates[0]} ~ {recent_dates[-1]}")
 
-    # 强制清除最近几天的缓存，确保重新获取
-    _invalidate_recent_caches(recent_dates)
+    # 自动检测之前缺失的日期（换手率或成交额为0），追加到更新列表
+    extra_dates = []
+    for d in existing[-10:]:  # 检查最近10个交易日
+        if d['date'] not in recent_dates:
+            if d.get('turnover_rate', 0) == 0 or d.get('cje_amount', 0) == 0:
+                extra_dates.append(d['date'])
+    if extra_dates:
+        all_update_dates = sorted(set(extra_dates + recent_dates))
+        print(f"增量更新: 最近 {n_days} 天 + {len(extra_dates)} 天待补齐 = {len(all_update_dates)} 天")
+    else:
+        all_update_dates = recent_dates
+    print(f"更新日期: {all_update_dates[0]} ~ {all_update_dates[-1]}")
 
-    # 获取四大指标（仅重新获取 recent_dates）
-    turnover_data = get_turnover_data(ak, recent_dates)
-    margin_data = get_margin_data(ak, recent_dates)
-    limitup_data = get_limitup_data(ak, recent_dates)
+    # 强制清除待更新日期的缓存，确保重新获取
+    _invalidate_recent_caches(all_update_dates)
+
+    # 获取四大指标（仅重新获取 all_update_dates）
+    turnover_data = get_turnover_data(ak, all_update_dates)
+    margin_data = get_margin_data(ak, all_update_dates)
+    limitup_data = get_limitup_data(ak, all_update_dates)
 
     # 市场方向因子（880008 N日收益率）— 需要全部交易日来计算
     return_data = get_market_return(trade_dates)
 
     # 刷新模式：获取不到的数据按 0 存入缓存
-    warnings = _fill_missing_with_zero(recent_dates, turnover_data, margin_data, limitup_data)
+    warnings = _fill_missing_with_zero(all_update_dates, turnover_data, margin_data, limitup_data)
 
     # 成交额数据（亿元）
     cje_cache = _load_cje_cache()
 
     # 从已有数据重建历史分位序列（用于计算分位数）
-    t_hist = [d['turnover_rate'] for d in existing if d['turnover_rate'] > 0 and d['date'] < recent_dates[0]]
-    m_hist = [d['margin_ratio'] for d in existing if d['margin_ratio'] > 0 and d['date'] < recent_dates[0]]
-    l_hist = [d['limitup_ratio'] for d in existing if d['limitup_ratio'] > 0 and d['date'] < recent_dates[0]]
-    cje_hist = [d.get('cje_amount', 0) for d in existing if d.get('cje_amount', 0) > 0 and d['date'] < recent_dates[0]]
-    # 880008 收益率历史：从 return_data 中取 recent_dates 之前的数据
-    ret_hist = [return_data[dt] for dt in sorted(return_data.keys()) if dt < recent_dates[0]]
+    first_update = all_update_dates[0]
+    t_hist = [d['turnover_rate'] for d in existing if d['turnover_rate'] > 0 and d['date'] < first_update]
+    m_hist = [d['margin_ratio'] for d in existing if d['margin_ratio'] > 0 and d['date'] < first_update]
+    l_hist = [d['limitup_ratio'] for d in existing if d['limitup_ratio'] > 0 and d['date'] < first_update]
+    cje_hist = [d.get('cje_amount', 0) for d in existing if d.get('cje_amount', 0) > 0 and d['date'] < first_update]
+    # 880008 收益率历史：从 return_data 中取更新日期之前的数据
+    ret_hist = [return_data[dt] for dt in sorted(return_data.keys()) if dt < first_update]
 
     updated = 0
-    for dt in recent_dates:
+    for dt in all_update_dates:
         t_val = turnover_data.get(dt)
         m_entry = margin_data.get(dt)
         m_val = m_entry[0] if m_entry is not None else None

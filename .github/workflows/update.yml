@@ -4,6 +4,8 @@ on:
   schedule:
     # 每天北京时间18:30运行 (UTC 10:30)
     - cron: '30 10 * * 1-5'
+    # 每天北京时间21:00重试 (UTC 13:00)
+    - cron: '0 13 * * 1-5'
   workflow_dispatch:
   repository_dispatch:
     types: [refresh]
@@ -25,13 +27,27 @@ jobs:
       - name: Install dependencies
         run: pip install akshare numpy mootdx requests
 
-      - name: Update eIndex data
+      - name: Update eIndex data (attempt 1)
         run: |
           if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
             python scripts/update_data.py --recent
           else
             python scripts/update_data.py
           fi
+
+      - name: Check for missing data and retry
+        run: |
+          python -c "
+          import json, sys
+          with open('data/eindex_data.json') as f:
+              data = json.load(f)
+          warnings = data.get('warnings', [])
+          turnover_missing = [w for w in warnings if '换手率' in w]
+          if turnover_missing:
+              print(f'仍有 {len(turnover_missing)} 天换手率缺失，等待30秒后重试...')
+              sys.exit(1)
+          print('数据完整，无需重试')
+          " && echo "OK" || (sleep 30 && python scripts/update_data.py --recent)
 
       - name: Commit and push
         run: |
