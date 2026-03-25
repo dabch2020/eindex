@@ -1,8 +1,7 @@
 {
-  "updated_at": "2026-03-25 03:45:23",
+  "updated_at": "2026-03-25 12:10:41",
   "warnings": [
-    "2026-03-23 换手率数据缺失",
-    "2026-03-24 换手率数据缺失"
+    "2026-03-25 融资余额数据缺失（上交所+深交所）"
   ],
   "data": [
     {
@@ -46804,41 +46803,60 @@
     },
     {
       "date": "2026-03-23",
-      "eindex": 3.15,
+      "eindex": 22.27,
       "fear_threshold": 31.16,
       "greed_threshold": 72.82,
-      "turnover_rate": 0,
-      "turnover_pct": 0.83,
-      "margin_ratio": 0.025301,
-      "margin_pct": 23.33,
+      "turnover_rate": 0.025413,
+      "turnover_pct": 76.67,
+      "margin_ratio": 0.02707,
+      "margin_pct": 100.0,
       "margin_sh": 13186.65,
       "margin_sz": 12713.76,
       "limitup_count": 38,
       "limitup_ratio": 0.006909,
       "limitup_pct": 2.5,
-      "cje_amount": 0,
-      "cje_pct": 0,
+      "cje_amount": 24315.47,
+      "cje_pct": 70.0,
       "return_rate": -0.095004,
       "return_pct": 0.83
     },
     {
       "date": "2026-03-24",
-      "eindex": 46.96,
+      "eindex": 45.56,
       "fear_threshold": 30.37,
       "greed_threshold": 72.82,
-      "turnover_rate": 0,
-      "turnover_pct": 1.67,
+      "turnover_rate": 0.02136,
+      "turnover_pct": 45.83,
       "margin_ratio": 0.026489,
-      "margin_pct": 99.17,
+      "margin_pct": 98.33,
       "margin_sh": 13166.21,
       "margin_sz": 12664.0,
       "limitup_count": 100,
       "limitup_ratio": 0.018182,
       "limitup_pct": 89.17,
-      "cje_amount": 0,
-      "cje_pct": 0,
+      "cje_amount": 20828.68,
+      "cje_pct": 40.83,
       "return_rate": -0.041175,
       "return_pct": 3.33
+    },
+    {
+      "date": "2026-03-25",
+      "eindex": 30.74,
+      "fear_threshold": 30.37,
+      "greed_threshold": 72.82,
+      "turnover_rate": 0.015043,
+      "turnover_pct": 0.83,
+      "margin_ratio": 0,
+      "margin_pct": 0.83,
+      "margin_sh": 0,
+      "margin_sz": 0,
+      "limitup_count": 73,
+      "limitup_ratio": 0.013273,
+      "limitup_pct": 51.67,
+      "cje_amount": 14669.07,
+      "cje_pct": 0.83,
+      "return_rate": -0.004955,
+      "return_pct": 34.17
     }
   ]
 }
