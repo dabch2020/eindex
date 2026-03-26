@@ -1047,7 +1047,7 @@ def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
         if dt not in margin_data:
             margin_data[dt] = (0, 0, 0)
             warnings.append(f"{dt} 融资余额数据缺失（上交所+深交所）")
-            print(f"  ⚠ {dt} 融资余额获取失败，本次按 0 计算（不写入缓存，下次将重试）")")
+            print(f"  ⚠ {dt} 融资余额获取失败，本次按 0 计算（不写入缓存，下次将重试）")
 
     # 涨停（仅内存补 0，不写缓存）
     for dt in dates:
