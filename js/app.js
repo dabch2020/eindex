@@ -439,6 +439,7 @@ function renderTable() {
             <td style="color:${getIndexColor(d.return_pct || 0)}">${(d.return_pct || 0).toFixed(1)}</td>
             <td${!(d.margin_sh) ? ' style="color:#c084fc"' : ''}>${(d.margin_sh || 0).toFixed(2)}</td>
             <td${!(d.margin_sz) ? ' style="color:#c084fc"' : ''}>${(d.margin_sz || 0).toFixed(2)}</td>
+            <td style="color:${(d.return_rate || 0) >= 0 ? '#ef4444' : '#22c55e'}">${(d.return_rate || 0).toFixed(4)}</td>
             <td>${d.limitup_count || 0}</td>
             <td>${d.limitdown_count || 0}</td>
         </tr>`;
@@ -467,7 +468,7 @@ document.querySelectorAll('th.sortable').forEach(th => {
 // 导出CSV
 function exportCSV() {
     if (!allData.length) return;
-    const headers = ['日期', '情绪指数', '信号', '成交额分位', '融资分位', '涨停分位', '方向分位', '沪融资余额', '深融资余额', '涨停家数', '跌停家数'];
+    const headers = ['日期', '情绪指数', '信号', '成交额分位', '融资分位', '涨停分位', '方向分位', '沪融资余额', '深融资余额', '市场方向', '涨停家数', '跌停家数'];
     const rows = allData.map(d => {
         const sig = getSignal(d);
         return [
@@ -480,6 +481,7 @@ function exportCSV() {
             (d.return_pct || 0).toFixed(1),
             (d.margin_sh || 0).toFixed(2),
             (d.margin_sz || 0).toFixed(2),
+            (d.return_rate || 0).toFixed(4),
             d.limitup_count || 0,
             d.limitdown_count || 0
         ].join(',');
