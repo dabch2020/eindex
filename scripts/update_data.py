@@ -17,7 +17,7 @@ eIndex 数据更新脚本
 import json
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 DATA_DIR = Path(__file__).parent.parent / "data"
@@ -799,9 +799,10 @@ def get_limitup_data(ak, trade_dates, max_days=60):
                     dt = idx.strftime('%Y-%m-%d')
                     if dt not in cached_dates:
                         count = int(row['close'])
+                        ld_count = int(row['open']) if 'open' in row and row['open'] > 0 else 0
                         year = int(dt[:4])
                         total = TOTAL_STOCKS.get(year, 5300)
-                        cache[dt] = {"count": count, "ratio": count / total}
+                        cache[dt] = {"count": count, "ratio": count / total, "limitdown_count": ld_count}
                         new_count += 1
 
                 _save_limitup_cache(cache)
@@ -811,15 +812,15 @@ def get_limitup_data(ak, trade_dates, max_days=60):
         except Exception as e:
             print(f"  mootdx 获取失败: {e}")
 
-    # 转换为 {date: (ratio, count)} 格式
+    # 转换为 {date: (ratio, count, limitdown_count)} 格式
     results = {}
     for dt in trade_dates:
         if dt in cache:
             entry = cache[dt]
             if isinstance(entry, dict):
-                results[dt] = (entry["ratio"], entry["count"])
+                results[dt] = (entry["ratio"], entry["count"], entry.get("limitdown_count", 0))
             else:
-                results[dt] = (float(entry), 0)
+                results[dt] = (float(entry), 0, 0)
 
     print(f"  涨停数据可用: {len(results)} 天")
     return results
@@ -967,6 +968,7 @@ def generate_data():
             "margin_sh": round(m_sh, 2),
             "margin_sz": round(m_sz, 2),
             "limitup_count": l_count,
+            "limitdown_count": ld_count,
             "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
             "cje_amount": round(cje_val, 2) if cje_val is not None else 0,
@@ -977,7 +979,7 @@ def generate_data():
 
     # ── 保存 ──
     output = {
-        "updated_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "updated_at": datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S'),
         "data": results
     }
 
@@ -1099,6 +1101,7 @@ def generate_data_recent(n_days=2):
         l_entry = limitup_data.get(dt)
         l_val = l_entry[0] if l_entry is not None else None
         l_count = l_entry[1] if l_entry is not None else 0
+        ld_count = l_entry[2] if l_entry is not None and len(l_entry) > 2 else 0
         ret_val = return_data.get(dt)
 
         cje_entry = cje_cache.get(dt)
@@ -1154,6 +1157,7 @@ def generate_data_recent(n_days=2):
             "margin_sh": round(m_sh, 2),
             "margin_sz": round(m_sz, 2),
             "limitup_count": l_count,
+            "limitdown_count": ld_count,
             "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
             "cje_amount": round(cje_val, 2) if cje_val is not None else 0,
@@ -1175,7 +1179,7 @@ def generate_data_recent(n_days=2):
         eindex_hist_backfill.append(d['eindex'])
 
     output = {
-        "updated_at": datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        "updated_at": datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S'),
         "warnings": warnings,
         "data": merged
     }
