@@ -543,6 +543,8 @@ def get_margin_data(ak, trade_dates):
     print(f"  缺失: 沪市 {len(missing_sh)} 天, 深市 {len(missing_sz)} 天")
 
     if need_fetch:
+        import socket
+        socket.setdefaulttimeout(15)
         filled_sh = 0
         filled_sz = 0
         for dt in need_fetch:
@@ -560,7 +562,7 @@ def get_margin_data(ak, trade_dates):
                         break
                     except Exception:
                         if attempt < 2:
-                            time.sleep(5)
+                            time.sleep(3)
 
             time.sleep(1)
 
@@ -576,7 +578,7 @@ def get_margin_data(ak, trade_dates):
                         break
                     except Exception:
                         if attempt < 2:
-                            time.sleep(5)
+                            time.sleep(3)
 
             # 增量保存
             if (filled_sh + filled_sz) > 0 and (filled_sh + filled_sz) % 20 == 0:
@@ -603,7 +605,7 @@ def get_margin_data(ak, trade_dates):
         _save_margin_cache(cache)
         print(f"  补漏完成: 沪市+{filled_sh}, 深市+{filled_sz}, 缓存共 {len(cache)} 天")
 
-    # ── 合并计算 ratio（仅使用当天有完整沪深数据的日期） ──
+    # ── 合并计算 ratio ──
     results = {}
     margin_gaps = []
     all_dates = sorted(set(list(sh_margin.keys()) + list(sz_margin.keys())))
@@ -612,14 +614,13 @@ def get_margin_data(ak, trade_dates):
         sh = sh_margin.get(dt)
         sz = sz_margin.get(dt)
 
-        if sh is None and sz is None:
-            margin_gaps.append((dt, "沪市+深市"))
-            continue
-        if sh is None:
-            margin_gaps.append((dt, "沪市"))
-            continue
-        if sz is None:
-            margin_gaps.append((dt, "深市"))
+        if sh is None or sz is None:
+            missing_parts = []
+            if sh is None:
+                missing_parts.append("沪市")
+            if sz is None:
+                missing_parts.append("深市")
+            margin_gaps.append((dt, "+".join(missing_parts)))
             continue
 
         total_yi = sh + sz  # 亿元
@@ -1038,22 +1039,12 @@ def _fill_missing_with_zero(dates, turnover_data, margin_data, limitup_data):
             warnings.append(f"{dt} 换手率数据缺失")
             print(f"  ⚠ {dt} 换手率获取失败，本次按 0 计算（不写入缓存，下次将重试）")
 
-    # 融资余额（仅内存补 0，不写缓存）
-    mc = _load_margin_cache()
+    # 融资余额：缺失时按 0 计算（不写缓存，下次将重试）
     for dt in dates:
         if dt not in margin_data:
             margin_data[dt] = (0, 0, 0)
-            entry = mc.get(dt, {})
-            has_sh = entry.get('sh', 0) > 0
-            has_sz = entry.get('sz', 0) > 0
-            if not has_sh and not has_sz:
-                missing_side = "上交所+深交所"
-            elif not has_sh:
-                missing_side = "上交所"
-            else:
-                missing_side = "深交所"
-            warnings.append(f"{dt} 融资余额数据缺失（{missing_side}）")
-            print(f"  ⚠ {dt} 融资余额获取失败（{missing_side}），本次按 0 计算（不写入缓存，下次将重试）")
+            warnings.append(f"{dt} 融资余额数据缺失（上交所+深交所）")
+            print(f"  ⚠ {dt} 融资余额获取失败，本次按 0 计算（不写入缓存，下次将重试）")")
 
     # 涨停（仅内存补 0，不写缓存）
     for dt in dates:
