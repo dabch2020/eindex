@@ -20,6 +20,9 @@ import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
+# 北京时间（UTC+8），A股所有日期判断统一使用
+_BJT = timezone(timedelta(hours=8))
+
 DATA_DIR = Path(__file__).parent.parent / "data"
 DATA_FILE = DATA_DIR / "eindex_data.json"
 DATA_JS_FILE = DATA_DIR / "eindex_data.js"
@@ -247,7 +250,7 @@ def get_trade_dates(ak=None, start="2016-01-26"):
     优先从本地缓存推导（turn_rate_cache / limitup_cache 的 keys），
     仅当本地无缓存时才调用 akshare API。"""
     print("获取交易日历...")
-    end = datetime.now().strftime("%Y-%m-%d")
+    end = datetime.now(_BJT).strftime("%Y-%m-%d")
 
     # 优先从本地缓存推导交易日历
     cache_dates = set()
@@ -399,7 +402,7 @@ def _fetch_index_amount_em(ak, symbol, max_retries=3):
                     "fields2": "f51,f52,f53,f54,f55,f56,f57,f58,f59,f60,f61",
                     "klt": "101",  # 日K
                     "fqt": "1",
-                    "beg": (datetime.now().replace(day=1) - __import__('datetime').timedelta(days=60)).strftime("%Y%m%d"),
+                    "beg": (datetime.now(_BJT).replace(day=1) - __import__('datetime').timedelta(days=60)).strftime("%Y%m%d"),
                     "end": "20500101",
                 }
                 r = _req.get(url, params=params, timeout=30)
@@ -638,7 +641,7 @@ def get_margin_data(ak, trade_dates):
 
 def _append_margin_gaps_to_log(gaps):
     """将融资余额缺失记录追加到 log.md"""
-    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    now = datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S')
     lines = [f"\n### 融资余额数据缺失记录（{now}）\n\n"]
     lines.append(f"共 {len(gaps)} 天存在缺失，已用前值填充：\n\n")
     lines.append("| 日期 | 缺失市场 |\n")
@@ -1010,7 +1013,7 @@ def generate_data():
 
     # ── 保存 ──
     output = {
-        "updated_at": datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S'),
+        "updated_at": datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S'),
         "data": results
     }
 
@@ -1200,7 +1203,7 @@ def generate_data_recent(n_days=2):
         eindex_hist_backfill.append(d['eindex'])
 
     output = {
-        "updated_at": datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S'),
+        "updated_at": datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S'),
         "warnings": warnings,
         "data": merged
     }
@@ -1230,7 +1233,7 @@ def _bump_version():
     if not INDEX_HTML.exists():
         return
     html = INDEX_HTML.read_text(encoding='utf-8')
-    today = datetime.now().strftime('%Y-%m-%d')
+    today = datetime.now(_BJT).strftime('%Y-%m-%d')
     m = re.search(r'v(\d{4}-\d{2}-\d{2})-(\d{3})', html)
     if m and m.group(1) == today:
         seq = int(m.group(2)) + 1
