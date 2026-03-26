@@ -702,6 +702,16 @@ def _invalidate_recent_caches(dates):
     if lc_changed:
         _save_limitup_cache(lc)
 
+    # 跌停缓存
+    ldc = _load_limitdown_cache()
+    ldc_changed = False
+    for dt in dates:
+        if dt in ldc:
+            del ldc[dt]
+            ldc_changed = True
+    if ldc_changed:
+        _save_limitdown_cache(ldc)
+
     print(f"  已清除 {len(dates)} 天缓存，准备重新获取")
 
 
@@ -724,6 +734,7 @@ def _save_margin_cache(cache):
 
 
 LIMITUP_CACHE = DATA_DIR / "limitup_cache.json"
+LIMITDOWN_CACHE = DATA_DIR / "limitdown_cache.json"
 
 
 def _load_limitup_cache():
@@ -738,6 +749,21 @@ def _save_limitup_cache(cache):
     """保存涨停数据缓存"""
     DATA_DIR.mkdir(exist_ok=True)
     with open(LIMITUP_CACHE, 'w', encoding='utf-8') as f:
+        json.dump(cache, f, ensure_ascii=False, indent=2)
+
+
+def _load_limitdown_cache():
+    """加载跌停数据缓存"""
+    if LIMITDOWN_CACHE.exists():
+        with open(LIMITDOWN_CACHE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return {}
+
+
+def _save_limitdown_cache(cache):
+    """保存跌停数据缓存"""
+    DATA_DIR.mkdir(exist_ok=True)
+    with open(LIMITDOWN_CACHE, 'w', encoding='utf-8') as f:
         json.dump(cache, f, ensure_ascii=False, indent=2)
 
 
@@ -764,6 +790,7 @@ def get_limitup_data(ak, trade_dates, max_days=60):
     socket.setdefaulttimeout(10)
 
     cache = _load_limitup_cache()
+    ld_cache = _load_limitdown_cache()
     cached_dates = set(cache.keys())
     missing = [dt for dt in trade_dates if dt not in cached_dates]
 
@@ -802,11 +829,13 @@ def get_limitup_data(ak, trade_dates, max_days=60):
                         ld_count = int(row['open']) if 'open' in row and row['open'] > 0 else 0
                         year = int(dt[:4])
                         total = TOTAL_STOCKS.get(year, 5300)
-                        cache[dt] = {"count": count, "ratio": count / total, "limitdown_count": ld_count}
+                        cache[dt] = {"count": count, "ratio": count / total}
+                        ld_cache[dt] = {"count": ld_count, "ratio": ld_count / total}
                         new_count += 1
 
                 _save_limitup_cache(cache)
-                print(f"  mootdx 880006 新增 {new_count} 天, 缓存共 {len(cache)} 天")
+                _save_limitdown_cache(ld_cache)
+                print(f"  mootdx 880006 新增 {new_count} 天, 涨停缓存共 {len(cache)} 天, 跌停缓存共 {len(ld_cache)} 天")
             else:
                 print("  mootdx 未获取到数据")
         except Exception as e:
@@ -817,8 +846,9 @@ def get_limitup_data(ak, trade_dates, max_days=60):
     for dt in trade_dates:
         if dt in cache:
             entry = cache[dt]
+            ld_entry = ld_cache.get(dt, {})
             if isinstance(entry, dict):
-                results[dt] = (entry["ratio"], entry["count"], entry.get("limitdown_count", 0))
+                results[dt] = (entry["ratio"], entry["count"], ld_entry.get("count", 0) if isinstance(ld_entry, dict) else 0)
             else:
                 results[dt] = (float(entry), 0, 0)
 
