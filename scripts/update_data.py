@@ -265,18 +265,32 @@ def get_trade_dates(ak=None, start="2016-01-26"):
 
     if cache_dates:
         dates = sorted(d for d in cache_dates if start <= d <= end)
-        if dates:
+        if dates and dates[-1] >= end:
+            # 缓存已覆盖到今天，直接返回
             print(f"  交易日(缓存): {dates[0]} ~ {dates[-1]}，共 {len(dates)} 天")
             return dates
 
-    # 回退：调用 akshare API
+    # 缓存未覆盖今天或无缓存：调用 akshare API 获取最新交易日历
     if ak is None:
         ak = ensure_akshare()
     df = ak.stock_zh_index_daily_em(symbol="sh000001")
     df['date'] = df['date'].astype(str)
-    dates = sorted(d for d in df['date'] if start <= d <= end)
-    print(f"  交易日(API): {dates[0]} ~ {dates[-1]}，共 {len(dates)} 天")
-    return dates
+    api_dates = sorted(d for d in df['date'] if start <= d <= end)
+    # 合并缓存和 API 的日期（API 可能缺少部分历史日，缓存可能缺少最新日）
+    merged = sorted(set(api_dates) | cache_dates & {d for d in cache_dates if start <= d <= end})
+    if merged:
+        print(f"  交易日(API+缓存): {merged[0]} ~ {merged[-1]}，共 {len(merged)} 天")
+        return merged
+    if api_dates:
+        print(f"  交易日(API): {api_dates[0]} ~ {api_dates[-1]}，共 {len(api_dates)} 天")
+        return api_dates
+    # 最后回退到纯缓存
+    if cache_dates:
+        dates = sorted(d for d in cache_dates if start <= d <= end)
+        if dates:
+            print(f"  交易日(缓存): {dates[0]} ~ {dates[-1]}，共 {len(dates)} 天")
+            return dates
+    return []
 
 
 def _load_turnover_cache():
@@ -683,36 +697,42 @@ def _invalidate_recent_caches(dates):
     if cje_changed:
         _save_cje_cache(cje)
 
-    # 融资余额缓存：清除全部（或 0 值条目）
+    # 融资余额缓存：仅清除 sh=0 或 sz=0 的条目，非零数据不删除
     if MARGIN_CACHE.exists():
         with open(MARGIN_CACHE, 'r', encoding='utf-8') as f:
             mc = json.load(f)
         mc_changed = False
         for dt in dates:
             if dt in mc:
-                del mc[dt]
-                mc_changed = True
+                entry = mc[dt]
+                if isinstance(entry, dict) and (entry.get('sh', 0) == 0 or entry.get('sz', 0) == 0):
+                    del mc[dt]
+                    mc_changed = True
         if mc_changed:
             with open(MARGIN_CACHE, 'w', encoding='utf-8') as f:
                 json.dump(mc, f, ensure_ascii=False, indent=2)
 
-    # 涨停缓存
+    # 涨停缓存：仅清除 0 值条目
     lc = _load_limitup_cache()
     lc_changed = False
     for dt in dates:
         if dt in lc:
-            del lc[dt]
-            lc_changed = True
+            entry = lc[dt]
+            if isinstance(entry, dict) and entry.get('count', 0) == 0:
+                del lc[dt]
+                lc_changed = True
     if lc_changed:
         _save_limitup_cache(lc)
 
-    # 跌停缓存
+    # 跌停缓存：仅清除 0 值条目
     ldc = _load_limitdown_cache()
     ldc_changed = False
     for dt in dates:
         if dt in ldc:
-            del ldc[dt]
-            ldc_changed = True
+            entry = ldc[dt]
+            if isinstance(entry, dict) and entry.get('count', 0) == 0:
+                del ldc[dt]
+                ldc_changed = True
     if ldc_changed:
         _save_limitdown_cache(ldc)
 
@@ -946,6 +966,7 @@ def generate_data():
         l_entry = limitup_data.get(dt)
         l_val = l_entry[0] if l_entry is not None else None
         l_count = l_entry[1] if l_entry is not None else 0
+        ld_count = l_entry[2] if l_entry is not None and len(l_entry) > 2 else 0
         ret_val = return_data.get(dt)
 
         cje_entry = cje_cache.get(dt)
@@ -1002,7 +1023,7 @@ def generate_data():
             "margin_sh": round(m_sh, 2),
             "margin_sz": round(m_sz, 2),
             "limitup_count": l_count,
-            "limitdown_count": ld_count,
+            "limitdown_count": ld_count, # type: ignore
             "limitup_ratio": round(l_val, 6) if l_val is not None else 0,
             "limitup_pct": round(l_pct, 2) if l_pct is not None else 0,
             "cje_amount": round(cje_val, 2) if cje_val is not None else 0,
@@ -1021,6 +1042,7 @@ def generate_data():
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     _save_js_version(output)
+    _bump_version()
 
     print(f"\n数据已保存: {DATA_FILE}")
     print(f"共 {len(results)} 条记录")
@@ -1212,6 +1234,7 @@ def generate_data_recent(n_days=2):
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         json.dump(output, f, ensure_ascii=False, indent=2)
     _save_js_version(output)
+    _bump_version()
 
     print(f"\n增量更新完成: 更新/新增 {updated} 天，总计 {len(merged)} 条")
     if merged:

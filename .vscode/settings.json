@@ -120,6 +120,32 @@
             "matchCommandLine": true
         },
         "git pull": true,
-        "git stash": true
+        "git stash": true,
+        "/^tail -5 /Users/gachen2/MyProject/eindex/data/eindex_data\\.json \\| python3 -c \"import sys; data=sys\\.stdin\\.read\\(\\); print\\(data\\[-500:\\]\\)\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 -c \"\nimport json\nwith open\\('/Users/gachen2/MyProject/eindex/data/eindex_data\\.json'\\) as f:\n    d = json\\.load\\(f\\)\nentries = d\\['data'\\]\nprint\\(f'Total entries: \\{len\\(entries\\)\\}'\\)\nprint\\(f'Last 3 dates:'\\)\nfor e in entries\\[-3:\\]:\n    print\\(f\\\\\"  \\{e\\['date'\\]\\}  eindex=\\{e\\['eindex'\\]\\}\\\\\"\\)\nprint\\(f\\\\\"updated_at: \\{d\\['updated_at'\\]\\}\\\\\"\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python3 scripts/update_data\\.py$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nfrom datetime import datetime, timezone, timedelta\n_BJT = timezone\\(timedelta\\(hours=8\\)\\)\nnow = datetime\\.now\\(_BJT\\)\nprint\\(f'北京时间: \\{now\\}'\\)\nprint\\(f'星期: \\{now\\.strftime\\(\\\\\"%A\\\\\"\\)\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\nwith open\\('data/eindex_data\\.json'\\) as f:\n    d = json\\.load\\(f\\)\nentries = d\\['data'\\]\nprint\\(f'Last date: \\{entries\\[-1\\]\\[\\\\\"date\\\\\"\\]\\}'\\)\nprint\\(f'updated_at: \\{d\\[\\\\\"updated_at\\\\\"\\]\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "git checkout": true,
+        "/^cd /Users/gachen2/MyProject/eindex && python3 -c \"\nimport json\nwith open\\('data/eindex_data\\.json'\\) as f:\n    d = json\\.load\\(f\\)\nprint\\(f'Last date: \\{d\\[\\\\\"data\\\\\"\\]\\[-1\\]\\[\\\\\"date\\\\\"\\]\\}'\\)\nprint\\(f'updated_at: \\{d\\[\\\\\"updated_at\\\\\"\\]\\}'\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "git rebase": true
     }
 }
