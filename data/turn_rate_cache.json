@@ -12338,5 +12338,10 @@
     "sh_amount": 7996.9643,
     "sz_amount": 10535.7703,
     "turnover_rate": 0.0187636
+  },
+  "2026-03-30": {
+    "sh_amount": 6266.937,
+    "sz_amount": 8020.5539,
+    "turnover_rate": 0.01446547
   }
 }
