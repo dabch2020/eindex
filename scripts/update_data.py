@@ -12,9 +12,12 @@ eIndex 数据更新脚本
 用法：
   python update_data.py          # 增量更新（只获取新数据）
   python update_data.py --full   # 全量重建（涨停数据获取较慢）
+  python update_data.py --daemon # 后台守护：每个交易日 8:25 和 15:05 自动更新
 """
 
 import json
+import os
+import signal
 import sys
 import time
 from datetime import datetime, timezone, timedelta
@@ -1268,10 +1271,72 @@ def _bump_version():
     print(f"版本号已更新: {new_ver}")
 
 
+# ── 定时更新守护进程 ──────────────────────────────────
+
+# 每日定时更新时刻（北京时间 hour, minute）
+_SCHEDULE_TIMES = [(8, 25), (15, 5)]
+
+
+def _is_trade_day(dt):
+    """简单判断是否为交易日（排除周末）。
+    节假日无法离线判断，但即使触发更新也不会产生新数据，无副作用。"""
+    return dt.weekday() < 5  # Mon=0 ... Fri=4
+
+
+def run_daemon():
+    """后台定时任务：每个交易日 8:25 和 15:05（北京时间）自动更新数据"""
+    schedule_desc = ', '.join(f'{h:02d}:{m:02d}' for h, m in _SCHEDULE_TIMES)
+    print(f"eIndex 定时更新守护进程已启动 (PID {os.getpid()})")
+    print(f"  更新时间: 每个交易日 {schedule_desc} (北京时间)")
+    print(f"  按 Ctrl+C 停止\n")
+
+    running = True
+
+    def _shutdown(signum, frame):
+        nonlocal running
+        print(f"\n[{datetime.now(_BJT).strftime('%H:%M:%S')}] 收到停止信号，正在退出...")
+        running = False
+
+    signal.signal(signal.SIGINT, _shutdown)
+    signal.signal(signal.SIGTERM, _shutdown)
+
+    last_run = None  # (date_str, 'HH:MM') 防止同一时段重复执行
+
+    while running:
+        now = datetime.now(_BJT)
+        today_str = now.strftime('%Y-%m-%d')
+
+        if _is_trade_day(now):
+            for h, m in _SCHEDULE_TIMES:
+                slot_key = (today_str, f"{h:02d}:{m:02d}")
+                # 在目标时刻后 2 分钟窗口内触发
+                if now.hour == h and m <= now.minute < m + 2 and last_run != slot_key:
+                    last_run = slot_key
+                    ts = now.strftime('%Y-%m-%d %H:%M:%S')
+                    print(f"\n{'='*50}")
+                    print(f"[{ts}] 定时更新开始")
+                    print(f"{'='*50}")
+                    try:
+                        generate_data()
+                        print(f"[{datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S')}] 定时更新完成")
+                    except Exception as e:
+                        print(f"[{datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S')}] 定时更新失败: {e}")
+
+        # 每 30 秒检查一次
+        for _ in range(30):
+            if not running:
+                break
+            time.sleep(1)
+
+    print("守护进程已停止")
+
+
 if __name__ == '__main__':
     if '--bump-version' in sys.argv:
         _bump_version()
     elif '--recent' in sys.argv:
         generate_data_recent()
+    elif '--daemon' in sys.argv:
+        run_daemon()
     else:
         generate_data()
