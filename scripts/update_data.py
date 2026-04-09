@@ -1322,7 +1322,7 @@ def _save_js_version(output):
 
 
 def _bump_version():
-    """自动更新 index.html 中的版本号（格式 vYYYY-MM-DD-NNN）"""
+    """自动更新 index.html 中的版本号（格式 vYYYY-MM-DD-NNN）和静态资源缓存参数"""
     import re
     if not INDEX_HTML.exists():
         return
@@ -1335,6 +1335,10 @@ def _bump_version():
         seq = 1
     new_ver = f'v{today}-{seq:03d}'
     html_new = re.sub(r'v\d{4}-\d{2}-\d{2}-\d{3}', new_ver, html)
+    # 更新 CSS/JS 缓存参数
+    cache_bust = datetime.now(_BJT).strftime('%Y%m%d%H%M')
+    html_new = re.sub(r'style\.css\?v=\w+', f'style.css?v={cache_bust}', html_new)
+    html_new = re.sub(r'app\.js\?v=\w+', f'app.js?v={cache_bust}', html_new)
     INDEX_HTML.write_text(html_new, encoding='utf-8')
     print(f"版本号已更新: {new_ver}")
 
