@@ -273,12 +273,37 @@ def get_trade_dates(ak=None, start="2016-01-26"):
             print(f"  交易日(缓存): {dates[0]} ~ {dates[-1]}，共 {len(dates)} 天")
             return dates
 
-    # 缓存未覆盖今天或无缓存：调用 akshare API 获取最新交易日历
-    if ak is None:
-        ak = ensure_akshare()
-    df = ak.stock_zh_index_daily_em(symbol="sh000001")
-    df['date'] = df['date'].astype(str)
-    api_dates = sorted(d for d in df['date'] if start <= d <= end)
+    # 缓存未覆盖今天或无缓存：先尝试腾讯 API，再回退 akshare
+    api_dates = []
+
+    # 方法1：腾讯财经 API（轻量、稳定）
+    try:
+        import requests as _req
+        url = "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get"
+        # 获取最近 250 个交易日即可补全缺失
+        beg = (datetime.now(_BJT) - timedelta(days=400)).strftime("%Y-%m-%d")
+        r = _req.get(url, params={"param": f"sh000001,day,{beg},{end},500,qfq"}, timeout=30)
+        r.raise_for_status()
+        data = r.json()
+        stock = data.get("data", {}).get("sh000001", {})
+        klines = stock.get("qfqday") or stock.get("day") or []
+        if klines:
+            api_dates = sorted(row[0] for row in klines if start <= row[0] <= end)
+            print(f"  交易日(腾讯API): 获取 {len(api_dates)} 天")
+    except Exception as e:
+        print(f"  腾讯交易日历获取失败: {e}")
+
+    # 方法2：akshare（东方财富，全量数据）
+    if not api_dates:
+        try:
+            if ak is None:
+                ak = ensure_akshare()
+            df = ak.stock_zh_index_daily_em(symbol="sh000001")
+            df['date'] = df['date'].astype(str)
+            api_dates = sorted(d for d in df['date'] if start <= d <= end)
+            print(f"  交易日(akshare): 获取 {len(api_dates)} 天")
+        except Exception as e:
+            print(f"  akshare交易日历获取失败: {e}")
     # 合并缓存和 API 的日期（API 可能缺少部分历史日，缓存可能缺少最新日）
     merged = sorted(set(api_dates) | cache_dates & {d for d in cache_dates if start <= d <= end})
     if merged:
@@ -401,12 +426,55 @@ def get_market_return(trade_dates, lookback=RETURN_LOOKBACK):
     return results
 
 
-def _fetch_index_amount_em(ak, symbol, max_retries=3):
-    """获取指数每日成交额，带重试。
-    优先用轻量级日期范围查询，失败时回退到全量查询。"""
+def _fetch_index_amount_qq(symbol, max_retries=3):
+    """通过腾讯财经 API 获取指数日K成交额。
+    返回 {date: amount_yuan} 字典。"""
     import requests as _req
 
-    # 方法1：直接调用东方财富 API（带日期范围，数据量小）
+    qq_symbol = symbol  # 腾讯用 sh/sz 前缀，与本项目一致
+    end_date = datetime.now(_BJT).strftime("%Y-%m-%d")
+    beg_date = (datetime.now(_BJT) - timedelta(days=90)).strftime("%Y-%m-%d")
+
+    for attempt in range(max_retries):
+        try:
+            url = "https://proxy.finance.qq.com/ifzqgtimg/appstock/app/newfqkline/get"
+            params = {
+                "param": f"{qq_symbol},day,{beg_date},{end_date},160,qfq",
+            }
+            r = _req.get(url, params=params, timeout=30)
+            r.raise_for_status()
+            data = r.json()
+            stock_data = data.get("data", {}).get(qq_symbol, {})
+            klines = stock_data.get("qfqday") or stock_data.get("day") or []
+            if klines:
+                result = {}
+                for row in klines:
+                    # 字段: date,open,close,high,low,vol,{},涨跌幅,成交额(万元),...
+                    dt = row[0]
+                    if len(row) >= 9:
+                        amt_wan = float(str(row[8]).replace(",", ""))
+                        result[dt] = amt_wan * 10000  # 万元 → 元
+                if result:
+                    print(f"    {symbol} 腾讯API成功: {len(result)} 天")
+                    return result
+        except Exception as e:
+            if attempt < max_retries - 1:
+                print(f"    {symbol} 腾讯尝试 {attempt+1} 失败: {e}，重试...")
+                time.sleep(3 * (attempt + 1))
+    return None
+
+
+def _fetch_index_amount_em(ak, symbol, max_retries=3):
+    """获取指数每日成交额，带重试。
+    优先腾讯API，失败时回退到东方财富/akshare。"""
+    import requests as _req
+
+    # 方法1：腾讯财经 API（稳定、轻量）
+    qq_result = _fetch_index_amount_qq(symbol, max_retries)
+    if qq_result:
+        return qq_result
+
+    # 方法2：直接调用东方财富 API（带日期范围，数据量小）
     code_map = {"sh000001": "1.000001", "sz399001": "0.399001"}
     secid = code_map.get(symbol)
     if secid:
@@ -441,7 +509,7 @@ def _fetch_index_amount_em(ak, symbol, max_retries=3):
                     print(f"    {symbol} 直连尝试 {attempt+1} 失败: {e}，重试...")
                     time.sleep(3 * (attempt + 1))
 
-    # 方法2：回退到 akshare（获取全量数据，较慢）
+    # 方法3：回退到 akshare（获取全量数据，较慢）
     for attempt in range(max_retries):
         try:
             df = ak.stock_zh_index_daily_em(symbol=symbol)
