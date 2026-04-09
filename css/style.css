@@ -435,6 +435,22 @@ header {
     margin-bottom: 0;
 }
 
+.table-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.table-controls select {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    cursor: pointer;
+}
+
 .export-btn {
     background: var(--accent-blue);
     color: white;

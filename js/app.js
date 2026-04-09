@@ -409,9 +409,73 @@ function renderIndicatorsChart() {
     window.addEventListener('resize', () => chart.resize());
 }
 
+// 获取月度极值数据（近5年每月eIndex最高3天和最低3天）
+function getMonthlyExtremes() {
+    const now = new Date();
+    const fiveYearsAgo = new Date(now.getFullYear() - 5, now.getMonth(), 1);
+    const cutoff = fiveYearsAgo.toISOString().slice(0, 10);
+
+    // 按年月分组
+    const byMonth = {};
+    for (const d of allData) {
+        if (d.date < cutoff) continue;
+        const ym = d.date.slice(0, 7); // YYYY-MM
+        if (!byMonth[ym]) byMonth[ym] = [];
+        byMonth[ym].push(d);
+    }
+
+    const result = [];
+    for (const ym of Object.keys(byMonth).sort().reverse()) {
+        const days = byMonth[ym];
+        const sorted = [...days].sort((a, b) => b.eindex - a.eindex);
+        const top3 = sorted.slice(0, 3);
+        const bottom3 = sorted.slice(-3).reverse();
+        // 合并去重，按日期降序
+        const merged = new Map();
+        for (const d of top3) merged.set(d.date, { ...d, _tag: 'high' });
+        for (const d of bottom3) {
+            if (merged.has(d.date)) {
+                merged.get(d.date)._tag = 'both';
+            } else {
+                merged.set(d.date, { ...d, _tag: 'low' });
+            }
+        }
+        result.push({ month: ym, items: [...merged.values()].sort((a, b) => b.date.localeCompare(a.date)) });
+    }
+    return result;
+}
+
 // 渲染表格
 function renderTable() {
     const tbody = document.getElementById('tableBody');
+    const mode = document.getElementById('tableViewMode').value;
+
+    if (mode === 'monthly') {
+        renderMonthlyTable(tbody);
+    } else {
+        renderRecentTable(tbody);
+    }
+}
+
+function renderRowHtml(d, tagHtml) {
+    const sig = getSignal(d);
+    const cjeAmount = (d.cje_amount || 0);
+    const cjeStr = cjeAmount > 0 ? cjeAmount.toFixed(0) : '-';
+    return `<tr>
+        <td>${d.date}${tagHtml || ''}</td>
+        <td style="color:${getIndexColor(d.eindex)};font-weight:700">${d.eindex.toFixed(1)}</td>
+        <td class="signal-cell ${sig.cls}">${sig.icon} ${sig.text}</td>
+        <td>${cjeStr}</td>
+        <td style="color:${getIndexColor(d.cje_pct || 0)}">${(d.cje_pct || 0).toFixed(1)}</td>
+        <td style="color:${getIndexColor(d.margin_pct)}">${d.margin_pct.toFixed(1)}</td>
+        <td style="color:${getIndexColor(d.limitup_pct)}">${d.limitup_pct.toFixed(1)}</td>
+        <td style="color:${getIndexColor(d.return_pct || 0)}">${(d.return_pct || 0).toFixed(1)}</td>
+        <td>${d.limitup_count || 0}</td>
+        <td>${d.limitdown_count || 0}</td>
+    </tr>`;
+}
+
+function renderRecentTable(tbody) {
     const sorted = [...allData].sort((a, b) => {
         let va = a[sortField], vb = b[sortField];
         if (sortField === 'date') {
@@ -424,26 +488,24 @@ function renderTable() {
         return sortAsc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
     });
 
-    // 显示最近30条
-    const recent = sorted.slice(0, 30);
+    const recent = sorted.slice(0, 15);
+    tbody.innerHTML = recent.map(d => renderRowHtml(d, '')).join('');
+}
 
-    tbody.innerHTML = recent.map(d => {
-        const sig = getSignal(d);
-        return `<tr>
-            <td>${d.date}</td>
-            <td style="color:${getIndexColor(d.eindex)};font-weight:700">${d.eindex.toFixed(1)}</td>
-            <td class="signal-cell ${sig.cls}">${sig.icon} ${sig.text}</td>
-            <td style="color:${getIndexColor(d.cje_pct || 0)}">${(d.cje_pct || 0).toFixed(1)}</td>
-            <td style="color:${getIndexColor(d.margin_pct)}">${d.margin_pct.toFixed(1)}</td>
-            <td style="color:${getIndexColor(d.limitup_pct)}">${d.limitup_pct.toFixed(1)}</td>
-            <td style="color:${getIndexColor(d.return_pct || 0)}">${(d.return_pct || 0).toFixed(1)}</td>
-            <td${!(d.margin_sh) ? ' style="color:#c084fc"' : ''}>${(d.margin_sh || 0).toFixed(2)}</td>
-            <td${!(d.margin_sz) ? ' style="color:#c084fc"' : ''}>${(d.margin_sz || 0).toFixed(2)}</td>
-            <td style="color:${(d.return_rate || 0) >= 0 ? '#ef4444' : '#22c55e'}">${(d.return_rate || 0).toFixed(4)}</td>
-            <td>${d.limitup_count || 0}</td>
-            <td>${d.limitdown_count || 0}</td>
-        </tr>`;
-    }).join('');
+function renderMonthlyTable(tbody) {
+    const extremes = getMonthlyExtremes();
+    let html = '';
+    for (const group of extremes) {
+        html += `<tr class="month-separator"><td colspan="10" style="background:var(--card-bg);font-weight:700;padding:8px 12px;color:var(--text-primary);border-bottom:2px solid var(--border-color)">${group.month}</td></tr>`;
+        for (const d of group.items) {
+            let tag = '';
+            if (d._tag === 'high') tag = ' <span style="color:#ff5252;font-size:0.75em">▲高</span>';
+            else if (d._tag === 'low') tag = ' <span style="color:#00d4aa;font-size:0.75em">▼低</span>';
+            else if (d._tag === 'both') tag = ' <span style="color:#ffc107;font-size:0.75em">◆</span>';
+            html += renderRowHtml(d, tag);
+        }
+    }
+    tbody.innerHTML = html;
 }
 
 // 表格排序
@@ -468,20 +530,18 @@ document.querySelectorAll('th.sortable').forEach(th => {
 // 导出CSV
 function exportCSV() {
     if (!allData.length) return;
-    const headers = ['日期', '情绪指数', '信号', '成交额分位', '融资分位', '涨停分位', '方向分位', '沪融资余额', '深融资余额', '市场方向', '涨停家数', '跌停家数'];
+    const headers = ['日期', '情绪指数', '信号', '成交额(亿)', '成交额分位', '融资分位', '涨停分位', '方向分位', '涨停家数', '跌停家数'];
     const rows = allData.map(d => {
         const sig = getSignal(d);
         return [
             d.date,
             d.eindex.toFixed(1),
             sig.text,
+            (d.cje_amount || 0).toFixed(0),
             (d.cje_pct || 0).toFixed(1),
             d.margin_pct.toFixed(1),
             d.limitup_pct.toFixed(1),
             (d.return_pct || 0).toFixed(1),
-            (d.margin_sh || 0).toFixed(2),
-            (d.margin_sz || 0).toFixed(2),
-            (d.return_rate || 0).toFixed(4),
             d.limitup_count || 0,
             d.limitdown_count || 0
         ].join(',');

@@ -13,7 +13,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="header-row">
-                    <h1><span class="logo-icon">📊</span> eIndex <span class="subtitle">A股情绪指数</span> <span class="version">v2026-04-09-006</span></h1>
+                    <h1><span class="logo-icon">📊</span> eIndex <span class="subtitle">A股情绪指数</span> <span class="version">v2026-04-09-008</span></h1>
                     <button class="btn-refresh" id="btnRefresh">
                         <span class="icon">&#x21bb;</span> 刷新
                     </button>
@@ -97,9 +97,15 @@
         <section class="table-section">
             <div class="table-header">
                 <h2 class="section-title">历史数据明细</h2>
-                <button class="export-btn" id="exportBtn" onclick="exportCSV()">
-                    📥 导出CSV
-                </button>
+                <div class="table-controls">
+                    <select id="tableViewMode" onchange="renderTable()">
+                        <option value="recent">最近15个交易日</option>
+                        <option value="monthly">月度极值（近5年）</option>
+                    </select>
+                    <button class="export-btn" id="exportBtn" onclick="exportCSV()">
+                        📥 导出CSV
+                    </button>
+                </div>
             </div>
             <div class="table-wrapper">
                 <table id="dataTable">
@@ -108,13 +114,11 @@
                             <th data-sort="date" class="sortable">日期 ▼</th>
                             <th data-sort="eindex" class="sortable">情绪指数</th>
                             <th data-sort="signal" class="sortable">信号</th>
+                            <th data-sort="cje_amount" class="sortable">成交额(亿)</th>
                             <th data-sort="cje_pct" class="sortable">成交额分位</th>
                             <th data-sort="margin_pct" class="sortable">融资分位</th>
                             <th data-sort="limitup_pct" class="sortable">涨停分位</th>
                             <th data-sort="return_pct" class="sortable">方向分位</th>
-                            <th data-sort="margin_sh" class="sortable">沪融资余额</th>
-                            <th data-sort="margin_sz" class="sortable">深融资余额</th>
-                            <th data-sort="return_rate" class="sortable">市场方向</th>
                             <th data-sort="limitup_count" class="sortable">涨停家数</th>
                             <th data-sort="limitdown_count" class="sortable">跌停家数</th>
                         </tr>
