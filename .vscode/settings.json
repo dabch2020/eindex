@@ -146,6 +146,18 @@
             "approve": true,
             "matchCommandLine": true
         },
-        "git rebase": true
+        "git rebase": true,
+        "/^cd /Users/gachen2/MyProject/eindex && python -c \"\nimport json\nwith open\\('data/eindex_data\\.json'\\) as f:\n    d = json\\.load\\(f\\)\nfor rec in d\\['data'\\]:\n    if rec\\['date'\\] >= '2026-04-06':\n        print\\(rec\\['date'\\], 'cje:', rec\\.get\\('cje_amount'\\), 'eindex:', rec\\.get\\('eindex'\\)\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^python scripts/update_data\\.py 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cd /Users/gachen2/MyProject/eindex && python -c \"\nimport json\nwith open\\('data/eindex_data\\.json'\\) as f:\n    d = json\\.load\\(f\\)\nfor rec in d\\['data'\\]:\n    if rec\\['date'\\] >= '2026-04-07':\n        print\\(rec\\['date'\\], 'cje:', rec\\.get\\('cje_amount'\\), 'eindex:', rec\\.get\\('eindex'\\)\\)\n\"$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     }
 }
