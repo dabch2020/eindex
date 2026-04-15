@@ -764,42 +764,36 @@ def _invalidate_recent_caches(dates):
     if cje_changed:
         _save_cje_cache(cje)
 
-    # 融资余额缓存：仅清除 sh=0 或 sz=0 的条目，非零数据不删除
+    # 融资余额缓存：无条件清除
     if MARGIN_CACHE.exists():
         with open(MARGIN_CACHE, 'r', encoding='utf-8') as f:
             mc = json.load(f)
         mc_changed = False
         for dt in dates:
             if dt in mc:
-                entry = mc[dt]
-                if isinstance(entry, dict) and (entry.get('sh', 0) == 0 or entry.get('sz', 0) == 0):
-                    del mc[dt]
-                    mc_changed = True
+                del mc[dt]
+                mc_changed = True
         if mc_changed:
             with open(MARGIN_CACHE, 'w', encoding='utf-8') as f:
                 json.dump(mc, f, ensure_ascii=False, indent=2)
 
-    # 涨停缓存：仅清除 0 值条目
+    # 涨停缓存：无条件清除
     lc = _load_limitup_cache()
     lc_changed = False
     for dt in dates:
         if dt in lc:
-            entry = lc[dt]
-            if isinstance(entry, dict) and entry.get('count', 0) == 0:
-                del lc[dt]
-                lc_changed = True
+            del lc[dt]
+            lc_changed = True
     if lc_changed:
         _save_limitup_cache(lc)
 
-    # 跌停缓存：仅清除 0 值条目
+    # 跌停缓存：无条件清除
     ldc = _load_limitdown_cache()
     ldc_changed = False
     for dt in dates:
         if dt in ldc:
-            entry = ldc[dt]
-            if isinstance(entry, dict) and entry.get('count', 0) == 0:
-                del ldc[dt]
-                ldc_changed = True
+            del ldc[dt]
+            ldc_changed = True
     if ldc_changed:
         _save_limitdown_cache(ldc)
 
