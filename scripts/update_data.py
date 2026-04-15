@@ -1449,7 +1449,7 @@ def run_daemon():
             print(f"[{ts}] 网页触发即时更新")
             print(f"{'='*50}")
             try:
-                generate_data()
+                generate_data_recent()
                 _git_push()
                 print(f"[{datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S')}] 即时更新完成")
             except Exception as e:
