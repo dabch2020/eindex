@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-04-15 16:59:54",
+  "updated_at": "2026-04-15 17:06:58",
   "warnings": [
     "2026-04-15 融资余额数据缺失（上交所+深交所）"
   ],
@@ -49569,8 +49569,8 @@
       "eindex": 65.0,
       "fear_threshold": 28.8,
       "greed_threshold": 72.82,
-      "turnover_rate": 0.024146,
-      "turnover_pct": 75.83,
+      "turnover_rate": 0.023256,
+      "turnover_pct": 69.17,
       "margin_ratio": 0.025507,
       "margin_pct": 35.83,
       "margin_sh": 13260.01,
@@ -49586,11 +49586,11 @@
     },
     {
       "date": "2026-04-15",
-      "eindex": 36.99,
+      "eindex": 47.73,
       "fear_threshold": 28.8,
       "greed_threshold": 72.82,
-      "turnover_rate": 0.018899,
-      "turnover_pct": 20.0,
+      "turnover_rate": 0.023623,
+      "turnover_pct": 71.67,
       "margin_ratio": 0,
       "margin_pct": 0.83,
       "margin_sh": 0,
@@ -49599,8 +49599,8 @@
       "limitdown_count": 10,
       "limitup_ratio": 0.010909,
       "limitup_pct": 23.33,
-      "cje_amount": 18657.44,
-      "cje_pct": 23.33,
+      "cje_amount": 24152.45,
+      "cje_pct": 71.67,
       "return_rate": 0.010342,
       "return_pct": 61.67
     }

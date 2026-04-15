@@ -741,30 +741,26 @@ def _append_margin_gaps_to_log(gaps):
 
 def _invalidate_recent_caches(dates):
     """清除指定日期的所有缓存，强制重新获取。
-    换手率/成交额缓存：仅清除 0 值条目（正常数据不会变，且重算需要 ltsz_cache）。
+    换手率/成交额缓存：无条件清除（盘中数据到收盘后会变化）。
     融资余额/涨停缓存：全部清除（强制重新获取）。"""
 
-    # 换手率缓存：仅清除 0 值条目
+    # 换手率缓存：无条件清除
     tc = _load_turnover_cache()
     tc_changed = False
     for dt in dates:
         if dt in tc:
-            entry = tc[dt]
-            if isinstance(entry, dict) and entry.get('turnover_rate', 0) == 0:
-                del tc[dt]
-                tc_changed = True
+            del tc[dt]
+            tc_changed = True
     if tc_changed:
         _save_turnover_cache(tc)
 
-    # 成交额缓存：仅清除 0 值条目
+    # 成交额缓存：无条件清除
     cje = _load_cje_cache()
     cje_changed = False
     for dt in dates:
         if dt in cje:
-            entry = cje[dt]
-            if isinstance(entry, dict) and entry.get('sh', 0) == 0 and entry.get('sz', 0) == 0:
-                del cje[dt]
-                cje_changed = True
+            del cje[dt]
+            cje_changed = True
     if cje_changed:
         _save_cje_cache(cje)
 
