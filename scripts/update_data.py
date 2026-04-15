@@ -1355,8 +1355,35 @@ def _is_trade_day(dt):
     return dt.weekday() < 5  # Mon=0 ... Fri=4
 
 
+def _git_push():
+    """自动 commit 并 push 数据更新到 GitHub"""
+    import subprocess
+    repo_dir = Path(__file__).parent.parent
+    try:
+        subprocess.run(['git', 'add', '-A'], cwd=repo_dir, check=True,
+                       capture_output=True, timeout=30)
+        result = subprocess.run(['git', 'diff', '--staged', '--quiet'], cwd=repo_dir,
+                                capture_output=True, timeout=10)
+        if result.returncode == 0:
+            print("  无变更，跳过 push")
+            return
+        ts = datetime.now(_BJT).strftime('%Y-%m-%d %H:%M')
+        subprocess.run(['git', 'commit', '-m', f'chore: auto update {ts}'],
+                       cwd=repo_dir, check=True, capture_output=True, timeout=30)
+        # pull --rebase 防止冲突
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'],
+                       cwd=repo_dir, capture_output=True, timeout=60)
+        subprocess.run(['git', 'push', 'origin', 'main'],
+                       cwd=repo_dir, check=True, capture_output=True, timeout=60)
+        print(f"  git push 成功")
+    except subprocess.TimeoutExpired:
+        print(f"  git push 超时")
+    except Exception as e:
+        print(f"  git push 失败: {e}")
+
+
 def run_daemon():
-    """后台定时任务：每个交易日 8:25 和 15:05（北京时间）自动更新数据"""
+    """后台定时任务：每个交易日定时自动更新数据并推送到 GitHub"""
     schedule_desc = ', '.join(f'{h:02d}:{m:02d}' for h, m in _SCHEDULE_TIMES)
     print(f"eIndex 定时更新守护进程已启动 (PID {os.getpid()})")
     print(f"  更新时间: 每个交易日 {schedule_desc} (北京时间)")
@@ -1390,6 +1417,7 @@ def run_daemon():
                     print(f"{'='*50}")
                     try:
                         generate_data()
+                        _git_push()
                         print(f"[{datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S')}] 定时更新完成")
                     except Exception as e:
                         print(f"[{datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S')}] 定时更新失败: {e}")
