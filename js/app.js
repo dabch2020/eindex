@@ -567,8 +567,9 @@ loadData();
     var _b='dNQq2x013K8F_sH4Fqnd';
     var _c='JtVwfBfOEgy9pxWUQGMmU';
     var _d='VeDdNx7E2QrLeqCZ5OD46NQhjvEPn5Q';
-    var DISPATCH_TOKEN = _a+_b+_c+_d;
+    var TOKEN = _a+_b+_c+_d;
     var REPO = 'dabch2020/eindex';
+    var API_BASE = 'https://api.github.com/repos/' + REPO;
     var PAGES_DATA_URL = 'https://dabch2020.github.io/eindex/data/eindex_data.json';
     var btn = document.getElementById('btnRefresh');
     var descEl = document.querySelector('.header-desc');
@@ -576,19 +577,32 @@ loadData();
 
     btn.onclick = function() {
         btn.classList.add('loading');
-        descEl.textContent = '正在触发后台更新（最近2个交易日），请稍候约1-2分钟…';
+        descEl.textContent = '正在触发后台更新，请稍候…';
 
-        fetch('https://api.github.com/repos/' + REPO + '/dispatches', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + DISPATCH_TOKEN,
-                'Accept': 'application/vnd.github.v3+json'
-            },
-            body: JSON.stringify({ event_type: 'refresh' })
+        // 获取 .refresh 文件当前 SHA（如果存在）
+        fetch(API_BASE + '/contents/.refresh', {
+            headers: { 'Authorization': 'Bearer ' + TOKEN }
+        })
+        .then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(existing) {
+            var body = {
+                message: 'trigger refresh',
+                content: btoa(new Date().toISOString())
+            };
+            if (existing && existing.sha) body.sha = existing.sha;
+
+            return fetch(API_BASE + '/contents/.refresh', {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + TOKEN,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            });
         })
         .then(function(r) {
-            if (r.status === 204 || r.status === 200) {
-                descEl.textContent = '✅ 已触发更新，正在等待数据刷新…';
+            if (r.ok) {
+                descEl.textContent = '✅ 已触发更新，等待本地 daemon 处理…';
                 pollForUpdate();
             } else {
                 descEl.textContent = '❌ 触发失败 (HTTP ' + r.status + ')';
@@ -608,7 +622,7 @@ loadData();
         var maxAttempts = 36;  // 最多等 3 分钟 (36 x 5s)
         var timer = setInterval(function() {
             attempts++;
-            descEl.textContent = '✅ 已触发更新，正在等待数据刷新… (' + (attempts * 5) + 's)';
+            descEl.textContent = '✅ 等待 daemon 更新… (' + (attempts * 5) + 's)';
             fetch(dataUrl + '?_t=' + Date.now())
                 .then(function(r) { return r.json(); })
                 .then(function(json) {
@@ -622,7 +636,7 @@ loadData();
                         btn.classList.remove('loading');
                     } else if (attempts >= maxAttempts) {
                         clearInterval(timer);
-                        descEl.textContent = '✅ 更新已触发，请稍后手动刷新页面';
+                        descEl.textContent = '⚠ daemon 可能未运行，请稍后重试';
                         btn.classList.remove('loading');
                     }
                 })

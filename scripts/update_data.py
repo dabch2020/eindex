@@ -1382,11 +1382,43 @@ def _git_push():
         print(f"  git push 失败: {e}")
 
 
+def _read_local_refresh():
+    """读取本地 .refresh 文件内容"""
+    refresh_file = Path(__file__).parent.parent / '.refresh'
+    if refresh_file.exists():
+        return refresh_file.read_text().strip()
+    return ''
+
+
+def _check_web_trigger(last_seen):
+    """通过 git fetch 检测远程 .refresh 文件是否更新，返回新内容或 None"""
+    import subprocess
+    repo_dir = Path(__file__).parent.parent
+    try:
+        subprocess.run(['git', 'fetch', 'origin', 'main', '--quiet'],
+                       cwd=repo_dir, capture_output=True, timeout=15)
+        result = subprocess.run(
+            ['git', 'show', 'origin/main:.refresh'],
+            cwd=repo_dir, capture_output=True, timeout=5, text=True
+        )
+        if result.returncode == 0:
+            content = result.stdout.strip()
+            if content and content != last_seen:
+                # 拉取远程变更
+                subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'],
+                               cwd=repo_dir, capture_output=True, timeout=30)
+                return content
+    except Exception:
+        pass
+    return None
+
+
 def run_daemon():
     """后台定时任务：每个交易日定时自动更新数据并推送到 GitHub"""
     schedule_desc = ', '.join(f'{h:02d}:{m:02d}' for h, m in _SCHEDULE_TIMES)
     print(f"eIndex 定时更新守护进程已启动 (PID {os.getpid()})")
     print(f"  更新时间: 每个交易日 {schedule_desc} (北京时间)")
+    print(f"  支持网页刷新按钮即时触发")
     print(f"  按 Ctrl+C 停止\n")
 
     running = True
@@ -1400,12 +1432,32 @@ def run_daemon():
     signal.signal(signal.SIGTERM, _shutdown)
 
     last_run = None  # (date_str, 'HH:MM') 防止同一时段重复执行
+    last_refresh = _read_local_refresh()  # 网页刷新触发检测基准
 
     while running:
         now = datetime.now(_BJT)
         today_str = now.strftime('%Y-%m-%d')
 
-        if _is_trade_day(now):
+        triggered = False
+
+        # 检测网页刷新按钮触发
+        new_refresh = _check_web_trigger(last_refresh)
+        if new_refresh:
+            last_refresh = new_refresh
+            ts = now.strftime('%Y-%m-%d %H:%M:%S')
+            print(f"\n{'='*50}")
+            print(f"[{ts}] 网页触发即时更新")
+            print(f"{'='*50}")
+            try:
+                generate_data()
+                _git_push()
+                print(f"[{datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S')}] 即时更新完成")
+            except Exception as e:
+                print(f"[{datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S')}] 即时更新失败: {e}")
+            triggered = True
+
+        # 定时更新
+        if not triggered and _is_trade_day(now):
             for h, m in _SCHEDULE_TIMES:
                 slot_key = (today_str, f"{h:02d}:{m:02d}")
                 # 在目标时刻后 2 分钟窗口内触发
