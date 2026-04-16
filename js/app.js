@@ -616,6 +616,13 @@ loadData();
     };
 
     function pollForUpdate() {
+        // 使用触发前1分钟作为基准，避免时钟偏差导致误判
+        var triggerTime = (function() {
+            var d = new Date(Date.now() - 60000);
+            var p = function(n) { return n < 10 ? '0' + n : '' + n; };
+            return d.getFullYear() + '-' + p(d.getMonth()+1) + '-' + p(d.getDate()) + ' ' +
+                   p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
+        })();
         var originalUpdated = window.__EINDEX_DATA__ ? window.__EINDEX_DATA__.updated_at : '';
         var dataUrl = isLocal ? PAGES_DATA_URL : 'data/eindex_data.json';
         var attempts = 0;
@@ -626,7 +633,8 @@ loadData();
             fetch(dataUrl + '?_t=' + Date.now())
                 .then(function(r) { return r.json(); })
                 .then(function(json) {
-                    if (json.updated_at !== originalUpdated) {
+                    // 要求 updated_at 晚于触发时间（防止 CDN 延迟返回旧更新）
+                    if (json.updated_at && json.updated_at !== originalUpdated && json.updated_at > triggerTime) {
                         clearInterval(timer);
                         allData = json.data;
                         dataWarnings = json.warnings || [];
