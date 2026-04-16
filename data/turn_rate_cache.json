@@ -12384,11 +12384,6 @@
     "sz_amount": 13852.8855,
     "turnover_rate": 0.02325566
   },
-  "2026-04-15": {
-    "sh_amount": 10288.5187,
-    "sz_amount": 13863.9293,
-    "turnover_rate": 0.02362331
-  },
   "2026-04-09": {
     "sh_amount": 9024.8184,
     "sz_amount": 12315.943,
@@ -12399,9 +12394,14 @@
     "sz_amount": 13672.0459,
     "turnover_rate": 0.02297806
   },
+  "2026-04-15": {
+    "sh_amount": 10288.5187,
+    "sz_amount": 13863.9293,
+    "turnover_rate": 0.02362331
+  },
   "2026-04-16": {
-    "sh_amount": 3015.6258,
-    "sz_amount": 4381.0948,
-    "turnover_rate": 0.00723467
+    "sh_amount": 9074.2239,
+    "sz_amount": 12665.3528,
+    "turnover_rate": 0.0212633
   }
 }
