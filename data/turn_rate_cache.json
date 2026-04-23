@@ -12379,11 +12379,6 @@
     "sz_amount": 12309.3186,
     "turnover_rate": 0.02121565
   },
-  "2026-04-14": {
-    "sh_amount": 9984.3513,
-    "sz_amount": 13852.8855,
-    "turnover_rate": 0.02325566
-  },
   "2026-04-09": {
     "sh_amount": 9024.8184,
     "sz_amount": 12315.943,
@@ -12393,6 +12388,11 @@
     "sh_amount": 9556.6411,
     "sz_amount": 13672.0459,
     "turnover_rate": 0.02297806
+  },
+  "2026-04-14": {
+    "sh_amount": 9984.3513,
+    "sz_amount": 13852.8855,
+    "turnover_rate": 0.02325566
   },
   "2026-04-15": {
     "sh_amount": 10288.5187,
@@ -12405,14 +12405,14 @@
     "turnover_rate": 0.02264637
   },
   "2026-04-17": {
-    "sh_amount": 3446.7608,
-    "sz_amount": 5067.9361,
-    "turnover_rate": 0.00823452
+    "sh_amount": 10135.2066,
+    "sz_amount": 14120.6303,
+    "turnover_rate": 0.02343396
   },
   "2026-04-20": {
-    "sh_amount": 3717.5605,
-    "sz_amount": 5123.8699,
-    "turnover_rate": 0.00854185
+    "sh_amount": 10845.7801,
+    "sz_amount": 14941.9208,
+    "turnover_rate": 0.02472839
   },
   "2026-04-21": {
     "sh_amount": 10333.4902,
@@ -12422,6 +12422,11 @@
   "2026-04-22": {
     "sh_amount": 10936.2589,
     "sz_amount": 14661.5922,
-    "turnover_rate": 0.02453718
+    "turnover_rate": 0.02436377
+  },
+  "2026-04-23": {
+    "sh_amount": 8247.366,
+    "sz_amount": 10460.0854,
+    "turnover_rate": 0.01780556
   }
 }

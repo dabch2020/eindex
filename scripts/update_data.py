@@ -1458,7 +1458,7 @@ def run_daemon():
                     print(f"[{ts}] 定时更新开始")
                     print(f"{'='*50}")
                     try:
-                        generate_data()
+                        generate_data_recent()
                         _git_push()
                         print(f"[{datetime.now(_BJT).strftime('%Y-%m-%d %H:%M:%S')}] 定时更新完成")
                     except Exception as e:
@@ -1481,4 +1481,4 @@ if __name__ == '__main__':
     elif '--daemon' in sys.argv:
         run_daemon()
     else:
-        generate_data()
+        generate_data()  # 支持 --full 参数进行全量重算
