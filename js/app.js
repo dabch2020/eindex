@@ -563,11 +563,7 @@ loadData();
 
 // ===== 刷新按钮 =====
 (function() {
-    var _a='github_pat_11AP5KOUY0';
-    var _b='dNQq2x013K8F_sH4Fqnd';
-    var _c='JtVwfBfOEgy9pxWUQGMmU';
-    var _d='VeDdNx7E2QrLeqCZ5OD46NQhjvEPn5Q';
-    var TOKEN = _a+_b+_c+_d;
+    var TOKEN_KEY = 'eindex_refresh_token';
     var REPO = 'dabch2020/eindex';
     var API_BASE = 'https://api.github.com/repos/' + REPO;
     var PAGES_DATA_URL = 'https://dabch2020.github.io/eindex/data/eindex_data.json';
@@ -575,13 +571,34 @@ loadData();
     var descEl = document.querySelector('.header-desc');
     var isLocal = location.protocol === 'file:';
 
+    function getToken() {
+        var token = localStorage.getItem(TOKEN_KEY) || '';
+        if (token) return token;
+        var input = window.prompt('请输入 GitHub PAT（仅保存在当前浏览器，用于触发更新）');
+        if (!input) return '';
+        token = input.trim();
+        if (!token) return '';
+        localStorage.setItem(TOKEN_KEY, token);
+        return token;
+    }
+
+    function setStatus(text) {
+        descEl.textContent = text;
+    }
+
     btn.onclick = function() {
+        var token = getToken();
+        if (!token) {
+            setStatus('⚠ 未提供 PAT，已取消触发');
+            return;
+        }
+
         btn.classList.add('loading');
-        descEl.textContent = '正在触发后台更新，请稍候…';
+        setStatus('正在触发后台更新，请稍候…');
 
         // 获取 .refresh 文件当前 SHA（如果存在）
         fetch(API_BASE + '/contents/.refresh', {
-            headers: { 'Authorization': 'Bearer ' + TOKEN }
+            headers: { 'Authorization': 'Bearer ' + token }
         })
         .then(function(r) { return r.ok ? r.json() : null; })
         .then(function(existing) {
@@ -594,7 +611,7 @@ loadData();
             return fetch(API_BASE + '/contents/.refresh', {
                 method: 'PUT',
                 headers: {
-                    'Authorization': 'Bearer ' + TOKEN,
+                    'Authorization': 'Bearer ' + token,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(body)
@@ -602,15 +619,19 @@ loadData();
         })
         .then(function(r) {
             if (r.ok) {
-                descEl.textContent = '✅ 已触发更新，等待本地 daemon 处理…';
+                setStatus('✅ 已触发更新，等待本地 daemon 处理…');
                 pollForUpdate();
+            } else if (r.status === 401 || r.status === 403) {
+                localStorage.removeItem(TOKEN_KEY);
+                setStatus('❌ PAT 无效或无权限（HTTP ' + r.status + '），请重新点击“刷新”并输入新 PAT');
+                btn.classList.remove('loading');
             } else {
-                descEl.textContent = '❌ 触发失败 (HTTP ' + r.status + ')';
+                setStatus('❌ 触发失败 (HTTP ' + r.status + ')');
                 btn.classList.remove('loading');
             }
         })
         .catch(function() {
-            descEl.textContent = '❌ 网络错误，请稍后重试';
+            setStatus('❌ 网络错误，请稍后重试');
             btn.classList.remove('loading');
         });
     };
@@ -629,7 +650,7 @@ loadData();
         var maxAttempts = 36;  // 最多等 3 分钟 (36 x 5s)
         var timer = setInterval(function() {
             attempts++;
-            descEl.textContent = '✅ 等待 daemon 更新… (' + (attempts * 5) + 's)';
+            setStatus('✅ 等待 daemon 更新… (' + (attempts * 5) + 's)');
             fetch(dataUrl + '?_t=' + Date.now())
                 .then(function(r) { return r.json(); })
                 .then(function(json) {
@@ -640,11 +661,11 @@ loadData();
                         dataWarnings = json.warnings || [];
                         backfillThresholds(allData);
                         renderAll();
-                        descEl.textContent = '✅ 数据已更新（' + json.updated_at + '）';
+                        setStatus('✅ 数据已更新（' + json.updated_at + '）');
                         btn.classList.remove('loading');
                     } else if (attempts >= maxAttempts) {
                         clearInterval(timer);
-                        descEl.textContent = '⚠ daemon 可能未运行，请稍后重试';
+                        setStatus('⚠ daemon 可能未运行，请稍后重试');
                         btn.classList.remove('loading');
                     }
                 })
