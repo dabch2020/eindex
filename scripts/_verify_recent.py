@@ -38,7 +38,7 @@ import pandas as pd
 
 all_mootdx = []
 for start in range(0, 1600, 800):
-    data = client.index(symbol='880006', frequency=9, start=start, offset=800)
+    data = client.index(symbol='880006', frequency=9, start=start, offset=800) # type: ignore
     if data is None or len(data) == 0:
         break
     all_mootdx.append(data)

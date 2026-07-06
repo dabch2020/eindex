@@ -158,6 +158,7 @@
         "/^cd /Users/gachen2/MyProject/eindex && python -c \"\nimport json\nwith open\\('data/eindex_data\\.json'\\) as f:\n    d = json\\.load\\(f\\)\nfor rec in d\\['data'\\]:\n    if rec\\['date'\\] >= '2026-04-07':\n        print\\(rec\\['date'\\], 'cje:', rec\\.get\\('cje_amount'\\), 'eindex:', rec\\.get\\('eindex'\\)\\)\n\"$/": {
             "approve": true,
             "matchCommandLine": true
-        }
+        },
+        "true": true
     }
 }
