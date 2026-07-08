@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-08 11:01:31",
+  "updated_at": "2026-07-08 11:36:17",
   "warnings": [
     "2026-07-08 融资余额数据缺失（上交所+深交所）"
   ],
@@ -50706,21 +50706,21 @@
     },
     {
       "date": "2026-07-08",
-      "eindex": 2.08,
+      "eindex": 4.4,
       "fear_threshold": 36.34,
       "greed_threshold": 79.17,
-      "turnover_rate": 0.014602,
-      "turnover_pct": 0.83,
+      "turnover_rate": 0.016662,
+      "turnover_pct": 1.67,
       "margin_ratio": 0,
       "margin_pct": 0.83,
       "margin_sh": 0,
       "margin_sz": 0,
-      "limitup_count": 32,
-      "limitdown_count": 13,
-      "limitup_ratio": 0.005818,
-      "limitup_pct": 1.67,
-      "cje_amount": 14919.9,
-      "cje_pct": 0.83,
+      "limitup_count": 43,
+      "limitdown_count": 11,
+      "limitup_ratio": 0.007818,
+      "limitup_pct": 7.5,
+      "cje_amount": 17024.8,
+      "cje_pct": 2.5,
       "return_rate": -0.048151,
       "return_pct": 3.33
     }
