@@ -1,7 +1,7 @@
 {
-  "updated_at": "2026-07-08 08:27:05",
+  "updated_at": "2026-07-08 10:01:45",
   "warnings": [
-    "2026-07-07 融资余额数据缺失（上交所+深交所）"
+    "2026-07-08 融资余额数据缺失（上交所+深交所）"
   ],
   "data": [
     {
@@ -50686,15 +50686,15 @@
     },
     {
       "date": "2026-07-07",
-      "eindex": 18.15,
+      "eindex": 23.61,
       "fear_threshold": 37.96,
       "greed_threshold": 79.26,
       "turnover_rate": 0.025262,
       "turnover_pct": 44.17,
-      "margin_ratio": 0,
-      "margin_pct": 0.83,
-      "margin_sh": 0,
-      "margin_sz": 0,
+      "margin_ratio": 0.028763,
+      "margin_pct": 99.17,
+      "margin_sh": 14790.93,
+      "margin_sz": 14597.1,
       "limitup_count": 34,
       "limitdown_count": 45,
       "limitup_ratio": 0.006182,
@@ -50703,6 +50703,26 @@
       "cje_pct": 42.5,
       "return_rate": -0.017488,
       "return_pct": 20.83
+    },
+    {
+      "date": "2026-07-08",
+      "eindex": 1.81,
+      "fear_threshold": 36.34,
+      "greed_threshold": 79.17,
+      "turnover_rate": 0.008721,
+      "turnover_pct": 0.83,
+      "margin_ratio": 0,
+      "margin_pct": 0.83,
+      "margin_sh": 0,
+      "margin_sz": 0,
+      "limitup_count": 24,
+      "limitdown_count": 13,
+      "limitup_ratio": 0.004364,
+      "limitup_pct": 0.83,
+      "cje_amount": 8910.78,
+      "cje_pct": 0.83,
+      "return_rate": -0.048151,
+      "return_pct": 3.33
     }
   ]
 }
