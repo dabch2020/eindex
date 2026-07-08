@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-07-07 15:06:03",
+  "updated_at": "2026-07-08 08:27:05",
   "warnings": [
     "2026-07-07 融资余额数据缺失（上交所+深交所）"
   ],
@@ -50689,8 +50689,8 @@
       "eindex": 18.15,
       "fear_threshold": 37.96,
       "greed_threshold": 79.26,
-      "turnover_rate": 0.024879,
-      "turnover_pct": 41.67,
+      "turnover_rate": 0.025262,
+      "turnover_pct": 44.17,
       "margin_ratio": 0,
       "margin_pct": 0.83,
       "margin_sh": 0,
