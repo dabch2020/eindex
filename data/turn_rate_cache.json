@@ -12702,11 +12702,11 @@
   "2026-07-15": {
     "sh_amount": 12262.9827,
     "sz_amount": 13448.5561,
-    "turnover_rate": 0.02632711
+    "turnover_rate": 0.02560177
   },
   "2026-07-16": {
-    "sh_amount": 3675.0494,
-    "sz_amount": 4272.2744,
-    "turnover_rate": 0.00813759
+    "sh_amount": 6115.8793,
+    "sz_amount": 7193.9834,
+    "turnover_rate": 0.01325304
   }
 }
