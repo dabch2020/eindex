@@ -12710,8 +12710,13 @@
     "turnover_rate": 0.01296081
   },
   "2026-07-17": {
-    "sh_amount": 0.0,
+    "sh_amount": 12464.4545,
     "sz_amount": 14085.1331,
-    "turnover_rate": 0.01426926
+    "turnover_rate": 0.02797994
+  },
+  "2026-07-20": {
+    "sh_amount": 4040.7488,
+    "sz_amount": 4722.1715,
+    "turnover_rate": 0.00923502
   }
 }
