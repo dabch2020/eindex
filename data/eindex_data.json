@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-06 02:11:36",
+  "updated_at": "2026-11-07 01:39:03",
   "data": [
     {
       "date": "2016-01-26",
@@ -52303,11 +52303,31 @@
     },
     {
       "date": "2026-11-05",
-      "eindex": 43.33,
+      "eindex": 34.83,
       "fear_threshold": 12.17,
       "greed_threshold": 68.33,
       "turnover_rate": 0.023317,
       "turnover_pct": 50.0,
+      "margin_ratio": 0.024611,
+      "margin_pct": 0.83,
+      "margin_sh": 11453.09,
+      "margin_sz": 10901.79,
+      "limitup_count": 0,
+      "limitdown_count": 0,
+      "limitup_ratio": 0,
+      "limitup_pct": 0,
+      "cje_amount": 21179.53,
+      "cje_pct": 43.33,
+      "return_rate": 0,
+      "return_pct": 0
+    },
+    {
+      "date": "2026-11-06",
+      "eindex": 16.67,
+      "fear_threshold": 12.17,
+      "greed_threshold": 67.87,
+      "turnover_rate": 0.01851,
+      "turnover_pct": 22.5,
       "margin_ratio": 0,
       "margin_pct": 0,
       "margin_sh": 0,
@@ -52316,8 +52336,8 @@
       "limitdown_count": 0,
       "limitup_ratio": 0,
       "limitup_pct": 0,
-      "cje_amount": 21179.53,
-      "cje_pct": 43.33,
+      "cje_amount": 16577.94,
+      "cje_pct": 16.67,
       "return_rate": 0,
       "return_pct": 0
     }
