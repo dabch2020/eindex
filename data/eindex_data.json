@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-13 02:31:08",
+  "updated_at": "2026-11-14 01:58:40",
   "data": [
     {
       "date": "2016-01-26",
@@ -52418,6 +52418,26 @@
       "limitup_pct": 0,
       "cje_amount": 19320.82,
       "cje_pct": 34.17,
+      "return_rate": 0,
+      "return_pct": 0
+    },
+    {
+      "date": "2026-11-13",
+      "eindex": 18.33,
+      "fear_threshold": 11.83,
+      "greed_threshold": 66.67,
+      "turnover_rate": 0.019388,
+      "turnover_pct": 32.5,
+      "margin_ratio": 0,
+      "margin_pct": 0,
+      "margin_sh": 0,
+      "margin_sz": 0,
+      "limitup_count": 0,
+      "limitdown_count": 0,
+      "limitup_ratio": 0,
+      "limitup_pct": 0,
+      "cje_amount": 16556.68,
+      "cje_pct": 18.33,
       "return_rate": 0,
       "return_pct": 0
     }
